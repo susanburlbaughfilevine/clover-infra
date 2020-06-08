@@ -1,0 +1,91 @@
+---
+# For gitlab what are the things we want to do?
+# On commit/Merge into master
+# What needs to happen?
+# Compile assets
+# Deploy to servers (import servers, US and Canada)
+#
+# This file is a template, and might need editing
+# before it works on your project.
+# # see https://docs.gitlab.com/ce/ci/yaml/README.html
+# for all available options
+variables:
+  projectname: "00 - Deploy New CloverDX Server"
+  projectpkgname: "cloverdx"
+  octopusspace: "Metal"
+  fileincludeglob: "*"
+
+stages:
+  - build
+  - octopus-pack
+  - octopus-push
+
+image: node:latest
+
+build:
+  stage: build
+  script:
+    - Write-Output "Remove the Git Directory (causes issues)"
+    - Remove-Item -Recurse -Force .git/
+  artifacts:
+    paths:
+      - "*"
+    expire_in:
+      12 hours
+
+pack-master:
+  stage: octopus-pack
+  script:
+    - dir
+    - $gitversion = (gitversion | convertfrom-json).SemVer
+    - octo version
+    - octo pack --id="${projectpkgname}" --version="${gitversion}" --include="${fileincludeglob}"
+  artifacts:
+    paths:
+      - "*nupkg"
+    expire_in:
+      60 minutes
+  only:
+    - master
+
+push-master:
+  stage: octopus-push
+  script:
+    - $gitversion = (gitversion | convertfrom-json).SemVer
+    - octo version
+    - octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+    - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+  only:
+    - master
+
+pack-branch:
+  stage: octopus-pack
+  script:
+    - $gitversion = gitversion | convertfrom-json
+    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
+    - $nupkgversion = ${gitversion}.MajorMinorPatch + "--" + ${gitbranchkey}
+    - $releaseversion = ${gitversion}.FullSemVer + "--" + ${gitbranchkey} + "." + ${gitversion}.ShortSha
+    - octo version
+    - octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
+  artifacts:
+    paths:
+      - "*nupkg"
+    expire_in:
+      60 minutes
+  except:
+    - master
+    - tags
+
+push-branch:
+  stage: octopus-push
+  script:
+    - $gitversion = gitversion | convertfrom-json
+    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
+    - $nupkgversion = ${gitversion}.MajorMinorPatch + "--" + ${gitbranchkey}
+    - $releaseversion = ${gitversion}.FullSemVer + "--" + ${gitbranchkey} + "." + ${gitversion}.ShortSha
+    - octo version
+    - octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+    - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
+  except:
+    - master
+    - tags
