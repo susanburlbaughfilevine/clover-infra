@@ -38,6 +38,8 @@ pack-master:
   script:
     - dir
     - $gitversion = (gitversion | convertfrom-json).SemVer
+    - Write-Output "Remove the Git Directory (causes issues)"
+    - Remove-Item -Recurse -Force .git/
     - octo version
     - octo pack --id="${projectpkgname}" --version="${gitversion}" --include="${fileincludeglob}"
   artifacts:
@@ -65,6 +67,8 @@ pack-branch:
     - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
     - $nupkgversion = ${gitversion}.MajorMinorPatch + "--" + ${gitbranchkey}
     - $releaseversion = ${gitversion}.FullSemVer + "--" + ${gitbranchkey} + "." + ${gitversion}.ShortSha
+    - Write-Output "Remove the Git Directory (causes issues)"
+    - Remove-Item -Recurse -Force .git/
     - octo version
     - octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
   artifacts:
