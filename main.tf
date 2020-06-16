@@ -1,6 +1,6 @@
 module "cloverdx" {
-    source               = "../../modules/hardened_web_server"
-    # source               = "git@github.com:Filevine/devops_projects.git//iac/terraform/modules/hardened_web_server"
+    
+    source               = "git::ssh://git@gitlab.com/filevine/team/engineering-platform/projects.git//iac/terraform/modules/hardened_web_server"
     resource_count       = 1
     env_name             = "${var.provider_s3_environment}-cloverdx"
     instance_name_long   = "${var.provider_s3_environment}-cloverdx-test"
