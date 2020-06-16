@@ -13,7 +13,7 @@ variables:
   projectname: "00 - Deploy New CloverDX Server"
   projectpkgname: "cloverdx"
   octopusspace: "Metal"
-  fileincludeglob: "*"
+  fileincludeglob: "**/**"
 
 stages:
   - build
@@ -29,7 +29,7 @@ build:
     - Remove-Item -Recurse -Force .git/
   artifacts:
     paths:
-      - "*"
+      - "."
     expire_in:
       12 hours
 
