@@ -27,11 +27,9 @@ module "cloverdx" {
         octopus_server_address = var.octopus_server_address
         octopus_server_environment = var.octopus_server_environment
         octopus_server_roles       = var.octopus_server_roles
-        octopus_server_environment_metal = var.octopus_server_environment_metal
-        octopus_server_roles_metal       = var.octopus_server_roles_metal
-        octopus_server_space_metal = var.octopus_server_space_metal 
-        octopus_listen_port_metal  = var.octopus_listen_port_metal
-        instance_name_long = "${var.provider_s3_environment}-partnership_import"
+        octopus_server_space = var.octopus_server_space 
+        octopus_listen_port  = var.octopus_listen_port
+        instance_name_long = "${var.provider_s3_environment}-clover"
     })
     # Root Disk size should be about 200? (120 suggested min)
     root_disk_size = 200
