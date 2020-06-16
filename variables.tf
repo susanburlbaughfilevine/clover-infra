@@ -168,6 +168,13 @@ variable "octopus_api_key" {
 }
 
 
+variable "octopus_server_environment_metal" {
+    description = "Octopus Server Environment"
+    type        = string
+    default     = "test"
+}
+
+
 variable "octopus_server_environment" {
     description = "Octopus Server Environment"
     type        = string

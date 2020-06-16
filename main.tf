@@ -25,6 +25,7 @@ module "cloverdx" {
         bporter_rdp_admin_password = "${var.bporter_rdp_admin_password}"
         octopus_api_key      = var.octopus_api_key
         octopus_server_address = var.octopus_server_address
+        octopus_server_environment_metal = var.octopus_server_environment_metal
         octopus_server_environment = var.octopus_server_environment
         octopus_server_roles       = var.octopus_server_roles
         octopus_server_space = var.octopus_server_space 
