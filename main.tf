@@ -1,6 +1,5 @@
 module "cloverdx" {
-    source               = "../../modules/hardened_web_server"
-    # source               = "git@github.com:Filevine/devops_projects.git//iac/terraform/modules/hardened_web_server"
+    source               = "git::ssh://git@gitlab.com/filevine/team/engineering-platform/projects.git//iac/terraform/modules/hardened_web_server"
     resource_count       = 1
     env_name             = "${var.provider_s3_environment}-cloverdx"
     instance_name_long   = "${var.provider_s3_environment}-cloverdx-test"
@@ -25,13 +24,12 @@ module "cloverdx" {
         bporter_rdp_admin_password = "${var.bporter_rdp_admin_password}"
         octopus_api_key      = var.octopus_api_key
         octopus_server_address = var.octopus_server_address
+        octopus_server_environment_metal = var.octopus_server_environment_metal
         octopus_server_environment = var.octopus_server_environment
         octopus_server_roles       = var.octopus_server_roles
-        octopus_server_environment_metal = var.octopus_server_environment_metal
-        octopus_server_roles_metal       = var.octopus_server_roles_metal
-        octopus_server_space_metal = var.octopus_server_space_metal 
-        octopus_listen_port_metal  = var.octopus_listen_port_metal
-        instance_name_long = "${var.provider_s3_environment}-partnership_import"
+        octopus_server_space = var.octopus_server_space 
+        octopus_listen_port  = var.octopus_listen_port
+        instance_name_long = "${var.provider_s3_environment}-clover"
     })
     # Root Disk size should be about 200? (120 suggested min)
     root_disk_size = 200

@@ -174,19 +174,26 @@ variable "octopus_server_environment_metal" {
     default     = "test"
 }
 
-variable "octopus_server_roles_metal" {
+
+variable "octopus_server_environment" {
+    description = "Octopus Server Environment"
+    type        = string
+    default     = "test"
+}
+
+variable "octopus_server_roles" {
     description = "octopus server roles"
     type        = string
     default     = "web"
 }
 
-variable "octopus_listen_port_metal" {
+variable "octopus_listen_port" {
     description = "octopus server roles"
     type        = string
-    default     = "10934"
+    default     = "10933"
 }
 
-variable "octopus_server_space_metal" {
+variable "octopus_server_space" {
     description = "octopus server roles"
     type        = string
     default     = "Metal"
