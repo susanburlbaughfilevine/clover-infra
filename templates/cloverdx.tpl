@@ -74,7 +74,7 @@ function getIpV4
 
 Write-Output("Start Time: $userdata_start_time / Now time: $(Get-Date)")
 $ip = getIpV4
-# addOctopusTentacle ${octopus_api_key} ${octopus_server_address} ${octopus_server_environment_metal} ${octopus_server_roles_metal} ${octopus_listen_port_metal} ${instance_name_long} ${octopus_server_space_metal} $ip
+# addOctopusTentacle ${octopus_api_key} ${octopus_server_address} ${octopus_server_environment_metal} ${octopus_server_roles} ${octopus_listen_port} ${instance_name_long} ${octopus_server_space} $ip
 
 addAdminUser bporter '${bporter_rdp_admin_password}' 'Bill Porter' 'Bill Porter'
 addAdminUser susan '${susan_rdp_admin_password}' 'Susan' 'Susan'
