@@ -29,6 +29,12 @@ Password: clover
 **NOTE:** If deployed to preexisting environment (production, production canada, etc.), default credentials may not work (because it would connect to the already existing database with existing credentials)
 
 ## How to Deploy?
+### Gitlab (New Process)
+Gitlab now auto builds clover packages into octopus.
+
+It will be available as a release option within octopus. (displaying information as semver)
+
+
 Teamcity is not set to auto build updates to the repository
 
 ### TeamCity
