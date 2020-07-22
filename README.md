@@ -11,7 +11,7 @@ CloverDX is a data migration software that allows us to migrate different types 
 * MSSQL Connection Libraries
 * Encryption: Bouncy Castle (Java)
 * Amazon Cloudwatch
-* [WAIT] Clover App Branding (for filevine branding)
+* [TODO] Clover App Branding (for filevine branding)
 
 ## Where do server build assets live? (tomcat, jre, etc.)
 There is an S3 bucket for the filevine-devops group, and we have a directory for the cloverdx server there.
