@@ -29,30 +29,42 @@ Password: clover
 **NOTE:** If deployed to preexisting environment (production, production canada, etc.), default credentials may not work (because it would connect to the already existing database with existing credentials)
 
 ## How to Deploy?
-### Gitlab (New Process)
-Gitlab now auto builds clover packages into octopus.
-
-It will be available as a release option within octopus. (displaying information as semver)
-
-
-Teamcity is not set to auto build updates to the repository
-
-### TeamCity
-* Go to the ["Metal" Project in teamcity](https://teamcity.filevinedev.com/project/Metal?branch=&mode=builds#all-projects)
-* Go to Project ["Clover"](https://teamcity.filevinedev.com/buildConfiguration/Metal_Clover?branch=&mode=builds)
-* Find the specific branch you wish to deploy (release or master)
-* Teamcity will generate a release number (incremented from the previous release)
-* Use the generated release number to find the associated release in Octopus
-
-#### Why doesn't my branch appear in the list of builds?
-* Branches that match "(release/*)" or **master** will build
+* This is set up to be as modular as possible so that we can deploy bits and pieces as necessary (in the event that we need to deploy clover to a separate server on it's own ...)
+### Gitlab
+Gitlab will automatically build deploy packages and push those to octopus as necessary.
 
 ### Octopus
 Octopus is not set to auto deploy new releases
 * Go to the ["Metal" Space in Octopus (Space-42)](https://octopus.filevinedev.com/app#/Spaces-42)
 * Go to Project ["00 - Deploy New CloverDX Server"](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/deployments)
+* Canada Servers must be manually added to the [Octopus Security Group](https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#SecurityGroups:group-id=sg-16534673;sort=tag:Name)
+
+#### Manual Steps as part of automation steps / Deployment
+* [TODO] Update data steps with Links
+* verify octopus tentacle connection
+   * Space: Metal
+   * Tag: clover-server
+* Execute commands from [Octopus Runbook](https://octopus.filevinedev.com/app#/Spaces-42/projects/01-runbook-cloverdx-server/operations/runbooks)
+   * Download Assets from S3 (you'll need to grab temporary keys)
+   * Install Clover - Push button
+   * Install Extra Software (Manual Process?)
+      * via scoop?
+      * S3 Browser
+      * Chrome
+      * Notepad++
+      * sysinternals
+   * Push Files from Previous System (not working) - Manual Process
+   * Update Clover Database Credentials
+   * Apply Branding
+   * Restart Tomcat (May or may not work ... )
+   * Display Current Cloudwatch Configuration
+   * Update Cloudwatch on Server
+   * Stop Cloudwatch Agent
+   * Start Cloudwatch Agent
 
 ### Manually
+(Just in case you can't do octopus options/can't build on your own)
+
 If for some reason you would like to test things locally
 * Verify that the necessary environment variables are set
 * Create a `.tfvars` file that specifies the appropriate values for your deploy
