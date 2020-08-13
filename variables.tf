@@ -54,7 +54,7 @@ variable "security_group_map" {
     # Based on region
     default={
         "us-west-2"=["sg-6cb81114", "sg-06bc8c0760f8403a6", "sg-12b6bc77", "sg-4a92a82c"]
-        "ca-canada-1"=["sg-66b4310d","sg-d2b732b9","sg-0341dea8e3ed6e450"]
+        "ca-central-1"=["sg-66b4310d","sg-d2b732b9","sg-0341dea8e3ed6e450"]
     }
 }
 
