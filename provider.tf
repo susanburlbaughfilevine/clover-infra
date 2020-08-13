@@ -12,6 +12,7 @@ provider "octopusdeploy" {
 # Note that the workspaces prefix doesn't allow interporlation, so this is the same as what's set in variables
 terraform {
   backend "s3" {
+    region         = "us-west-2"
     bucket         = "fv-global-fv-tf-backend"
     key            = "filevine-clover-servers"
     dynamodb_table = "fv-global-fv-tf-backend-table"
