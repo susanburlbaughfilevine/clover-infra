@@ -14,6 +14,7 @@ octopus_server_address = "#{octopus-server-address}"
 octopus_api_key = "#{octopus-api-key}"
 octopus_server_environment_metal = "Metal" # "#{octopus-server-envrionment-metal}"
 octopus_space = "Metal"
+fv_octopus_space = "Filevine"
 octopus_server_environment = "#{Octopus.Environment.Name}"
 octopus_provider_server_address = "#{octopus-server-address}"
 

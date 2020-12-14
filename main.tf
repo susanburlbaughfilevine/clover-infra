@@ -19,13 +19,13 @@ module "cloverdx" {
         clover_database_db   = var.clover_database_db
         clover_database_user = var.clover_database_user
         clover_database_pass = var.clover_database_pass
-        fv_clover_rdp_admin_password = "${var.fv_clover_rdp_admin_password}"
         octopus_api_key      = var.octopus_api_key
         octopus_server_address = var.octopus_server_address
         octopus_server_environment_metal = var.octopus_server_environment_metal
         octopus_server_environment = var.octopus_server_environment
-        octopus_server_roles       = var.octopus_server_roles
-        octopus_server_space = var.octopus_server_space 
+        octopus_server_roles    = var.octopus_server_roles
+        octopus_server_space    = var.octopus_server_space 
+        fv_octopus_server_space = var.fv_octopus_server_space 
         octopus_listen_port  = var.octopus_listen_port
         instance_name_long = "${var.provider_s3_environment}-clover"
     })

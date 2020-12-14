@@ -3,24 +3,6 @@
 $userdata_start_time = Get-Date
 Write-Output("Start Time: $userdata_start_time")
 
-function addAdminUser
-{
-    param([string]$username, [string]$password, [string]$fullname, [string]$description)
-    $UserPassword = ConvertTo-SecureString $password -AsPlainText -Force
-    New-LocalUser $username -Password $UserPassword -FullName $fullname -Description $description
-    Add-LocalGroupMember -Group 'Administrators' -Member ($username) –Verbose
-}
-
-function addNormalUser
-{
-    param([string]$username, [string]$password, [string]$fullname, [string]$description)
-    $UserPassword = ConvertTo-SecureString $password -AsPlainText -Force
-    New-LocalUser $username -Password $UserPassword -FullName $fullname -Description $description
-    Add-LocalGroupMember -Group 'Users' -Member ($username) –Verbose
-}
-
-Write-Output("Start Time: $userdata_start_time / Now time: $(Get-Date)")
-
 function addOctopusTentacle
 {
     param([string]$api_key, [string]$server_address, [string]$server_environment, [string]$server_roles, [int]$listen_port, [string]$instance_name_long,  [string]$server_space, [string]$ipv4)
@@ -44,7 +26,12 @@ function getIpV4
 
 Write-Output("Start Time: $userdata_start_time / Now time: $(Get-Date)")
 $ip = getIpV4
+# ------------------------------
+# Register in Metal Space
 addOctopusTentacle ${octopus_api_key} ${octopus_server_address} ${octopus_server_environment_metal} ${octopus_server_roles} ${octopus_listen_port} ${instance_name_long} ${octopus_server_space} $ip
+# ------------------------------
+# Register in Filevine Space
+addOctopusTentacle ${octopus_api_key} ${octopus_server_address} ${octopus_server_environment_metal} ${octopus_server_roles} ${octopus_listen_port} ${instance_name_long} ${fv_octopus_server_space} $ip
 
 
 </powershell>
