@@ -223,53 +223,53 @@ variable "clover_database_pass" {
 #    default     = ""
 #}
 
-variable "octopus_server_address" {
-    description = "Octopus Server Address when running from inside AWS (Private IP typically) - Viewpoint of server being built"
-    default = "http://172.31.10.85:88"
-}
+# variable "octopus_server_address" {
+#     description = "Octopus Server Address when running from inside AWS (Private IP typically) - Viewpoint of server being built"
+#     default = "http://172.31.10.85:88"
+# }
 
-variable "octopus_provider_server_address" {
-    description = "Use to set the Provider Octopus Server Address - Viewpoint of system running terraform"
-    default = "https://octopus.filevinedev.com"
-}
+# variable "octopus_provider_server_address" {
+#     description = "Use to set the Provider Octopus Server Address - Viewpoint of system running terraform"
+#     default = "https://octopus.filevinedev.com"
+# }
 
-variable "octopus_api_key" {
-    description = "Octopus API key"
-    type        = string
-    default     = ""
-}
-
-
-variable "octopus_server_environment_metal" {
-    description = "Octopus Server Environment"
-    type        = string
-    default     = "test"
-}
+# variable "octopus_api_key" {
+#     description = "Octopus API key"
+#     type        = string
+#     default     = ""
+# }
 
 
-variable "octopus_server_environment" {
-    description = "Octopus Server Environment"
-    type        = string
-    default     = "test"
-}
+# variable "octopus_server_environment_metal" {
+#     description = "Octopus Server Environment"
+#     type        = string
+#     default     = "test"
+# }
 
-variable "octopus_server_roles" {
-    description = "octopus server roles"
-    type        = string
-    default     = "web"
-}
 
-variable "octopus_listen_port" {
-    description = "octopus server roles"
-    type        = string
-    default     = "10933"
-}
+# variable "octopus_server_environment" {
+#     description = "Octopus Server Environment"
+#    type        = string
+#    default     = "test"
+#}
 
-variable "octopus_server_space" {
-    description = "octopus server roles"
-    type        = string
-    default     = "Metal"
-}
+#variable "octopus_server_roles" {
+#    description = "octopus server roles"
+#    type        = string
+#    default     = "web"
+#}
+
+#variable "octopus_listen_port" {
+#    description = "octopus server roles"
+#    type        = string
+#    default     = "10933"
+#}
+
+#variable "octopus_server_space" {
+#    description = "octopus server roles"
+#    type        = string
+#    default     = "Metal"
+#}
 
 #variable "ps_name" {
 #    description = "Partnership Server Group Name"
