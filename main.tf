@@ -20,8 +20,6 @@ module "cloverdx" {
         clover_database_user = var.clover_database_user
         clover_database_pass = var.clover_database_pass
         fv_clover_rdp_admin_password = "${var.fv_clover_rdp_admin_password}"
-        susan_rdp_admin_password = "${var.susan_rdp_admin_password}"
-        bporter_rdp_admin_password = "${var.bporter_rdp_admin_password}"
         octopus_api_key      = var.octopus_api_key
         octopus_server_address = var.octopus_server_address
         octopus_server_environment_metal = var.octopus_server_environment_metal

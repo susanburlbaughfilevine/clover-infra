@@ -13,6 +13,7 @@ variables:
   projectname: "00 - Deploy New CloverDX Server"
   projectpkgname: "cloverdx"
   octopusspace: "Metal"
+  fv_octopusspace: "Filevine"
   fileincludeglob: "**/**"
 
 stages:

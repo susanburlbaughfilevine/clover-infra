@@ -20,7 +20,6 @@ function addNormalUser
 }
 
 Write-Output("Start Time: $userdata_start_time / Now time: $(Get-Date)")
-addAdminUser fv_clover_admin '${fv_clover_rdp_admin_password}' 'admin for clover' 'FV Clover Admin'
 
 function addOctopusTentacle
 {
@@ -47,7 +46,5 @@ Write-Output("Start Time: $userdata_start_time / Now time: $(Get-Date)")
 $ip = getIpV4
 addOctopusTentacle ${octopus_api_key} ${octopus_server_address} ${octopus_server_environment_metal} ${octopus_server_roles} ${octopus_listen_port} ${instance_name_long} ${octopus_server_space} $ip
 
-addAdminUser bporter '${bporter_rdp_admin_password}' 'Bill Porter' 'Bill Porter'
-addAdminUser susan '${susan_rdp_admin_password}' 'Susan' 'Susan'
 
 </powershell>
