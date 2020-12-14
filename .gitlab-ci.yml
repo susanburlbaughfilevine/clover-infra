@@ -58,6 +58,9 @@ push-master:
     - octo version
     - octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
     - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+    # --- Filevine Space ---
+    - octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+    - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
   only:
     - master
 
