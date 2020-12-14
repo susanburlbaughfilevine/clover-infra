@@ -1,6 +1,9 @@
 provider "aws" {
 #  region  = "us-west-2"
 #  profile = "fv-us"
+  assume_role {
+    role_arn = var.assume_role_arn
+  }
 }
 
 provider "octopusdeploy" {
@@ -12,10 +15,10 @@ provider "octopusdeploy" {
 # Note that the workspaces prefix doesn't allow interporlation, so this is the same as what's set in variables
 terraform {
   backend "s3" {
-    region         = "us-west-2"
     bucket         = "fv-global-fv-tf-backend"
     key            = "filevine-clover-servers"
     dynamodb_table = "fv-global-fv-tf-backend-table"
+    region         = "us-west-2"
     encrypt        = true
     workspace_key_prefix = "filevine-clover-workspaces"
   }
