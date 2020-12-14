@@ -32,7 +32,7 @@ data "aws_subnet_ids" "public" {
   }
 }
 
-data "aws_kms_alias" "frontend" {
+data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
@@ -50,10 +50,6 @@ data "aws_security_group" "techaccess" {
 
 data "aws_security_group" "dataaccess" {
   name = "${var.envName}-DatastoresAccess"
-}
-
-data "aws_security_group" "frontend-loadbalancer" {
-  name = "${var.envName}-FrontEnd-LB"
 }
 
 data "aws_security_group" "build" {
