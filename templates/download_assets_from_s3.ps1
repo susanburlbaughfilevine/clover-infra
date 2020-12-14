@@ -1,5 +1,9 @@
-$s3_secret_key        = ""
-$s3_access_key        = ""
+# $s3_secret_key        = $s3_secret_key
+# $s3_access_key        = $s3_access_key
+Write-Output "Debug: ----------------------"
+Write-Output "S3 secret Key: $s3_secret_key"
+Write-Output "S3 Access key: $s3_access_key"
+Write-Output "End Debug: ----------------------"
 # =======================================================================
 $clover_assets        = "C:\clover_assets"
 $srcBucketName        = "filevine-devops"
