@@ -37,7 +37,7 @@ resource "aws_instance" "clover" {
 
   user_data              = templatefilk("$path.module)/clover-userdata.ps1", {
     octopus_api_key        = var.octopus_api_key
-    octopus_server_address = var.server_address
+    octopus_server_address = var.octopus_server_address
     octopus_space          = var.octopus_space
     octopus_server_environment = var.octopus_server_environment
     octopus_tenant         = var.octopus_tenant
