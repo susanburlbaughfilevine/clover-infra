@@ -34,8 +34,8 @@ resource "aws_instance" "clover" {
   iam_instance_profile   = "${var.envName}-FilevineApp-InstanceProfile"
   subnet_id              = element(tolist(data.aws_subnet_ids.private.ids), count.index)
   key_name               = "dedicated-shards"
+  user_data              = templatefile("${path.module}/clover-userdata.ps1", {
 
-  user_data              = templatefile("$path.module)/clover-userdata.ps1", {
     octopus_api_key        = var.octopus_api_key
     octopus_server_address = var.octopus_server_address
     octopus_space          = var.octopus_space
