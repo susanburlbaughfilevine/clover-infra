@@ -40,6 +40,10 @@ data "aws_security_group" "frontend" {
   name = "${var.envName}-FrontEnd"
 }
 
+data "aws_security_group" "backend" {
+  name = "${var.envName}-BackEnd"
+}
+
 data "aws_security_group" "techaccess" {
   name = "${var.envName}-TechAccess"
 }
