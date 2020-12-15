@@ -11,7 +11,7 @@ variable "envName" {
 #     default     = "us-west-2"
 # }
 
-variable "assume_role_arn" {
+variable "aws_role" {
   description = "Role ARN to assume the target of where to run this given terraform against"
 
 }
