@@ -8,9 +8,9 @@
 
 # envName   = "#{Octopus.Environment.Name}"
 # domain_name = "#{email-domain-name}"
-aws_region = "#{aws-region}"
+# aws_region      = "#{aws-region}"
 
-assume_role_arn = "#{aws_role}"
+aws_role = "#{aws_role}"
 
 envName         = "#{Octopus.Deployment.Tenant.Name}"
 region          = "#{aws_region}"
