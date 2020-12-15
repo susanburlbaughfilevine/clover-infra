@@ -14,6 +14,7 @@ aws_role = "#{aws_role}"
 
 envName         = "#{Octopus.Deployment.Tenant.Name}"
 region          = "#{aws_region}"
+aws_region          = "#{aws_region}"
 
 octopus_tenant                  = "#{Octopus.Deployment.Tenant.Name}"
 
