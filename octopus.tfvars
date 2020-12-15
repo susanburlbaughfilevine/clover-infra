@@ -8,7 +8,6 @@
 
 # envName   = "#{Octopus.Environment.Name}"
 # domain_name = "#{email-domain-name}"
-# aws_region      = "#{aws-region}"
 
 aws_role = "#{aws_role}"
 
