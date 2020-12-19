@@ -20,12 +20,6 @@ variable "region" {
   description = "Region to deploy into"
   default     = "us-west-2"
 }
-
-
-variable "scaleft_uri" {
-  description = "Uri where ScaleFT installer is located"
-}
-
 variable "dns_domain" {
   description = "DNS Domain this system lives in"
   default     = "filevinedev.com"
@@ -276,3 +270,15 @@ variable "clover_database_pass" {
 #    type        = string
 #    default     = ""
 #}
+
+# --------------------------------------------------------------------------------------
+# Updates for Filevine Tenent environment
+# --------------------------------------------------------------------------------------
+variable "fv_devops_secret_key" {
+  description = "the aws secret key that will allow us to access filevine-devops bucket"
+}
+
+variable "fv_devops_access_key" {
+  description = "the aws access key that will allow us to access filevine-devops bucket"
+}
+

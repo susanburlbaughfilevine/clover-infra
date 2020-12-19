@@ -20,7 +20,7 @@ terraform {
     dynamodb_table = "fv-global-fv-tf-backend-table"
     region         = "us-west-2"
     encrypt        = true
-    workspace_key_prefix = "filevine-clover-fv-workspaces"
+    workspace_key_prefix = "filevine-clover-workspaces"
   }
 }
 
