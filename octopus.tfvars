@@ -37,10 +37,12 @@ ami_status              = "#{ami_status}"
 # Where we last left off
 # ---------------------------------
 # Convert the variables below into octopus values
-# Testing the deployments
+# * Testing the deployments
 #
-# Deploy Secure patch to new client version
+# * Deploy Secure patch to new client version
 #
+# * Copy over the Makefile from the dms_lambda_iac since we're using linux
+# ---------------------------------
 
 #fv_clover_rdp_admin_password = "#{fv_clover_rdp_admin_password}"
 #bporter_rdp_admin_password="#{bporter_rdp_admin_password}"      
