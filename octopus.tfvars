@@ -27,13 +27,20 @@ octopus_space = "Metal"
 fv_octopus_space = "Filevine"
 octopus_server_environment = "#{Octopus.Environment.Name}"
 octopus_provider_server_address = "#{octopus-server-address}"
+fv_devops_secret_key = "#{filevine_devops_secret_key}"
+fv_devops_access_key = "#{filevine_devops_access_key}"
 
 instance_type = "#{aws-ec2-instancetype}"
 
-scaleft_uri   = "#{scaleft_uri}"
-
-
 ami_status              = "#{ami_status}"
+
+# Where we last left off
+# ---------------------------------
+# Convert the variables below into octopus values
+# Testing the deployments
+#
+# Deploy Secure patch to new client version
+#
 
 #fv_clover_rdp_admin_password = "#{fv_clover_rdp_admin_password}"
 #bporter_rdp_admin_password="#{bporter_rdp_admin_password}"      
@@ -46,3 +53,29 @@ ami_status              = "#{ami_status}"
 #s3_access_key="#{s3_access_key}" 
 #s3_secret_key="#{s3_secret_key}" 
 # Not Canada Servers
+#-----------------------------------------------------------------------------
+# $clover_assets        = "C:\clover_assets"
+# $srcBucketName        = "filevine-devops"
+
+# set some variables (not used)
+# $cloverTomcatZip = "CloverDXServer.5.5.1.Tomcat-9.0.22.zip"
+# $cloverTomcatZip   = "CloverDXServer.5.7.0.Tomcat-9.0.22.zip"
+# $cloverTomcatZipDir   = "CloverDXServer.5.7.0.Tomcat-9.0.22"
+# $secureCfgZip      = "secure-cfg-tool.5.6.0.zip"
+# $secureCfgZip      = "secure-cfg-tool.5.7.0.zip"
+# $tomcatDir            = "C:\tomcat"
+# $clover_assets        = "C:\clover_assets"
+# $srcBucketName        = "filevine-devops"
+
+# $cloverTomcatZip   = "CloverDXServer.5.7.0.Tomcat-9.0.22.zip"
+# $tomcatDir            = "C:\tomcat"
+# $clover_assets        = "C:\clover_assets"
+
+# Install Clover Branding
+
+# $clover_branding_zip  = "FVBranding5.6.0.zip"
+# $branding_directory   = "C:\FilevineBranding"
+# $tomcatDir            = "C:\tomcat"
+# $clover_assets        = "C:\clover_assets"
+#-----------------------------------------------------------------------------
+
