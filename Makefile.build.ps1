@@ -70,3 +70,23 @@ task destroy_environment {
 }
 
 task reset_environment destroy_environment,parent-test,apply
+
+task set_local {
+  rm provider.tf
+  cp -f provider.tf_local provider.tf
+}
+
+task set_octopus {
+  rm provider.tf
+  cp -f provider.tf_octopus provider.tf
+}
+
+task save_local {
+  rm provider.tf_local
+  cp -f provider.tf provider.tf_local
+}
+
+task save_octopus {
+  cp -f provider.tf provider.tf_octopus
+}
+
