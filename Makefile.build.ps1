@@ -9,11 +9,11 @@ task validate {
 }
 
 task plan {
-    terraform plan -out=testfile -input=false
+    terraform plan  -var-file local_vars.tfvars --out=testfile -input=false
 }
 
 task apply {
-    terraform apply -input=false testfile
+    terraform apply -var-file local_vars.tfvars -input=false testfile
 }
 
 # We do not want to store information like passwords, etc.
@@ -72,21 +72,22 @@ task destroy_environment {
 task reset_environment destroy_environment,parent-test,apply
 
 task set_local {
-  rm provider.tf
-  cp -f provider.tf_local provider.tf
+  remove-item provider.tf
+  copy-item -Force provider.tf_local provider.tf
+  cat provider.tf
 }
 
 task set_octopus {
-  rm provider.tf
-  cp -f provider.tf_octopus provider.tf
+  remove-item provider.tf
+  copy-item -Force provider.tf_octopus provider.tf
+  cat provider.tf
 }
 
 task save_local {
-  rm provider.tf_local
-  cp -f provider.tf provider.tf_local
+  copy-item -Force provider.tf provider.tf_local
 }
 
 task save_octopus {
-  cp -f provider.tf provider.tf_octopus
+  copy-item -Force provider.tf provider.tf_octopus
 }
 

@@ -12,7 +12,7 @@ data "aws_vpc" "filevine" {
   }
   filter {
     name   = "tag-value"
-    values = ["${data.aws_iam_account_alias.current.account_alias}"]
+    values = [data.aws_iam_account_alias.current.account_alias]
   }
 }
 

@@ -42,7 +42,7 @@ resource "aws_instance" "clover" {
     octopus_server_environment = var.octopus_server_environment
     octopus_tenant         = var.octopus_tenant
     server_roles           = "clover-server"
-    scaleft_config         = "${file("${path.root}/sftd.yaml")}"
+    scaleft_config         = file("${path.root}/sftd.yaml")
   })
   monitoring             = false
 
