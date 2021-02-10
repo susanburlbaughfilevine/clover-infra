@@ -1,11 +1,14 @@
-$clover_database_url  = ""
-$clover_database_user = ""
-$clover_database_pass = ""
-$clover_database_db   = ""
+#$clover_database_url  = ""
+#$clover_database_user = ""
+#$clover_database_pass = ""
+#$clover_database_db   = ""
 
+Write-Output "Apache Zip File: ${apache_zip_file}"
+Write-Output "Clover Zip File: ${clover_zip_file}"
 $clover_assets        = "C:\clover_assets"
-$srcBucketName        = "filevine-devops"
-$cloverTomcatZip      = "CloverDXServer.5.7.0.Tomcat-9.0.22.zip"
+# $srcBucketName        = "filevine-devops"
+# $cloverTomcatZip      = "CloverDXServer.5.7.0.Tomcat-9.0.22.zip"
+# $apacheZip            = "apache-tomcat-win.x64.zip"
 $tomcatDir            = "C:\tomcat"
 
 # Unzip Function
@@ -89,7 +92,8 @@ Write-Output "Environment variables updated"
 
 # Unzip Tomcat
 ## Path: C:\tomcat\v9\apache-tomcat-9.0.30\bin
-Unzip "$clover_assets\apache-tomcat-win.x64.zip" "c:\tomcat\v9\"
+Unzip "$clover_assets\$apacheZip" "C:\tomcat\v9" 
+#apache-tomcat-win.x64.zip" "c:\tomcat\v9\"
 Write-Output "unzip tomcat"
 
 # grab the only folder in this directory ...
