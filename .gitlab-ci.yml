@@ -13,6 +13,7 @@ variables:
   projectname: "00 - Deploy New CloverDX Server"
   projectpkgname: "cloverdx"
   octopusspace: "Metal"
+  #  fv_octopusspace: "Filevine"
   fileincludeglob: "**/**"
 
 stages:
@@ -57,6 +58,9 @@ push-master:
     - octo version
     - octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
     - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+    # --- Filevine Space ---
+    #- octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${fv_octopusspace}" --overwrite-mode="OverwriteExisting"
+    # - octo create-release --project="${projectname}" --space="${fv_octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
   only:
     - master
 
@@ -90,6 +94,9 @@ push-branch:
     - octo version
     - octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
     - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
+      # -- TEMP - Filevine
+      #- octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${fv_octopusspace}" --overwrite-mode="OverwriteExisting"
+      #- octo create-release --project="${projectname}" --space="${fv_octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
   except:
     - master
     - tags
