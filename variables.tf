@@ -77,6 +77,13 @@ variable "instance_type" {
   default     = "t3a.medium"
 }
 
+# =====================================
+# define undeclared variables
+# =====================================
+#variable "" {
+
+#}
+
 # These variables can be reused through the configuration. Change the default value to the values you desire.
 # variable "env_name" {
 #     description = "The name to use to make resources unique"
@@ -274,11 +281,11 @@ variable "clover_database_pass" {
 # --------------------------------------------------------------------------------------
 # Updates for Filevine Tenent environment
 # --------------------------------------------------------------------------------------
-variable "fv_devops_secret_key" {
-  description = "the aws secret key that will allow us to access filevine-devops bucket"
-}
+#variable "fv_devops_secret_key" {
+#  description = "the aws secret key that will allow us to access filevine-devops bucket"
+#}
 
-variable "fv_devops_access_key" {
-  description = "the aws access key that will allow us to access filevine-devops bucket"
-}
+#variable "fv_devops_access_key" {
+#  description = "the aws access key that will allow us to access filevine-devops bucket"
+#}
 

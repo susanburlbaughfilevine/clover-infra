@@ -13,7 +13,7 @@ task plan {
 }
 
 task apply {
-    terraform apply -var-file local_vars.tfvars -input=false testfile
+    terraform apply -input=false testfile
 }
 
 # We do not want to store information like passwords, etc.
@@ -66,9 +66,11 @@ task set_provider {
 
 
 task destroy_environment {
-    terraform destroy -input=false
+    terraform destroy -input=false -var-file local_vars.tfvars
 }
 
+
+task destroy destroy_environment
 task reset_environment destroy_environment,parent-test,apply
 
 task set_local {
