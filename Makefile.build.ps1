@@ -9,7 +9,7 @@ task validate {
 }
 
 task plan {
-    terraform plan -out=testfile -input=false
+    terraform plan  -var-file local_vars.tfvars --out=testfile -input=false
 }
 
 task apply {
@@ -66,7 +66,30 @@ task set_provider {
 
 
 task destroy_environment {
-    terraform destroy -input=false
+    terraform destroy -input=false -var-file local_vars.tfvars
 }
 
+
+task destroy destroy_environment
 task reset_environment destroy_environment,parent-test,apply
+
+task set_local {
+  remove-item provider.tf
+  copy-item -Force provider.tf_local provider.tf
+  cat provider.tf
+}
+
+task set_octopus {
+  remove-item provider.tf
+  copy-item -Force provider.tf_octopus provider.tf
+  cat provider.tf
+}
+
+task save_local {
+  copy-item -Force provider.tf provider.tf_local
+}
+
+task save_octopus {
+  copy-item -Force provider.tf provider.tf_octopus
+}
+
