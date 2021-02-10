@@ -14,6 +14,9 @@ Write-Output "Creating Assets: $clover_assets"
 
 Push-Location $clover_assets 
 
+Write-Output "Secret Key: ${s3_secret_key}"
+Write-Output "Acccess Key: ${s3_access_key}"
+
 # FIXME: Move this stuff to Artifactory
 # Let's grab our assets from S3
 Set-AWSCredentials –AccessKey $s3_access_key -SecretKey $s3_secret_key
