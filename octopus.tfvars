@@ -9,29 +9,31 @@
 # envName   = "#{Octopus.Environment.Name}"
 # domain_name = "#{email-domain-name}"
 
-aws_role                                 = "#{aws_role}"
-
 envName                                  = "#{Octopus.Deployment.Tenant.Name}"
 region                                   = "#{aws_region}"
-aws_region                               = "#{aws_region}"
-
 octopus_tenant                           = "#{Octopus.Deployment.Tenant.Name}"
+octopus_server_address                   = "#{octopus-server-address}"
+octopus_space                            = "Metal"
+octopus_api_key                          = "#{octopus-api-key}"
+octopus_server_environment               = "#{Octopus.Environment.Name}"
+octopus_provider_server_address          = "#{octopus-server-address}"
+instance_type                            = "#{aws-ec2-instancetype}"
+# ami_status                               = "#{ami_status}"
+ami_status                               = "released"
+aws_role                                 = "#{aws_role}"
+
+
+
+# aws_region                               = "#{aws_region}"
 
 
 # instance_type      = "#{aws_ec2_instancetype}"
 
-octopus_server_address                   = "#{octopus-server-address}"
-octopus_api_key                          = "#{octopus-api-key}"
-octopus_server_environment_metal         = "Metal"
+# octopus_server_environment_metal         = "Metal"
 # "#{octopus-server-envrionment-metal}"
-octopus_space                            = "Metal"
-fv_octopus_space                         = "Filevine"
-octopus_server_environment               = "#{Octopus.Environment.Name}"
-octopus_provider_server_address          = "#{octopus-server-address}"
+# fv_octopus_space                         = "Filevine"
 #fv_devops_secret_key                     = "#{filevine_devops_secret_key}"
 #fv_devops_access_key                     = "#{filevine_devops_access_key}"
-instance_type                            = "#{aws-ec2-instancetype}"
-ami_status                               = "#{ami_status}"
 
 # Where we last left off
 # ---------------------------------
