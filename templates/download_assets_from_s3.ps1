@@ -2,14 +2,17 @@
 # $s3_access_key        = $s3_access_key
 Write-Output "Debug: --------------------------"
 Write-Output "S3 secret Key: $filevine_devops_secret_key"
-Write-Output "S3 Access key: $fielvine_devops_access_key"
+Write-Output "S3 Access key: $filevine_devops_access_key"
 Write-Output "End Debug: ----------------------"
 # =======================================================================
 $clover_assets        = "C:\clover_assets"
 $srcBucketName        = "filevine-devops"
 
-if(![System.IO.File]::Exists($clover_assets)){
-    # file with path $path doesn't exist
+if (Test-Path $clover_assets) {
+    Write-Output "File Path ${clover_assets} Exists"
+} else {
+    Write-Output "File Path ${clover_assets} Does not Exists"
+
     New-Item $clover_assets -ItemType directory
     # Let's create a new directory to store all of our fun scripts and stuff
     Write-Output "Creating Assets: $clover_assets"
