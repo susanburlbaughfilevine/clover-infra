@@ -37,5 +37,5 @@ Set-Variable AWS_SESSION_TOKEN="${filevine_devops_session_token}"
 aws sts get-caller-identity
 
 $objects = get-S3object -bucketname $srcBucketName
-Read-S3Object -BucketName '$srcBucketName' -KeyPrefix cloverdx-assets/ -Folder '$clover_assets'
+Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets
 Get-ChildItem $objects
