@@ -8,9 +8,12 @@ Write-Output "End Debug: ----------------------"
 $clover_assets        = "C:\clover_assets"
 $srcBucketName        = "filevine-devops"
 
-New-Item $clover_assets -ItemType directory
-# Let's create a new directory to store all of our fun scripts and stuff
-Write-Output "Creating Assets: $clover_assets"
+if(![System.IO.File]::Exists($clover_assets)){
+    # file with path $path doesn't exist
+    New-Item $clover_assets -ItemType directory
+    # Let's create a new directory to store all of our fun scripts and stuff
+    Write-Output "Creating Assets: $clover_assets"
+}
 
 Push-Location $clover_assets 
 
