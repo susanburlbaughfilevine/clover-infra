@@ -46,7 +46,9 @@ function setUserWritablePermissions
 
 if (Test-Path $tomcatDir) {
     Write-Output "File Path ${tomcatDir} Exists"
-    Remove-Item -Path $tomcatDir -Recurse -Force
+    # Remove-Item -Path $tomcatDir -Recurse -Force
+    $nowDateTime = Get-Date -Format "MM.dd.yyyy.HH.mm"
+    move-Item -Path $tomcatDir "${tomcatDir}.old.date-${nowDateTime}"
     New-Item $tomcatDir -ItemType directory
     Write-Output "Creating Tomcat Directory: $tomcatDir"
 } else {
@@ -184,7 +186,14 @@ Write-Output "MSSQL lib files added"
 # Copy files from S3 assets directory
 $start_time = Get-Date
 Copy-Item -Path $clover_assets\bcprov-jdk15on-165.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\bcprov-jdk15on-165.jar
-Unzip "$clover_assets\secure-cfg-tool.5.6.0.zip" "$clover_assets\secure-cfg\"
+try {
+    Unzip "$clover_assets\secure-cfg-tool.5.6.0.zip" "$clover_assets\secure-cfg\"
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
 Copy-Item -Path $clover_assets\secure-cfg\secure-cfg-tool\lib\jasypt-1.9.0.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\jasypt-1.9.0.jar
 Write-Output "Move Files (lib files) - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Updated encryption lib files for clover"
