@@ -23,9 +23,9 @@ Push-Location $clover_assets
 
 #Write-Output "Secret Key: ${filevine_devops_secret_key}"
 #Write-Output "Acccess Key: ${filevine_devops_access_key}"
-Set-Variable AWS_ACCESS_KEY_ID="${filevine_devops_access_key}"
-Set-Variable AWS_SECRET_ACCESS_KEY="${filevine_devops_secret_key}"
-Set-Variable AWS_SESSION_TOKEN="${filevine_devops_session_token}"
+#Set-Variable AWS_ACCESS_KEY_ID="${filevine_devops_access_key}"
+#Set-Variable AWS_SECRET_ACCESS_KEY="${filevine_devops_secret_key}"
+#Set-Variable AWS_SESSION_TOKEN="${filevine_devops_session_token}"
 
 
 
@@ -36,6 +36,6 @@ Set-Variable AWS_SESSION_TOKEN="${filevine_devops_session_token}"
 # Let's verify the caller identity ...
 aws sts get-caller-identity
 
-$objects = get-S3object -bucketname $srcBucketName
+# $objects = Read-S3object -bucketname $srcBucketName
 Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets
-Get-ChildItem $objects
+# Get-ChildItem $objects
