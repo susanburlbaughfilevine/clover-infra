@@ -185,8 +185,15 @@ $start_time = Get-Date
 Write-Output "Stop IIS"
 $serviceName = "World Wide Web Publishing Service"
 # We need to disable the IIS service so when we restart the machine, it doesn't start up
-Set-Service $serviceName -StartupType Disabled
-Stop-Service -Name $serviceName
+try {
+    Set-Service $serviceName -StartupType Disabled
+    Stop-Service -Name $serviceName
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
 Write-Output "Stop IIS - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 
 # start up Tomcat
