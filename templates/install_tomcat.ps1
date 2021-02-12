@@ -46,6 +46,9 @@ function setUserWritablePermissions
 
 if (Test-Path $tomcatDir) {
     Write-Output "File Path ${tomcatDir} Exists"
+    Remove-Item -Path $tomcatDir -Recurse -Force
+    New-Item $tomcatDir -ItemType directory
+    Write-Output "Creating Tomcat Directory: $tomcatDir"
 } else {
     Write-Output "File Path ${tomcatDir} Does not Exists"
     New-Item $tomcatDir -ItemType directory
@@ -81,7 +84,21 @@ setUserWritablePermissions "$tomcatDir/profilerServer.properties"
 # Install JDK
 # Push-Location $clover_assets 
 Write-Output "Unzip JDK"
-Unzip "$clover_assets\jdk-11.win.x64.zip" "c:\jdk-11\"
+try {
+    if (Test-Path "c:\jdk-11") {
+        Write-Output "File Path c:\jdk-11 Exists"
+        Remove-Item -Path c:\jdk-11 -Recurse -Force
+    } else {
+        Write-Output "File Path c:\jdk-11 does not exist"
+    }
+    Unzip "$clover_assets\jdk-11.win.x64.zip" "c:\jdk-11\"
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
+
 # JDK 11: C:\jdk-11\jdk-11.0.6+10
 
 # FIXME This will be a very brittle design ...
