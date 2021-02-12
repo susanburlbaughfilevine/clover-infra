@@ -21,13 +21,20 @@ if (Test-Path $clover_assets) {
 
 Push-Location $clover_assets 
 
+Write-Output "Debug: --------------------------"
+Get-ChildItem -Path Env:
+Write-Output "End Debug: ----------------------"
 #Write-Output "Secret Key: ${filevine_devops_secret_key}"
 #Write-Output "Acccess Key: ${filevine_devops_access_key}"
 Set-Variable $env:AWS_ACCESS_KEY_ID="${filevine_devops_access_key}"
 Set-Variable $env:AWS_SECRET_ACCESS_KEY="${filevine_devops_secret_key}"
 Set-Variable $env:AWS_SESSION_TOKEN="${filevine_devops_session_token}"
-
-
+Set-Variable AWS_ACCESS_KEY_ID      ="${filevine_devops_access_key}"
+Set-Variable AWS_SECRET_ACCESS_KEY  ="${filevine_devops_secret_key}"
+Set-Variable AWS_SESSION_TOKEN      ="${filevine_devops_session_token}"
+Write-Output "Debug: --------------------------"
+Get-ChildItem -Path Env:
+Write-Output "End Debug: ----------------------"
 
 # FIXME: Move this stuff to Artifactory
 # Let's grab our assets from S3
