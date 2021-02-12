@@ -34,7 +34,7 @@ Push-Location $clover_assets
 # Set-AWSCredentials -AccessKey "${filevine_devops_access_key}" -SecretKey "${filevine_devops_secret_key}"
 
 # Let's verify the caller identity ...
-aws sts get-caller-identity
+# aws sts get-caller-identity
 
 # $objects = Read-S3object -bucketname $srcBucketName
 Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets
