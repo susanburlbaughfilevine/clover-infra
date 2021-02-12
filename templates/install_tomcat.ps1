@@ -5,6 +5,8 @@
 
 Write-Output "Apache Zip File: ${apache_zip_file}"
 Write-Output "Clover Zip File: ${clover_zip_file}"
+$apacheZip              = ${apache_zip_file}
+$cloverTomcatZip        = ${clover_zip_file}
 $clover_assets        = "C:\clover_assets"
 # $srcBucketName        = "filevine-devops"
 # $cloverTomcatZip      = "CloverDXServer.5.7.0.Tomcat-9.0.22.zip"
