@@ -43,7 +43,16 @@ function setUserWritablePermissions
 }
 
 # Creating a directory for tomcat
-New-Item $tomcatDir -ItemType directory
+
+if (Test-Path $tomcatDir) {
+    Write-Output "File Path ${tomcatDir} Exists"
+} else {
+    Write-Output "File Path ${tomcatDir} Does not Exists"
+    New-Item $tomcatDir -ItemType directory
+
+    # Let's create a new directory to store all of our fun scripts and stuff
+    Write-Output "Creating Tomcat Directory: $tomcatDir"
+}
 
 Push-Location $clover_assets 
 
