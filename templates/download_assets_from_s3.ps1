@@ -32,6 +32,11 @@ Push-Location $clover_assets
 Set-Variable AWS_ACCESS_KEY_ID      ="${filevine_devops_access_key}"
 Set-Variable AWS_SECRET_ACCESS_KEY  ="${filevine_devops_secret_key}"
 Set-Variable AWS_SESSION_TOKEN      ="${filevine_devops_session_token}"
+Write-Output "Debug: --------------------------"
+Write-Output "S3 secret Key:  $AWS_ACCESS_KEY_ID"
+Write-Output "S3 Access key:  $AWS_SECRET_ACCESS_KEY"
+Write-Output "S3 Session Key: $AWS_SESSION_TOKEN"
+Write-Output "End Debug: ----------------------"
 #Write-Output "Debug: --------------------------"
 #Get-ChildItem -Path Env:
 #Write-Output "End Debug: ----------------------"
@@ -44,5 +49,6 @@ Set-Variable AWS_SESSION_TOKEN      ="${filevine_devops_session_token}"
 # aws sts get-caller-identity
 
 # $objects = Read-S3object -bucketname $srcBucketName
-Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets -AccessKey $AWS_ACCESS_KEY_ID -SecretKey $AWS_SECRET_ACCESS_KEY -SessionToken $AWS_SESSION_TOKEN -Region us-west-2
+Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets -AccessKey $filevine_devops_access_key -SecretKey $filevine_devops_secret_key -SessionToken $filevine_devops_session_token -Region us-west-2
+# Read-S3Object -BucketName $srcBucketName -KeyPrefix cloverdx-assets/ -Folder $clover_assets -AccessKey $AWS_ACCESS_KEY_ID -SecretKey $AWS_SECRET_ACCESS_KEY -SessionToken $AWS_SESSION_TOKEN -Region us-west-2
 # Get-ChildItem $objects
