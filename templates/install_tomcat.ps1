@@ -46,6 +46,11 @@ function setUserWritablePermissions
 
 if (Test-Path $tomcatDir) {
     Write-Output "File Path ${tomcatDir} Exists"
+    # Remove-Item -Path $tomcatDir -Recurse -Force
+    $nowDateTime = Get-Date -Format "MM.dd.yyyy.HH.mm"
+    move-Item -Path $tomcatDir "${tomcatDir}.old.date-${nowDateTime}"
+    New-Item $tomcatDir -ItemType directory
+    Write-Output "Creating Tomcat Directory: $tomcatDir"
 } else {
     Write-Output "File Path ${tomcatDir} Does not Exists"
     New-Item $tomcatDir -ItemType directory
@@ -81,7 +86,21 @@ setUserWritablePermissions "$tomcatDir/profilerServer.properties"
 # Install JDK
 # Push-Location $clover_assets 
 Write-Output "Unzip JDK"
-Unzip "$clover_assets\jdk-11.win.x64.zip" "c:\jdk-11\"
+try {
+    if (Test-Path "c:\jdk-11") {
+        Write-Output "File Path c:\jdk-11 Exists"
+        Remove-Item -Path c:\jdk-11 -Recurse -Force
+    } else {
+        Write-Output "File Path c:\jdk-11 does not exist"
+    }
+    Unzip "$clover_assets\jdk-11.win.x64.zip" "c:\jdk-11\"
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
+
 # JDK 11: C:\jdk-11\jdk-11.0.6+10
 
 # FIXME This will be a very brittle design ...
@@ -167,7 +186,14 @@ Write-Output "MSSQL lib files added"
 # Copy files from S3 assets directory
 $start_time = Get-Date
 Copy-Item -Path $clover_assets\bcprov-jdk15on-165.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\bcprov-jdk15on-165.jar
-Unzip "$clover_assets\secure-cfg-tool.5.6.0.zip" "$clover_assets\secure-cfg\"
+try {
+    Unzip "$clover_assets\secure-cfg-tool.5.6.0.zip" "$clover_assets\secure-cfg\"
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
 Copy-Item -Path $clover_assets\secure-cfg\secure-cfg-tool\lib\jasypt-1.9.0.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\jasypt-1.9.0.jar
 Write-Output "Move Files (lib files) - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Updated encryption lib files for clover"
@@ -185,8 +211,15 @@ $start_time = Get-Date
 Write-Output "Stop IIS"
 $serviceName = "World Wide Web Publishing Service"
 # We need to disable the IIS service so when we restart the machine, it doesn't start up
-Set-Service $serviceName -StartupType Disabled
-Stop-Service -Name $serviceName
+try {
+    Set-Service $serviceName -StartupType Disabled
+    Stop-Service -Name $serviceName
+} catch {
+    Write-Output "An Error Occurred"  -ForegroundColor RED
+    Write-Output $Error[0].Exception | Get-Member
+} finally {
+    $Error.Clear()
+}
 Write-Output "Stop IIS - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 
 # start up Tomcat
