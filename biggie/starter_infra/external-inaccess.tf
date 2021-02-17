@@ -2,7 +2,7 @@
 resource "aws_security_group" "tech" {
   name        = "${var.envName}-Clover-TechAccess"
   description = "Tech Support Access into these environments"
-  vpc_id      = data.aws_vpc.filevine.id
+  vpc_id      = data.aws_vpc.clover.id
 
   tags = {
     Name       = "${var.envName}-Clover-TechAccess"
