@@ -4,7 +4,7 @@ data "aws_iam_account_alias" "current" {}
 
 data "aws_region" "current" {}
 
-data "aws_vpc" "filevine" {
+data "aws_vpc" "clover" {
   filter {
     name   = "tag-key"
     values = ["Name"]
@@ -16,7 +16,7 @@ data "aws_vpc" "filevine" {
 }
 
 data "aws_route53_zone" "master" {
-  provider = aws.filevine
+  provider = aws.clover
   name     = var.dns_domain
 }
 

@@ -1,8 +1,8 @@
 # Create SNS Topic
 # https://www.terraform.io/docs/providers/aws/r/sns_topic.html
 resource "aws_sns_topic" "slack_sns_topic" {
-  name         = "${var.envName}-slack-alerting"
-  display_name = "${var.envName}-slack-alerting"
+  name         = "${var.envName}-clover-slack-alerting"
+  display_name = "${var.envName}-clover-slack-alerting"
   policy       = <<POLICY
 {
   "Version":  "2012-10-17",

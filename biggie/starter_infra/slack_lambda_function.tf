@@ -1,7 +1,7 @@
 # Call template_file data source for Lambda Function
 # https://www.terraform.io/docs/configuration/functions/templatefile.html
 data "template_file" "cloudwatch_alarm_lambda" {
-  template = "${file("./cloudwatch_alarm_lambda.py")}"
+  template = file("./cloudwatch_alarm_lambda.py")
   vars = {
     slack_channel_name = var.slack_channel_name
     slack_webhook      = var.slack_webhook
@@ -23,7 +23,7 @@ data "archive_file" "slack_lmf_archive" {
 # Create IAM Role & Role Policy for Lambda Assume Role and Execution
 # https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
 resource "aws_iam_role_policy" "lambda_basic_execution_policy" {
-  name   = "${var.envName}-lambda_basic_execution_policy"
+  name   = "${var.envName}-clover-lambda_basic_execution_policy"
   role   = aws_iam_role.lambda_basic_execution_role.id
   policy = data.aws_iam_policy_document.lambda_basic_execution_policy.json
 }
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "lambda_basic_execution_policy" {
 }
 
 resource "aws_iam_role" "lambda_basic_execution_role" {
-  name               = "${var.envName}-lambda_basic_execution_role"
+  name               = "${var.envName}-clover-lambda_basic_execution_role"
   assume_role_policy = data.aws_iam_policy_document.sts-lambda_basic_execution_policy.json
 }
 
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "sts-lambda_basic_execution_policy" {
 # https://www.terraform.io/docs/providers/aws/r/lambda_function.html
 resource "aws_lambda_function" "sns_slack_lmf" {
   filename         = "${var.envName}-slack-lmf.zip"
-  function_name    = "${var.envName}-slack-function"
+  function_name    = "${var.envName}-clover-slack-function"
   source_code_hash = filebase64sha256("${var.envName}-slack-lmf.zip")
   role             = aws_iam_role.lambda_basic_execution_role.arn
   handler          = "cloudwatch_alarm_lambda.lambda_handler"

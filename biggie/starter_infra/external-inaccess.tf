@@ -1,11 +1,11 @@
 
 resource "aws_security_group" "tech" {
-  name        = "${var.envName}-TechAccess"
+  name        = "${var.envName}-Clover-TechAccess"
   description = "Tech Support Access into these environments"
   vpc_id      = data.aws_vpc.filevine.id
 
   tags = {
-    Name       = "${var.envName}-TechAccess"
+    Name       = "${var.envName}-Clover-TechAccess"
     managed_by = "Octopus via Terraform"
   }
 

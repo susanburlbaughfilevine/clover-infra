@@ -48,3 +48,11 @@ task save_local {
 task save_octopus {
   copy-item -Force provider.tf provider.tf_octopus
 }
+
+task rebase_continue {
+  git rebase --continue
+}
+
+task rebase_skip {
+  git rebase --skip
+}
