@@ -11,15 +11,6 @@ data "aws_vpc" "clover" {
   }
   filter {
     name   = "tag-value"
-    values = [data.aws_iam_account_alias.current.account_alias]
+    values = ["${data.aws_iam_account_alias.current.account_alias}-vpc"]
   }
-}
-
-data "aws_route53_zone" "master" {
-  provider = aws.clover
-  name     = var.dns_domain
-}
-
-data "aws_kms_alias" "billing" {
-  name = "alias/fv/default"
 }
