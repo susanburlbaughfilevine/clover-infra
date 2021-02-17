@@ -8,7 +8,7 @@
 #    value = module.cloverdx.instance_ids
 #}
 #output "check-lookup" {
-  # value = lookup([{"instance_id"=module.cloverdx.instance_ids}], "instance_id", "what")
+# value = lookup([{"instance_id"=module.cloverdx.instance_ids}], "instance_id", "what")
 #  value = "-${element(
 #      module.cloverdx.instance_ids,
 #      0

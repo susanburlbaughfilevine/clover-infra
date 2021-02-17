@@ -1,8 +1,8 @@
 
 variable "envName" {
-    description = ""
-    type        = string
-    default     = "dev"
+  description = ""
+  type        = string
+  default     = "dev"
 }
 
 # variable "aws_region" {
@@ -144,7 +144,7 @@ variable "instance_type" {
 #     # * sg-4a92a82c
 #     default     = ["sg-6cb81114", "sg-06bc8c0760f8403a6", "sg-12b6bc77", "sg-4a92a82c"]
 
- #    # default     = ["sg-33b4be56", "sg-16534673", "sg-12b6bc77", "sg-bc4a80d9"]
+#    # default     = ["sg-33b4be56", "sg-16534673", "sg-12b6bc77", "sg-bc4a80d9"]
 #     # default     = [aws_security_group.dev-wes, aws_security_group.database-group1, aws_security_group.production-security-group, aws_security_group.octopus]
 # }
 
@@ -188,9 +188,9 @@ variable "instance_type" {
 # }
 
 variable "root_disk_space" {
-    description = "Root Disk Space - you need to replace the entire system to adjust this space"
-    type        = number
-    default     = 30
+  description = "Root Disk Space - you need to replace the entire system to adjust this space"
+  type        = number
+  default     = 30
 }
 
 # FIXME/HACK - bad security practice
@@ -209,27 +209,27 @@ variable "root_disk_space" {
 
 # Clover Specific settings
 variable "clover_database_url" {
-    description = "clover database url"
-    type        = string
-    default     = "import.filevinedev.com"
+  description = "clover database url"
+  type        = string
+  default     = "import.filevinedev.com"
 }
 
 variable "clover_database_db" {
-    description = "clover_database_db"
-    type        = string
-    default     = "clover_db"
+  description = "clover_database_db"
+  type        = string
+  default     = "clover_db"
 }
 
 variable "clover_database_user" {
-    description = "clover_database_user"
-    type        = string
-    default     = "database_user"
+  description = "clover_database_user"
+  type        = string
+  default     = "database_user"
 }
 
 variable "clover_database_pass" {
-    description = "clover database pass"
-    type        = string
-    default     = "database_pass"
+  description = "clover database pass"
+  type        = string
+  default     = "database_pass"
 }
 
 #variable "fv_clover_rdp_admin_password" {

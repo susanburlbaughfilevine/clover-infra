@@ -118,17 +118,17 @@ data "aws_ami" "windows" {
   most_recent = true
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["win2019-base-*"]
   }
 
   filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 
   filter {
-    name = "tag:status"
+    name   = "tag:status"
     values = [var.ami_status]
   }
 
