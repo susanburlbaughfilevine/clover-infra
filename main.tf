@@ -16,8 +16,7 @@ resource "aws_instance" "clover" {
     data.aws_security_group.dataaccess.id
   ]
 
-  # iam_instance_profile                = "${var.envName}-FilevineApp-InstanceProfile"
-  iam_instance_profile                = data.aws_iam_instance_profile.filevineApp.name
+  iam_instance_profile                = "${var.envName}-CloverApp-InstanceProfile"
   subnet_id                           = element(tolist(data.aws_subnet_ids.private.ids), count.index)
   # key_name                            = "dedicated-shards"
   key_name                            = var.key_name
