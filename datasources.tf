@@ -62,11 +62,7 @@ output "backend-security-group" {
   value = "backend-security group: ${var.aws_sg_import_backend}"
 }
 data "aws_security_group" "backend" {
-<<<<<<< HEAD
-  name = var.aws_sg_import_backend
-=======
   name = "${var.envName}-clover-Backend"
->>>>>>> not quite working right
 }
 
 output "backend-security-group-arn" {
@@ -74,11 +70,7 @@ output "backend-security-group-arn" {
 }
 
 data "aws_security_group" "techaccess" {
-<<<<<<< HEAD
-  name = var.aws_sg_import_tech_access
-=======
-  name = "${var.envName}-clover-TechAccess"
->>>>>>> not quite working right
+  name = "${var.envName}-Clover-TechAccess"
 }
 
 output "techaccess-security-group-arn" {
@@ -86,11 +78,7 @@ output "techaccess-security-group-arn" {
 }
 
 data "aws_security_group" "dataaccess" {
-<<<<<<< HEAD
-  name = var.aws_sg_import_data_access
-=======
   name = "${var.envName}-clover-DatastoresAccess"
->>>>>>> not quite working right
 }
 
 output "datastores-security-group-arn" {
@@ -98,7 +86,7 @@ output "datastores-security-group-arn" {
 }
 
 data "aws_security_group" "build" {
-  name = var.aws_sg_import_octopus
+  name = "${var.envName}-clover-Build"
 }
 
 output "build-security-group-arn" {
