@@ -2,13 +2,6 @@ provider "aws" {
   assume_role {
     role_arn = var.assume_role_arn
   }
-  alias = "clover"
-}
-
-provider "octopusdeploy" {
-  address = var.octopus_provider_server_address
-  apikey  = var.octopus_api_key
-  space   = var.octopus_space
 }
 
 terraform {

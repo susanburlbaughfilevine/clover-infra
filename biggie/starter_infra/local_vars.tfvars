@@ -22,7 +22,3 @@ assume_role_arn                         = "arn:aws:iam::926927448710:role/Terraf
 # Add additional variables here as appropriate
 dns_domain = "filevinedev.com"
 subdomain  = "cloverdx-team-fva"
-
-# Node.js Variables for Slack Alert Lambda Function
-slack_channel_name = "team-fva"
-slack_webhook      = ""

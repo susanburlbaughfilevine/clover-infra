@@ -8,13 +8,3 @@
 
 envName         = "#{Octopus.Deployment.Tenant.Name}"
 assume_role_arn = "#{aws_role}"
-
-## Specific settings needed
-#
-# Add additional variables here as appropriate
-dns_domain = "#{dns_domain}"
-subdomain  = "#{subdomain}"
-
-# Node.js Variables for Slack Alert Lambda Function
-slack_channel_name = "#{slack_channel_name}"
-slack_webhook      = "#{slack_webhook}"
