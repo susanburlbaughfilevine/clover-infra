@@ -12,24 +12,6 @@ resource "aws_security_group" "datastores" {
     security_groups = [aws_security_group.frontend.id]
   }
 
-  ingress {
-    description     = "Redis Access"
-    from_port       = 6379
-    to_port         = 6379
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend.id]
-  }
-
-  ingress {
-    description     = "ElasticSearch Access"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend.id]
-  }
-
   tags = {
     Name       = "${var.envName}-clover-DatastoresAccess"
     managed_by = "Octopus via Terraform"
@@ -47,24 +29,6 @@ resource "aws_security_group" "frontend" {
   tags = {
     Name       = "${var.envName}-clover-FrontEnd"
     managed_by = "Octopus via Terraform"
-  }
-
-  ingress {
-    description     = "HTTP"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend-loadbalancer.id, aws_security_group.backend.id]
-  }
-
-  ingress {
-    description     = "HTTPS"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend-loadbalancer.id, aws_security_group.backend.id]
   }
 
   ingress {
@@ -131,44 +95,6 @@ resource "aws_security_group" "backend" {
   }
 
 }
-
-resource "aws_security_group" "frontend-loadbalancer" {
-  name        = "${var.envName}-clover-FrontEnd-LB"
-  description = "Loadbalancer for the FrontEnd Systems of CloverApp - managed by octopus"
-  vpc_id      = data.aws_vpc.clover.id
-
-  tags = {
-    Name       = "${var.envName}-clover-FrontEnd-LB"
-    managed_by = "Octopus via Terraform"
-  }
-
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    description = "Outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_security_group" "build" {
   name        = "${var.envName}-clover-Build"
   description = "Access to shared entities in the Common for Builds etc"
