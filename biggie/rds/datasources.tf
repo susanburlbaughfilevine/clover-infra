@@ -41,7 +41,6 @@ data "aws_security_group" "sqlserver" {
 data "aws_sns_topic" "slack_sns_topic" {
   name = "${var.envName}-clover-slack-alerting"
 }
-data "aws_iam_account_alias" "current" {}
 
 data "aws_region" "current" {}
 
