@@ -59,6 +59,23 @@ resource "aws_db_parameter_group" "sqlserver" {
 
 }
 
+resource "aws_iam_role" "sqlserverbackup" {
+  name               = "${var.envName}-sqlserver-NativeBackupRole"
+  path               = "/"
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement":
+    [{
+        "Effect": "Allow",
+        "Principal": {"Service":  "rds.amazonaws.com"},
+        "Action": "sts:AssumeRole"
+    }]
+}
+EOF
+
+}
+
 // TODO:  Do we have any custom settings?
 resource "aws_db_option_group" "sqlserver" {
   name                     = "${var.envName}-clover-se-13-00"
