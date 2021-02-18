@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_db_instance" "sqlserver" {
-  identifier = "${local.env}-clover"
+  identifier            = "${local.env}-clover"
   allocated_storage     = var.rds-storage
   max_allocated_storage = var.rds-max-storage
   storage_type          = var.rds-storage-type

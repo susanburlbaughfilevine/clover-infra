@@ -1,6 +1,6 @@
 variable "region" {
   description = "Region"
-  default   = "us-west-2"
+  default     = "us-west-2"
 }
 variable "envName" {
   description = "Environment Name"
