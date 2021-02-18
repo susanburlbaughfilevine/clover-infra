@@ -6,10 +6,6 @@ data "aws_security_group" "sqlserver" {
   name = "${var.envName}-clover-DatastoresAccess"
 }
 
-data "aws_sns_topic" "slack_sns_topic" {
-  name = "${var.envName}-clover-slack-alerting"
-}
-
 data "aws_vpc" "clover" {
   filter {
     name   = "tag-key"
