@@ -1,5 +1,9 @@
+locals {
+  env = lower(var.envName)
+}
+
 resource "aws_db_instance" "sqlserver" {
-  identifier = "${var.envName}-clover"
+  identifier = "${local.env}-clover"
   allocated_storage     = var.rds-storage
   max_allocated_storage = var.rds-max-storage
   storage_type          = var.rds-storage-type
@@ -12,7 +16,7 @@ resource "aws_db_instance" "sqlserver" {
   multi_az               = var.multi_az
 
   deletion_protection         = true
-  final_snapshot_identifier   = "${var.envName}-clover-FinalBackupBeforeDelete"
+  final_snapshot_identifier   = "${local.env}-clover-FinalBackupBeforeDelete"
   auto_minor_version_upgrade  = false
   allow_major_version_upgrade = false
   apply_immediately           = var.apply_immediately
@@ -42,7 +46,7 @@ resource "aws_db_instance" "sqlserver" {
 }
 
 resource "aws_db_parameter_group" "sqlserver" {
-  name        = "${var.envName}-filevine-se-13-00"
+  name        = "${local.env}-filevine-se-13-00"
   family      = "sqlserver-se-13.0"
   description = "Managed by Octopus with Terraform"
 
@@ -60,7 +64,7 @@ resource "aws_db_parameter_group" "sqlserver" {
 }
 
 resource "aws_iam_role" "sqlserverbackup" {
-  name               = "${var.envName}-sqlserver-NativeBackupRole"
+  name               = "${local.env}-sqlserver-NativeBackupRole"
   path               = "/"
   assume_role_policy = <<EOF
 {
@@ -78,7 +82,7 @@ EOF
 
 // TODO:  Do we have any custom settings?
 resource "aws_db_option_group" "sqlserver" {
-  name                     = "${var.envName}-clover-se-13-00"
+  name                     = "${local.env}-clover-se-13-00"
   option_group_description = "Option Group for Clover Application MSSQL"
   engine_name              = "sqlserver-se"
   major_engine_version     = "13.00"
@@ -93,17 +97,17 @@ resource "aws_db_option_group" "sqlserver" {
   }
 
   tags = {
-    Name       = "${var.envName}-clover-13.00"
+    Name       = "${local.env}-clover-13.00"
     managed_by = "octopus"
   }
 }
 
 resource "aws_db_subnet_group" "sqlserver" {
-  name        = "${var.envName}-clover-db-subnets"
+  name        = "${local.env}-clover-db-subnets"
   subnet_ids  = data.aws_subnet_ids.private.ids
   description = "Managed by Octopus with Terraform"
 
   tags = {
-    Name = "${var.envName}-clover-db-subnets"
+    Name = "${local.env}-clover-db-subnets"
   }
 }
