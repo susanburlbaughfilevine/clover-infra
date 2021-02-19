@@ -19,7 +19,42 @@ resource "aws_security_group" "datastores" {
 
 }
 
+resource "aws_security_group" "frontend-loadbalancer" {
+  name        = "${var.envName}-clover-FrontEnd-LB"
+  description = "Loadbalancer for the FrontEnd Systems of Clover - managed by octopus"
+  vpc_id      = data.aws_vpc.clover.id
 
+  tags = {
+    Name       = "${var.envName}-FrontEnd-LB"
+    managed_by = "Octopus via Terraform"
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 resource "aws_security_group" "frontend" {
   name        = "${var.envName}-clover-FrontEnd"
@@ -32,6 +67,16 @@ resource "aws_security_group" "frontend" {
   }
 
   ingress {
+    description     = "Clover"
+    from_port       = 8083
+    to_port         = 8083
+    protocol        = "tcp"
+    self            = true
+    security_groups = [aws_security_group.frontend-loadbalancer.id, aws_security_group.backend.id]
+  }
+
+
+  ingress {
     description = "Okta Advanced Server Access"
     from_port   = 4421
     to_port     = 4421
@@ -40,6 +85,15 @@ resource "aws_security_group" "frontend" {
   }
 
   ingress {
+    description = "Filevine Prod Import DB Server"
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["172.31.23.143/32"]
+  }
+
+    ingress {
     description = "Filevine Prod Import DB Server"
     from_port   = 1433
     to_port     = 1433
