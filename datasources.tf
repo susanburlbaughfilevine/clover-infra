@@ -81,7 +81,10 @@ data "aws_security_group" "dataaccess" {
   name = "${var.envName}-clover-DatastoresAccess"
 }
 
-output "datastores-security-group-arn" {
+data "aws_security_group" "frontend-loadbalancer" {
+  name = "${var.envName}-clover-FrontEnd-LB"
+}
+output "datastores-security-group" {
   value = "dataaccess-security group: ${data.aws_security_group.dataaccess.arn}"
 }
 
