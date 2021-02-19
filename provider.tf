@@ -11,6 +11,10 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias   = "filevine"
+}
+
 provider "octopusdeploy" {
   address = var.octopus_provider_server_address
   apikey  = var.octopus_api_key
@@ -29,4 +33,3 @@ terraform {
     workspace_key_prefix = "filevine-clover-workspaces"
   }
 }
-
