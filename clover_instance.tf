@@ -60,7 +60,6 @@ resource "aws_lb_target_group_attachment" "test" {
   target_group_arn  = aws_lb_target_group.clover_tg.arn
   target_id         = aws_instance.clover.id
   port              = 8083
-  availability_zone = "all"
 }
 
 resource "aws_instance" "clover" {
