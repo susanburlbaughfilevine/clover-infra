@@ -74,6 +74,7 @@ resource "aws_instance" "clover" {
 
   vpc_security_group_ids = [
     data.aws_security_group.backend.id,
+    data.aws_security_group.frontend.id,
     data.aws_security_group.build.id,
     data.aws_security_group.techaccess.id,
     data.aws_security_group.dataaccess.id
