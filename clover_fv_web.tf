@@ -65,3 +65,21 @@ resource "aws_acm_certificate_validation" "frontend_validate" {
   certificate_arn         = aws_acm_certificate.frontend_certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.frontend_validate : record.fqdn]
 }
+
+data "aws_route53_zone" "master" {
+  provider = aws.filevine
+  name     = var.dns_domain
+}
+
+resource "aws_route53_record" "clover_frontend_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "${var.subdomain}.${var.dns_domain}"
+  type     = "A"
+
+  alias {
+    name                   = aws_lb.clover_alb.dns_name
+    zone_id                = aws_lb.clover_alb.zone_id
+    evaluate_target_health = true
+  }
+}
