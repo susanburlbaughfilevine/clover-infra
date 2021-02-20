@@ -20,6 +20,14 @@ resource "aws_lb_target_group" "clover_tg" {
     cookie_duration = 7200
   }
 
+  health_check {
+    path                = "/clover/api/rest/v1/docs.html"
+    healthy_threshold   = "5"
+    unhealthy_threshold = "2"
+    matcher             = "200"
+    port                = 8083
+  }
+
   tags = {
     Name       = "${var.envName}-clover-tg"
     managed_by = "Octopus via Terraform"
@@ -57,9 +65,9 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn  = aws_lb_target_group.clover_tg.arn
-  target_id         = aws_instance.clover.id
-  port              = 8083
+  target_group_arn = aws_lb_target_group.clover_tg.arn
+  target_id        = aws_instance.clover.id
+  port             = 8083
 }
 
 resource "aws_instance" "clover" {
