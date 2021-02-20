@@ -83,3 +83,16 @@ resource "aws_route53_record" "clover_frontend_record" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "clover_internal_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "internal-${var.envName}-import.${var.dns_domain}"
+  type     = "A"
+
+  alias {
+    name                   = aws_lb.clover_alb.dns_name
+    zone_id                = aws_lb.clover_alb.zone_id
+    evaluate_target_health = true
+  }
+}
