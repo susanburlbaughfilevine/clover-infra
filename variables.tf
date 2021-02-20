@@ -83,6 +83,11 @@ variable "instance_type" {
   default     = "t3a.medium"
 }
 
+variable "tools_instance_type" {
+  description = "AWS Instance Type"
+  default     = "m5a.8xlarge"
+}
+
 # Clover Specific settings
 variable "clover_database_url" {
   description = "clover database url"
