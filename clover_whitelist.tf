@@ -14,7 +14,7 @@ resource "aws_security_group" "clover_whitelist" {
     to_port     = 443
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["174.193.5.207/32"]
+    cidr_blocks = ["76.192.9.181/32"]
   }
 
   egress {
