@@ -1,7 +1,7 @@
 resource "aws_ebs_volume" "tools_instance_volume_1" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/492f995f-cc85-4ed2-84de-5c8e05989822"
+  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
   encrypted         = true
 
   tags = {
@@ -12,7 +12,7 @@ resource "aws_ebs_volume" "tools_instance_volume_1" {
 resource "aws_ebs_volume" "tools_instance_volume_2" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/492f995f-cc85-4ed2-84de-5c8e05989822"
+  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
   encrypted         = true
 
   tags = {
@@ -23,7 +23,7 @@ resource "aws_ebs_volume" "tools_instance_volume_2" {
 resource "aws_ebs_volume" "tools_instance_volume_3" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/492f995f-cc85-4ed2-84de-5c8e05989822"
+  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
   encrypted         = true
 
   tags = {
