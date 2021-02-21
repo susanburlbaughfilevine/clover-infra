@@ -61,17 +61,17 @@ resource "aws_instance" "tools_instance" {
 resource "aws_volume_attachment" "tools_volume_attach_1" {
   device_name = "xvdg"
   instance_id = aws_instance.tools_instance.id
-  volume_id   = aws_ebs_volume.tools_instance_volume_1.id
+  volume_id   = aws_ebs_volume.tools_instance_volume_2.id
 }
 
 resource "aws_volume_attachment" "tools_volume_attach_2" {
   device_name = "xvdh"
   instance_id = aws_instance.tools_instance.id
-  volume_id   = aws_ebs_volume.tools_instance_volume_2.id
+  volume_id   = aws_ebs_volume.tools_instance_volume_1.id
 }
 
 resource "aws_volume_attachment" "tools_volume_attach_3" {
   device_name = "xvdj"
   instance_id = aws_instance.tools_instance.id
-  volume_id   = aws_ebs_volume.tools_instance_volume_3.id
+  volume_id   = aws_ebs_volume.tools_instance_volume_1.id
 }
