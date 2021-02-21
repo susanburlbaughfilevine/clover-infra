@@ -16,4 +16,12 @@ resource "aws_security_group" "clover_whitelist" {
     self        = true
     cidr_blocks = ["76.192.9.181/32"]
   }
+
+  egress {
+    description = "Outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
