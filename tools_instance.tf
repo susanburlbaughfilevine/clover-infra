@@ -33,7 +33,7 @@ resource "aws_ebs_volume" "tools_instance_volume_3" {
 
 
 resource "aws_instance" "tools_instance" {
-  ami           = data.aws_ami.windows.id
+  ami           = "ami-072452834855d33b9" //ami id is hardcoded due to resource import. dynamic ami would cause instance recreation
   instance_type = var.tools_instance_type
 
   tags = {
@@ -46,17 +46,6 @@ resource "aws_instance" "tools_instance" {
   iam_instance_profile   = "${var.envName}-CloverApp-InstanceProfile"
   subnet_id              = element(tolist(data.aws_subnet_ids.private.ids), 0)
   key_name               = "dedicated-shards"
-
-  user_data = templatefile("${path.root}/userdata.ps1", {
-    octopus_api_key = var.octopus_api_key
-    # Need to shift this to HTTPS
-    octopus_server_address     = var.octopus_server_address
-    octopus_space              = var.octopus_space
-    octopus_server_environment = var.octopus_server_environment
-    octopus_tenant             = var.octopus_tenant
-    server_roles               = "tools"
-    scaleft_config             = "${file("${path.root}/sftd.yaml")}"
-  })
 
   monitoring = false
 
