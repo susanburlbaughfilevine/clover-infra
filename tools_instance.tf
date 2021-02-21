@@ -52,7 +52,8 @@ resource "aws_instance" "tools_instance" {
   root_block_device {
     volume_size = 200
     encrypted   = true
-    kms_key_id  = data.aws_kms_alias.backend.target_key_arn
+    kms_key_id  = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8" //hardcoded to prevent instance recreation for now
+
   }
 }
 
