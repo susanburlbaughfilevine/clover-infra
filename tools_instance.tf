@@ -35,6 +35,7 @@ resource "aws_ebs_volume" "tools_instance_volume_3" {
 resource "aws_instance" "tools_instance" {
   ami           = "ami-072452834855d33b9" //ami id is hardcoded due to resource import. dynamic ami would cause instance recreation
   instance_type = var.tools_instance_type
+  ebs_optimized = true
 
   tags = {
     Name       = "${var.envName}-tools"
