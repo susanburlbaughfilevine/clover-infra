@@ -140,7 +140,7 @@ resource "aws_security_group" "backend" {
     from_port   = 4421
     to_port     = 4421
     protocol    = "tcp"
-    cidr_blocks = ["172.17.64.0/21"]
+    cidr_blocks = ["172.17.64.0/21", "172.17.80.0/21"]
   }
 
   tags = {
