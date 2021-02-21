@@ -19,43 +19,6 @@ resource "aws_security_group" "datastores" {
 
 }
 
-resource "aws_security_group" "frontend-loadbalancer" {
-  name        = "${var.envName}-clover-FrontEnd-LB"
-  description = "Loadbalancer for the FrontEnd Systems of Clover - managed by octopus"
-  vpc_id      = data.aws_vpc.clover.id
-
-  tags = {
-    Name       = "${var.envName}-FrontEnd-LB"
-    managed_by = "Octopus via Terraform"
-  }
-
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    description = "Outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_security_group" "frontend" {
   name        = "${var.envName}-clover-FrontEnd"
   description = "FrontEnd Systems of Clover - managed by octopus"
