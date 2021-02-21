@@ -72,7 +72,7 @@ resource "aws_security_group" "frontend" {
     to_port         = 8083
     protocol        = "tcp"
     self            = true
-    security_groups = [aws_security_group.frontend-loadbalancer.id, aws_security_group.backend.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 
