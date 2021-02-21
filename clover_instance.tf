@@ -2,7 +2,7 @@ resource "aws_lb" "clover_alb" {
   name               = "${var.envName}-clover-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.clover_whitelist.id]
+  security_groups    = [aws_security_group.clover_whitelist.id]
   subnets            = data.aws_subnet_ids.public.ids
   ip_address_type    = "ipv4"
   tags = {
