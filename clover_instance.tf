@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "clover_tg" {
     healthy_threshold   = "5"
     unhealthy_threshold = "2"
     matcher             = "200"
-    port                = 8083
+    port                = 80
   }
 
   tags = {
@@ -67,7 +67,7 @@ resource "aws_lb_listener" "http" {
 resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = aws_lb_target_group.clover_tg.arn
   target_id        = aws_instance.clover.id
-  port             = 8083
+  port             = 80
 }
 
 resource "aws_instance" "clover" {
