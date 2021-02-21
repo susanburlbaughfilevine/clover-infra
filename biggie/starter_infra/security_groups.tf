@@ -31,8 +31,8 @@ resource "aws_security_group" "frontend" {
 
   ingress {
     description     = "Clover"
-    from_port       = 8083
-    to_port         = 8083
+    from_port       = 80
+    to_port         = 80
     protocol        = "tcp"
     self            = true
     cidr_blocks = ["0.0.0.0/0"]
