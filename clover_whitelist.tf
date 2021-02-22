@@ -17,6 +17,24 @@ resource "aws_security_group" "clover_whitelist" {
     cidr_blocks = ["76.192.9.181/32"]
   }
 
+  ingress {
+    description = "Josh Mortensen"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["104.216.240.98/32"]
+  }
+
+  ingress {
+    description = "Bhavin Tailor"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["45.89.173.162/32"]
+  }
+
   egress {
     description = "Outbound"
     from_port   = 0
