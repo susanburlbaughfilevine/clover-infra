@@ -95,7 +95,7 @@ resource "aws_security_group" "backend" {
     to_port     = 1433
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["172.31.23.143/32"]
+    cidr_blocks = ["172.31.23.143/32", "172.17.80.0/21"]
   }
 
   ingress {
