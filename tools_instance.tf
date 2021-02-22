@@ -1,3 +1,16 @@
+resource "aws_route53_record" "tools_internal_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "${var.envName}-tools.${var.dns_domain}"
+  type     = "CNAME"
+
+  alias {
+    name                   = aws_instance.tools_instance.private_dns
+    zone_id                = data.aws_route53_zone.master.id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_ebs_volume" "tools_instance_volume_1" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
