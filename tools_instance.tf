@@ -3,7 +3,8 @@ resource "aws_route53_record" "tools_internal_record" {
   zone_id  = data.aws_route53_zone.master.id
   name     = "${var.envName}-tools.${var.dns_domain}"
   type     = "CNAME"
-  records        = [aws_instance.tools_instance.private_dns]
+  records  = [aws_instance.tools_instance.private_dns]
+  ttl      = 600
 }
 
 resource "aws_ebs_volume" "tools_instance_volume_1" {
