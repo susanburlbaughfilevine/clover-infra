@@ -82,6 +82,13 @@ Docscan code uses JTDS (SQL Server Open Source Driver) - Download link is via So
 * Check for a S3DocScan table in the Import Database
   * `select * from S3DocScan`
 
+### Setting Worker Class Path 
+* the CloverDX server has two parts, Core and Worker. 
+  * Tasks are usually run in the Worker so you need to add this library to `worker.classpath`. 
+  * [Adding Libraries to Worker Classpath](https://doc.cloverdx.com/latest/server/optional-server-installation-steps.html#adding-libraries-to-worker-classpath).
+    * Make sure the `worker-lib` directory is created in CloverDX home directory 
+    * add `worker.classpath` property into CloverDX configuration file (Configuration/Setup/Configuration File)* Restart CloverDX server.
+
 ## FAQ
 ### I need to update the default password that will be used on new systems
 Since everything is configured via Octopus, the best place to update that information is in Octopus Variables for the project
