@@ -156,13 +156,14 @@ See the "SQL Server Setup" for additional setup/instructions
       * via scoop?
       * S3 Browser
       * Chrome
+        * There is a DSC available for this (maybe?)
       * Notepad++
       * sysinternals
-   * Push Files from Previous System (not working) - Manual Process
-   * Update Clover Database Credentials
-   * Apply Branding
-   * Restart Tomcat (May or may not work ... )
-   * Display Current Cloudwatch Configuration
-   * Update Cloudwatch on Server
-   * Stop Cloudwatch Agent
-   * Start Cloudwatch Agent
+   * Push Files from Previous System (not working) - Manual Process / Not planned out
+   * Update Clover Database Credentials (Part of Runbook)
+   * Apply Branding (part of runbook)
+   * Restart Tomcat (part of runbook)
+   * Display Current Cloudwatch Configuration (part of runbook) - By default the cloudwatch reporting metrics are less than useful, this will allow us to confirm what metrics are available on the system. - I have not checked how this compares against latest IAM profile cloudwatch settings ... (use at your own risk ...)
+   * Update Cloudwatch on Server (part of runbook) - There are customized cloudwatch configs for this system, and runbook should allow you to see additonal values about the system. () 
+   * Stop Cloudwatch Agent (part of runbook) - Stop the windows service
+   * Start Cloudwatch Agent (part of runbook) - Start the windows service
