@@ -19,12 +19,26 @@ There is an S3 bucket for the filevine-devops group, and we have a directory for
 As part of the build process, we reach out and grab that s3 bucket directory and put that into a local working directory of "C:\clover_assets"
 
 ## Installing CloverDX
-* [Local Development](./LOCAL.md)
+* [Local Development](./LOCAL.md) - Via terraform to AWS systems
 * [Deployment Instructions](./deployment/README.md)
 * [After Server Setup](./deployment/after_server_setup.md)
+* [Runbooks](./deployment/runbooks/README.md)
 
 ### Things to do (Cleanup)
 * move start_infra flow into the TF Stack (design discussion)
+
+### Other sources of useful documentation
+* https://doc.cloverdx.com/latest/server/secure-configuration-properties.html#secure-configuration-properties-basic-usage
+* https://doc.cloverdx.com/latest/server/setup.html
+* https://doc.cloverdx.com/latest/server/postinstallation-configuration.html#firewall-exceptions
+* https://doc.cloverdx.com/latest/server/architecture.html
+* https://doc.cloverdx.com/latest/server/list-of-properties.html
+* https://doc.cloverdx.com/latest/server/mandatory-properties.html
+* https://doc.cloverdx.com/latest/server/clustering.html
+* https://doc.cloverdx.com/latest/server/example-of-3-node-cluster-configuration.html
+
+### Other Notes (Legacy Configuration)
+* [Legacy Configuration](./deployment/legacy_configuration.md)
 ### Other Notes (CJIS Specific)
 * [Secure Tunnel to CJIS Import Tools](https://filevine.atlassian.net/wiki/spaces/DEVOPS/pages/1134362629/Secure+Tunnel+to+CJIS+Import+Tools)
 #### Copy <5G files around
