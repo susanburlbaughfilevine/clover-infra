@@ -45,7 +45,7 @@ variable "ami_status" {
 
 variable "octopus_server_address" {
   description = "Octopus Server Address when running from inside AWS (Private IP typically) - Viewpoint of server being built"
-  default     = "http://172.31.10.85:88"
+  default     = "http://internal-octopus.filevinedev.com:88"
 }
 
 variable "octopus_provider_server_address" {
