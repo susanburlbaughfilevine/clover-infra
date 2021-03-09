@@ -80,7 +80,7 @@ variable "octopus_target_project" {
 
 variable "instance_type" {
   description = "AWS Instance Type"
-  default     = "t3a.medium"
+  default     = "c5.xlarge"
 }
 
 variable "tools_instance_type" {
