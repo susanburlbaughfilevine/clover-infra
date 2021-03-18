@@ -23,6 +23,11 @@ ami_status                               = "released"
 # aws_role                                 = "#{aws_role}"
 assume_role_arn                          = "#{aws_role}"
 
+aws_sg_import_frontend                   = "#{aws_sg_import_frontend}"
+aws_sg_import_backend                    = "#{aws_sg_import_backend}"
+aws_sg_import_tech_access                = "#{aws_sg_import_tech_access}"
+aws_sg_import_data_access                = "#{aws_sg_import_data_access}"
+aws_sg_import_octopus                    = "#{aws_sg_import_octopus}"
 
 
 # aws_region                               = "#{aws_region}"
