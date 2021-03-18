@@ -21,6 +21,11 @@ data "aws_vpc" "clover" {
   }
 }
 
+output "vpc-id" {
+  value = "vpc-id: ${data.aws_vpc.clover.id}"
+}
+
+
 data "aws_subnet_ids" "private" {
   vpc_id = data.aws_vpc.clover.id
 
@@ -41,6 +46,10 @@ data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
+output "frontend-security-group" {
+  value = "frontend-security group: ${var.aws_sg_import_frontend}"
+}
+
 data "aws_security_group" "frontend" {
   name = var.aws_sg_import_frontend
 }
@@ -49,6 +58,9 @@ output "frontend-security-group" {
   value = "frontend-security group: ${data.aws_security_group.frontend.arn}"
 }
 
+output "backend-security-group" {
+  value = "backend-security group: ${var.aws_sg_import_backend}"
+}
 data "aws_security_group" "backend" {
   name = var.aws_sg_import_backend
 }
