@@ -5,7 +5,7 @@ data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
-data "aws_vpc" "filevine" {
+data "aws_vpc" "clover" {
   filter {
     name   = "tag-key"
     values = ["Name"]
@@ -17,7 +17,7 @@ data "aws_vpc" "filevine" {
 }
 
 data "aws_subnet_ids" "private" {
-  vpc_id = data.aws_vpc.filevine.id
+  vpc_id = data.aws_vpc.clover.id
 
   tags = {
     Tier = "private"
@@ -25,7 +25,7 @@ data "aws_subnet_ids" "private" {
 }
 
 data "aws_subnet_ids" "public" {
-  vpc_id = data.aws_vpc.filevine.id
+  vpc_id = data.aws_vpc.clover.id
 
   tags = {
     Tier = "public"
