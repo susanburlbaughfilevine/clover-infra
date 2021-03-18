@@ -29,6 +29,7 @@ aws_sg_import_tech_access                = "#{aws_sg_import_tech_access}"
 aws_sg_import_data_access                = "#{aws_sg_import_data_access}"
 aws_sg_import_octopus                    = "#{aws_sg_import_octopus}"
 instance_profile                         = "#{aws_instance_profile}"
+key_name                                 = "#{encryption_key}
 
 
 # aws_region                               = "#{aws_region}"
