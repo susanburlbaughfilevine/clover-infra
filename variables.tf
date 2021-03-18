@@ -10,6 +10,22 @@ variable "envName" {
 #     type        = string
 #     default     = "us-west-2"
 # }
+variable "aws_sg_import_frontend" {
+    #default = "${var.envName}-DatastoresAccess"
+}
+variable "aws_sg_import_backend" {
+    #default = "${var.envName}-DatastoresAccess"
+}
+variable "aws_sg_import_tech_access" {
+    #default = "${var.envName}-DatastoresAccess"
+}
+variable "aws_sg_import_data_access" {
+    #default = "${var.envName}-DatastoresAccess"
+}
+variable "aws_sg_import_octopus" {
+    #default = "${var.envName}-DatastoresAccess"
+}
+
 
 # variable "aws_role" {
 #   description = "Role ARN to assume the target of where to run this given terraform against"
