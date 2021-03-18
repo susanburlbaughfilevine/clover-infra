@@ -26,6 +26,8 @@ variable "aws_sg_import_octopus" {
     #default = "${var.envName}-DatastoresAccess"
 }
 
+variable "instance_profile" {
+}
 
 # variable "aws_role" {
 #   description = "Role ARN to assume the target of where to run this given terraform against"
