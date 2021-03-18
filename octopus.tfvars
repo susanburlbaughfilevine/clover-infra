@@ -28,6 +28,7 @@ aws_sg_import_backend                    = "#{aws_sg_import_backend}"
 aws_sg_import_tech_access                = "#{aws_sg_import_tech_access}"
 aws_sg_import_data_access                = "#{aws_sg_import_data_access}"
 aws_sg_import_octopus                    = "#{aws_sg_import_octopus}"
+instance_profile                         = "#{aws_instance_profile}"
 
 
 # aws_region                               = "#{aws_region}"
