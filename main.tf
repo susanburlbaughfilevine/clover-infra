@@ -1,5 +1,3 @@
-
-
 resource "aws_instance" "clover" {
   count                               = 1
   ami                                 = data.aws_ami.windows.id
@@ -18,7 +16,8 @@ resource "aws_instance" "clover" {
     data.aws_security_group.dataaccess.id
   ]
 
-  iam_instance_profile                = "${var.envName}-FilevineApp-InstanceProfile"
+  # iam_instance_profile                = "${var.envName}-FilevineApp-InstanceProfile"
+  iam_instance_profile                = data.aws_iam_instance_profile.filevineApp.name
   subnet_id                           = element(tolist(data.aws_subnet_ids.private.ids), count.index)
   key_name                            = "dedicated-shards"
   user_data                           = templatefile("${path.module}/templates/userdata.ps1", {

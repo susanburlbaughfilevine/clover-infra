@@ -93,6 +93,11 @@ output "build-security-group-arn" {
   value = "build-security group: ${data.aws_security_group.build.arn}"
 }
 
+data "aws_iam_instance_profile" "filevineApp" {
+  name = var.instance_profile
+}
+
+
 data "aws_s3_bucket" "accesslogs" {
   bucket = "${data.aws_iam_account_alias.current.account_alias}-lblogs-${var.region}"
 }
