@@ -26,6 +26,10 @@ variable "aws_sg_import_octopus" {
     #default = "${var.envName}-DatastoresAccess"
 }
 
+variable "key_name" {
+  default = "dedicated_shards"
+}
+
 variable "instance_profile" {
 }
 
