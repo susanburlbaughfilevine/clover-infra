@@ -2,7 +2,7 @@ provider "aws" {
 #  region  = "us-west-2"
 #  profile = "fv-us"
   assume_role {
-    role_arn = var.aws_role
+    role_arn = var.assume_role_arn
   }
 }
 
