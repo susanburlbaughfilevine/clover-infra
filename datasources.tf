@@ -54,7 +54,7 @@ data "aws_security_group" "frontend" {
   name = var.aws_sg_import_frontend
 }
 
-output "frontend-security-group" {
+output "frontend-security-group-arn" {
   value = "frontend-security group: ${data.aws_security_group.frontend.arn}"
 }
 
@@ -65,7 +65,7 @@ data "aws_security_group" "backend" {
   name = var.aws_sg_import_backend
 }
 
-output "backend-security-group" {
+output "backend-security-group-arn" {
   value = "backend-security group: ${data.aws_security_group.backend.arn}"
 }
 
@@ -73,7 +73,7 @@ data "aws_security_group" "techaccess" {
   name = var.aws_sg_import_tech_access
 }
 
-output "techaccess-security-group" {
+output "techaccess-security-group-arn" {
   value = "techaccess-security group: ${data.aws_security_group.techaccess.arn}"
 }
 
@@ -81,7 +81,7 @@ data "aws_security_group" "dataaccess" {
   name = var.aws_sg_import_data_access
 }
 
-output "datastores-security-group" {
+output "datastores-security-group-arn" {
   value = "dataaccess-security group: ${data.aws_security_group.dataaccess.arn}"
 }
 
@@ -89,7 +89,7 @@ data "aws_security_group" "build" {
   name = var.aws_sg_import_octopus
 }
 
-output "build-security-group" {
+output "build-security-group-arn" {
   value = "build-security group: ${data.aws_security_group.build.arn}"
 }
 
