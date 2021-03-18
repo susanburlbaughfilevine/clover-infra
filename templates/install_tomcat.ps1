@@ -153,10 +153,33 @@ Unzip "$clover_assets\ROOT.zip" "$tomcatDirectory\webapps\"
 Push-Location $tomcatDirectory\webapps
 
 # We want to copy the clover.war to the current directory
+# ---------------------------------------------------------------------
+# Clover
+# ---------------------------------------------------------------------
+# grab the only folder in this directory ...
+#$tomcatWeb = gci C:\tomcat\v9\ | ? { $_.PSIsContainer } | sort CreationTime -desc | select -f 1
+# Write-Output "grab tomcat version directory"
+
+
+# $tomcatDirectory = "C:\tomcat\v9\$tomcatWeb"
+$BaseDir = $tomcatDir
+$NameToFind = "Clover"
+
+$MyVariable = Get-ChildItem $BaseDir -Recurse | Where-Object { $_.PSIsContainer -and $_.Name.StartsWith($NameToFind)}
+Write-Output "Directory: ${MyVariable.FullName}"
+
 New-Item $tomcatDirectory\webapps\clover -ItemType directory
-Copy-Item -Path $clover_assets\clover.war -Destination $tomcatDirectory\webapps\clover\clover.war
+Copy-Item -Path ${MyVariable.FullName}\webapps\clover.war -Destination $tomcatDirectory\webapps\clover\clover.war
+
+# Copy-Item -Path $clover_assets\clover.war -Destination $tomcatDirectory\webapps\clover\clover.war
+
+# ---------------------------------------------------------------------
+# Profiler
+# ---------------------------------------------------------------------
 New-Item $tomcatDirectory\webapps\profiler -ItemType directory
-Copy-Item -Path $clover_assets\profiler.war -Destination $tomcatDirectory\webapps\profiler\profiler.war
+
+Copy-Item -Path ${MyVariable.FullName}\webapps\profiler.war -Destination $tomcatDirectory\webapps\clover\profiler.war
+# Copy-Item -Path $clover_assets\profiler.war -Destination $tomcatDirectory\webapps\profiler\profiler.war
 # Copy-Item -Path $clover_assets\ROOT.zip -Destination $tomcatDirectory\webapps\
 Write-Output "copy clover.war to webapps"
 Write-Output "Clover clover.war moved to webapps - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
@@ -172,16 +195,7 @@ Write-Output "profiler.war extracted"
 
 Write-Output "Clover Extracted - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 
-# Update the library (add in the mssql drivers)
-$start_time = Get-Date
-Copy-Item -Path $clover_assets\mssql-jdbc-7.4.1.jre11.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11.jar
-# Move-Item $clover_assets\mssql-jdbc-7.4.1.jre11.jar $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11.jar
-Copy-Item -Path $clover_assets\mssql-jdbc-7.4.1.jre11-shaded.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11-shaded.jar
-# Move-Item $clover_assets\mssql-jdbc-7.4.1.jre11-shaded.jar $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11-shaded.jar
-Copy-Item -Path $clover_assets\mssql-jdbc-8.2.2.jre11.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-8.2.2.jre11.jar
-Write-Output "Move Files (mssql) - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-Write-Output "MSSQL lib files added"
-
+# TODO: Double Check versions
 # Install Bouncey Castle - Encryption
 # Copy files from S3 assets directory
 $start_time = Get-Date
@@ -197,6 +211,18 @@ try {
 Copy-Item -Path $clover_assets\secure-cfg\secure-cfg-tool\lib\jasypt-1.9.0.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\jasypt-1.9.0.jar
 Write-Output "Move Files (lib files) - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Updated encryption lib files for clover"
+
+# Update the library (add in the mssql drivers)
+$start_time = Get-Date
+# TODO: This should copy the lib folder contents to lib
+# Copy-Item -Recurse -Force -Path $clover_assets\lib\* -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\
+Copy-Item -Path $clover_assets\mssql-jdbc-7.4.1.jre11.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11.jar
+# Move-Item $clover_assets\mssql-jdbc-7.4.1.jre11.jar $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11.jar
+Copy-Item -Path $clover_assets\mssql-jdbc-7.4.1.jre11-shaded.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11-shaded.jar
+# Move-Item $clover_assets\mssql-jdbc-7.4.1.jre11-shaded.jar $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-7.4.1.jre11-shaded.jar
+Copy-Item -Path $clover_assets\mssql-jdbc-8.2.2.jre11.jar -Destination $tomcatDirectory\webapps\clover\WEB-INF\lib\mssql-jdbc-8.2.2.jre11.jar
+Write-Output "Move Files (mssql) - Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "MSSQL lib files added"
 
 # Copy over conf file (server.xml)
 # This allows us to host on port 80
