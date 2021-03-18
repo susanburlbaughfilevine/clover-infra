@@ -16,10 +16,6 @@ variable "aws_role" {
 
 }
 
-variable "assume_role_arn" {
-  description = "Role ARN to assume for the target of where to run this given terraform against"
-}
-
 variable "region" {
   description = "Region to deploy into"
   default     = "us-west-2"
