@@ -42,7 +42,7 @@ data "aws_kms_alias" "backend" {
 }
 
 data "aws_security_group" "frontend" {
-  name = "${var.envName}-FrontEnd"
+  name = var.aws_sg_import_frontend
 }
 
 output "frontend-security-group" {
@@ -50,7 +50,7 @@ output "frontend-security-group" {
 }
 
 data "aws_security_group" "backend" {
-  name = "${var.envName}-Backend"
+  name = var.aws_sg_import_backend
 }
 
 output "backend-security-group" {
@@ -58,16 +58,15 @@ output "backend-security-group" {
 }
 
 data "aws_security_group" "techaccess" {
-  name = "${var.envName}-TechAccess"
+  name = var.aws_sg_import_tech_access
 }
 
 output "techaccess-security-group" {
   value = "techaccess-security group: ${data.aws_security_group.techaccess.arn}"
 }
 
-
 data "aws_security_group" "dataaccess" {
-  name = "${var.envName}-DatastoresAccess"
+  name = var.aws_sg_import_data_access
 }
 
 output "datastores-security-group" {
@@ -75,7 +74,7 @@ output "datastores-security-group" {
 }
 
 data "aws_security_group" "build" {
-  name = "${var.envName}-Build"
+  name = var.aws_sg_import_octopus
 }
 
 output "build-security-group" {
