@@ -68,9 +68,8 @@ pack-branch:
   stage: octopus-pack
   script:
     - $gitversion = gitversion | convertfrom-json
-    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
-    - $nupkgversion = ${gitversion}.MajorMinorPatch + "--" + ${gitbranchkey}
-    - $releaseversion = ${gitversion}.FullSemVer + "--" + ${gitbranchkey} + "." + ${gitversion}.ShortSha
+    - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
+    - $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
     - Write-Output "Remove the Git Directory (causes issues)"
     - Remove-Item -Recurse -Force .git/
     - octo version
@@ -88,9 +87,8 @@ push-branch:
   stage: octopus-push
   script:
     - $gitversion = gitversion | convertfrom-json
-    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
-    - $nupkgversion = ${gitversion}.MajorMinorPatch + "--" + ${gitbranchkey}
-    - $releaseversion = ${gitversion}.FullSemVer + "--" + ${gitbranchkey} + "." + ${gitversion}.ShortSha
+    - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
+    - $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
     - octo version
     - octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
     - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
