@@ -23,6 +23,9 @@ As part of the build process, we reach out and grab that s3 bucket directory and
 * [Deployment Instructions](./deployment/README.md)
 * [After Server Setup](./deployment/after_server_setup.md)
 * [Runbooks](./deployment/runbooks/README.md)
+* Manually
+    * Update tomCat config on CloverDX system
+        Edit `c:\tomcat\cloverServer.properties` -> Add the line `dataapp.execution.timeout=7200`
 
 ### Things to do (Cleanup)
 * move start_infra flow into the TF Stack (design discussion)
@@ -39,6 +42,7 @@ As part of the build process, we reach out and grab that s3 bucket directory and
 
 ### Other Notes (Legacy Configuration)
 * [Legacy Configuration](./deployment/legacy_configuration.md)
+
 ### Other Notes (CJIS Specific)
 * [Secure Tunnel to CJIS Import Tools](https://filevine.atlassian.net/wiki/spaces/DEVOPS/pages/1134362629/Secure+Tunnel+to+CJIS+Import+Tools)
 #### Copy <5G files around
