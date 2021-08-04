@@ -14,7 +14,7 @@ data "aws_vpc" "clover" {
     values = ["Name"]
   }
   filter {
-    name   = "tag-value"
+    name = "tag-value"
     # values = [data.aws_iam_account_alias.current.account_alias]
     values = ["${data.aws_iam_account_alias.current.account_alias}-vpc"]
 
