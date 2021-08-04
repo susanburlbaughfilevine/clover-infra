@@ -17,7 +17,7 @@ variable "instance_profile" {
 
 variable "aws_role" {
   description = "Role ARN to assume the target of where to run this given terraform against"
-
+}
 variable "assume_role_arn" {
   description = "Role ARN to assume for the target of where to run this given terraform against"
 }
@@ -112,5 +112,3 @@ variable "clover_database_pass" {
   type        = string
   default     = "database_pass"
 }
-
-
