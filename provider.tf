@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias   = "filevine"
+  alias = "filevine"
 }
 
 provider "octopusdeploy" {
