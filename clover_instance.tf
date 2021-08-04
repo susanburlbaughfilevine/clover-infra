@@ -156,8 +156,14 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "tg_attach" {
   target_group_arn = aws_lb_target_group.clover_tg.arn
+  target_id        = aws_instance.clover.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "tg_attach_internal" {
+  target_group_arn = aws_lb_target_group.clover_tg_internal.arn
   target_id        = aws_instance.clover.id
   port             = 80
 }
