@@ -1,11 +1,6 @@
 provider "aws" {
-<<<<<<< HEAD
-  region  = var.region
-#  profile = "fv-us"
-=======
   #  region  = "us-west-2"
   #  profile = "fv-us"
->>>>>>> feature/deploy_rds: Ran terraform fmt
   assume_role {
     role_arn = var.assume_role_arn
   }
