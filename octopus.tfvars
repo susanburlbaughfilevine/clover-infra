@@ -20,6 +20,7 @@ octopus_provider_server_address = "#{octopus-server-address}"
 instance_type                   = "#{aws-ec2-instancetype}"
 ami_status                      = "released"
 aws_role                        = "#{aws_role}"
+assume_role_arn                 = "#{aws_role}"
 
 aws_sg_import_frontend    = "#{aws_sg_import_frontend}"
 aws_sg_import_backend     = "#{aws_sg_import_backend}"
