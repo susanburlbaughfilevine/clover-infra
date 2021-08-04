@@ -10,6 +10,73 @@ resource "aws_lb" "clover_alb" {
   }
 }
 
+resource "aws_security_group" "internal_alb_sg" {
+  name        = "${var.envName}-clover-alb-internal"
+  description = "Allow web traffic from ZPA"
+  vpc_id      = data.aws_vpc.clover.id
+
+  ingress {
+    description = "Ingress HTTPS traffic from Filevine platform services"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["172.17.64.0/21"]
+  }
+
+  ingress {
+    description = "Ingress HTTP traffic from Filevine platform services"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["172.17.64.0/21"]
+  }
+
+  tags = {
+    Name = "${var.envName}-clover-alb-interal-sg"
+  }
+}
+
+resource "aws_lb" "clover_alb_internal" {
+  name               = "${var.envName}-clover-alb-internal"
+  internal           = true
+  load_balancer_type = "application"
+  security_groups    = [data.aws_security_group.internal_alb_sg]
+  subnets            = data.aws_subnet_ids.public.ids
+  ip_address_type    = "ipv4"
+  tags = {
+    Name = "${var.envName}-clover-alb-internal"
+  }
+}
+
+resource "aws_lb_listener" "https_internal" {
+  load_balancer_arn = aws_lb.clover_alb_internal.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.frontend_certificate.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.clover_tg.arn
+  }
+}
+
+resource "aws_lb_listener" "http_internal" {
+  load_balancer_arn = aws_lb.clover_alb_internal.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+
 resource "aws_lb_target_group" "clover_tg" {
   name     = "${var.envName}-front-web"
   port     = 80
