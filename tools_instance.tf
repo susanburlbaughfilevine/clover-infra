@@ -52,7 +52,7 @@ resource "aws_instance" "tools_instance" {
     env        = var.envName
   }
 
-  vpc_security_group_ids = [data.aws_security_group.backend.id, data.aws_security_group.build.id, data.aws_security_group.techaccess.id]
+  vpc_security_group_ids = [data.aws_security_group.backend.id, data.aws_security_group.build.id, data.aws_security_group.techaccess.id, data.aws_security_group.dataaccess.id]
   iam_instance_profile   = "${var.envName}-CloverApp-InstanceProfile"
   subnet_id              = element(tolist(data.aws_subnet_ids.private.ids), 0)
   key_name               = "dedicated-shards"
