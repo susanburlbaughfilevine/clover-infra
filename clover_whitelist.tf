@@ -27,7 +27,47 @@ resource "aws_security_group" "clover_whitelist" {
     to_port     = 443
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["50.102.214.38/32"]
+    cidr_blocks = ["50.104.81.205/32"]
+  }
+
+  ingress {
+    description = "Josh Mortensen"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["104.216.240.98/32"]
+  }
+
+  ingress {
+    description = "Katelyn Schmeisser"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["130.45.25.42/32"]
+  }
+
+  ingress {
+    description = "Sion Kim"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["136.175.96.130/32"]
+  }
+
+  ingress {
+    description = "David Cruz TorGuard Personal Public IP ()"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["185.242.5.93/32"]
+  }
+
+  ingress {
+    description = "Bhavin Tailor"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["45.89.173.114/32"]
   }
 
   egress {

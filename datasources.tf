@@ -46,10 +46,6 @@ data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
-output "frontend-security-group" {
-  value = "frontend-security group: ${var.aws_sg_import_frontend}"
-}
-
 data "aws_security_group" "frontend" {
   name = "${var.envName}-clover-FrontEnd"
 }
@@ -58,9 +54,6 @@ output "frontend-security-group-arn" {
   value = "frontend-security group: ${data.aws_security_group.frontend.arn}"
 }
 
-output "backend-security-group" {
-  value = "backend-security group: ${var.aws_sg_import_backend}"
-}
 data "aws_security_group" "backend" {
   name = "${var.envName}-clover-Backend"
 }

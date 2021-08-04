@@ -40,7 +40,7 @@ resource "aws_lb" "clover_alb_internal" {
   name               = "${var.envName}-clover-alb-internal"
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [data.aws_security_group.internal_alb_sg]
+  security_groups    = [aws_security_group.internal_alb_sg.id]
   subnets            = data.aws_subnet_ids.public.ids
   ip_address_type    = "ipv4"
   tags = {
@@ -138,11 +138,11 @@ resource "aws_lb_target_group_attachment" "test" {
 }
 
 resource "aws_instance" "clover" {
-  ami           = data.aws_ami.windows.id
+  ami           = "ami-04d4207792608f8e8" #data.aws_ami.windows.id - temporary hack to prevent instance replacement
   instance_type = var.instance_type
 
   tags = {
-    Name       = "${var.envName}-clover"
+    Name       = "${var.envName}-clover-0"
     managed_by = "terraform"
     env        = var.envName
   }
