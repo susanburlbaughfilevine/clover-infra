@@ -14,7 +14,7 @@ data "aws_vpc" "clover" {
     values = ["Name"]
   }
   filter {
-    name   = "tag-value"
+    name = "tag-value"
     # values = [data.aws_iam_account_alias.current.account_alias]
     values = ["${data.aws_iam_account_alias.current.account_alias}-vpc"]
 
@@ -46,23 +46,16 @@ data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
-output "frontend-security-group" {
-  value = "frontend-security group: ${var.aws_sg_import_frontend}"
-}
-
 data "aws_security_group" "frontend" {
-  name = var.aws_sg_import_frontend
+  name = "${var.envName}-clover-FrontEnd"
 }
 
 output "frontend-security-group-arn" {
   value = "frontend-security group: ${data.aws_security_group.frontend.arn}"
 }
 
-output "backend-security-group" {
-  value = "backend-security group: ${var.aws_sg_import_backend}"
-}
 data "aws_security_group" "backend" {
-  name = var.aws_sg_import_backend
+  name = "${var.envName}-clover-Backend"
 }
 
 output "backend-security-group-arn" {
@@ -70,7 +63,7 @@ output "backend-security-group-arn" {
 }
 
 data "aws_security_group" "techaccess" {
-  name = var.aws_sg_import_tech_access
+  name = "${var.envName}-Clover-TechAccess"
 }
 
 output "techaccess-security-group-arn" {
@@ -78,15 +71,15 @@ output "techaccess-security-group-arn" {
 }
 
 data "aws_security_group" "dataaccess" {
-  name = var.aws_sg_import_data_access
+  name = "${var.envName}-clover-DatastoresAccess"
 }
 
-output "datastores-security-group-arn" {
+output "datastores-security-group" {
   value = "dataaccess-security group: ${data.aws_security_group.dataaccess.arn}"
 }
 
 data "aws_security_group" "build" {
-  name = var.aws_sg_import_octopus
+  name = "${var.envName}-clover-Build"
 }
 
 output "build-security-group-arn" {
@@ -106,17 +99,17 @@ data "aws_ami" "windows" {
   most_recent = true
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["win2019-base-*"]
   }
 
   filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 
   filter {
-    name = "tag:status"
+    name   = "tag:status"
     values = [var.ami_status]
   }
 
