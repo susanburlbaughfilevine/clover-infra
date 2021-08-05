@@ -16,19 +16,19 @@ resource "aws_security_group" "internal_alb_sg" {
   vpc_id      = data.aws_vpc.clover.id
 
   ingress {
-    description = "Ingress HTTPS traffic from Filevine platform services"
+    description = "Ingress HTTPS traffic from Filevine platform services CJIS"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["172.17.64.0/21"]
+    cidr_blocks = ["172.17.80.0/21"]
   }
 
   ingress {
-    description = "Ingress HTTP traffic from Filevine platform services"
+    description = "Ingress HTTP traffic from Filevine platform services CJIS"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["172.17.64.0/21"]
+    cidr_blocks = ["172.17.80.0/21"]
   }
 
   egress {
@@ -36,7 +36,7 @@ resource "aws_security_group" "internal_alb_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [data.aws_vpc.clover.cidr_block]
+    cidr_blocks = ["172.17.80.0/21"]
   }
 
   tags = {
