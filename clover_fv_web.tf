@@ -92,7 +92,6 @@ resource "aws_route53_record" "import_internal_record" {
 
   alias {
     name                   = aws_instance.tools_instance.private_dns
-    zone_id                = data.aws_route53_zone.master.id
     evaluate_target_health = true
   }
 }
