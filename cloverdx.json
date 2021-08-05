@@ -1,0 +1,59 @@
+{
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\tomcat9-stderr*",
+            "log_group_name": "CloverDX/tomcat9/stderr",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\tomcat9-stdout*",
+            "log_group_name": "CloverDX/tomcat9/stdout",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\catalina*",
+            "log_group_name": "CloverDX/catalina/stdout",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\localhost_access*",
+            "log_group_name": "CloverDX/tomcat9/localhost_access",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\localhost.*",
+            "log_group_name": "CloverDX/tomcat9/localhost",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\commons-daemon*",
+            "log_group_name": "CloverDX/commons-daemon/stdout",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\host-manager*",
+            "log_group_name": "CloverDX/host-manager/stdout",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          },
+          {
+            "file_path": "C:\\tomcat\\v9\\apache-tomcat-9.0.31\\logs\\manager*",
+            "log_group_name": "CloverDX/manager/stdout",
+	    "log_stream_name": "{local_hostname}/{instance_id}",
+	    "timezone": "UTC"
+          }
+
+        ]
+      }
+    }
+  }
+}
