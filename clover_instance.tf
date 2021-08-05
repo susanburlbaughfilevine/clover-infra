@@ -31,14 +31,52 @@ resource "aws_security_group" "internal_alb_sg" {
     cidr_blocks = ["172.17.80.0/21"]
   }
 
+  ingress {
+    description = "Ingress HTTP traffic from local VPC subnets"
+    from_port   = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["172.17.88.0/21"]
+  }
+
+  ingress {
+    description = "Ingress HTTPS traffic from local VPC subnets"
+    from_port   = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["172.17.88.0/21"]
+  }
+
   egress {
-    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
+    description = "Egress traffic from load balancer to filevine platofmr services VPC subnet"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["172.17.80.0/21"]
   }
+  
+  egress {
+    description = "Egress traffic from load balancer to filevine platform services VPC subnet"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["172.17.80.0/21"]
+  }
 
+  egress {
+    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["172.17.88.0/21"]
+  }
+egress {
+    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["172.17.88.0/21"]
+  }
   tags = {
     Name = "${var.envName}-clover-alb-interal-sg"
   }
