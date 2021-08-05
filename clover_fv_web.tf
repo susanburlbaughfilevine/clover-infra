@@ -88,9 +88,11 @@ resource "aws_route53_record" "clover_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
   name     = "internal-${var.envName}-import.${var.dns_domain}"
-  type     = "A"
-  ttl      = 600
-  records = [
-    "172.17.92.180"
-  ]
+  type     = "CNAME"
+
+  alias {
+    name                   = aws_lb.clover_alb_internal.dns_name
+    zone_id                = aws_lb.clover_alb_internal.zone_id
+    evaluate_target_health = true
+  }
 }

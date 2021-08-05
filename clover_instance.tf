@@ -31,6 +31,14 @@ resource "aws_security_group" "internal_alb_sg" {
     cidr_blocks = ["172.17.64.0/21"]
   }
 
+  egress {
+    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.clover.cidr_block]
+  }
+
   tags = {
     Name = "${var.envName}-clover-alb-interal-sg"
   }
@@ -88,10 +96,10 @@ resource "aws_lb_target_group" "clover_tg" {
   }
 
   health_check {
-    path                = "/clover/api/rest/v1/docs.html"
+    path                = "/clover/"
     healthy_threshold   = "5"
     unhealthy_threshold = "2"
-    matcher             = "200"
+    matcher             = "302"
     port                = 80
   }
 
@@ -114,10 +122,10 @@ resource "aws_lb_target_group" "clover_tg_internal" {
   }
 
   health_check {
-    path                = "/clover/api/rest/v1/docs.html"
+    path                = "/clover/"
     healthy_threshold   = "5"
     unhealthy_threshold = "2"
-    matcher             = "200"
+    matcher             = "302"
     port                = 80
   }
 
