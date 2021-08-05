@@ -84,10 +84,23 @@ resource "aws_route53_record" "clover_frontend_record" {
   }
 }
 
-resource "aws_route53_record" "clover_internal_record" {
+resource "aws_route53_record" "import_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
   name     = "internal-${var.envName}-import.${var.dns_domain}"
+  type     = "CNAME"
+
+  alias {
+    name                   = aws_instance.tools_instance.private_dns
+    zone_id                = data.aws_route53_zone.master.id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "clover_internal_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "internal-clover-cjis.${var.dns_domain}"
   type     = "CNAME"
 
   alias {
