@@ -89,7 +89,8 @@ resource "aws_route53_record" "import_internal_record" {
   zone_id  = data.aws_route53_zone.master.id
   name     = "internal-${var.envName}-import.${var.dns_domain}"
   type     = "CNAME"
-  records = ["${aws_instance.tools_instance.private_dns}"]
+  ttl      = 300
+  records  = ["${aws_instance.tools_instance.private_dns}"]
 }
 
 resource "aws_route53_record" "clover_internal_record" {
