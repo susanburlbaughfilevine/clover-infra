@@ -26,6 +26,10 @@ As part of the build process, we reach out and grab that s3 bucket directory and
 * Manually
     * Update tomCat config on CloverDX system
         Edit `c:\tomcat\cloverServer.properties` -> Add the line `dataapp.execution.timeout=7200`
+    * Configure Cloudwatch Logging
+        * Copy the file cloverdx.json to c:\programdata\amazon/amazoncloudwatch/configs
+        * Delete c:\programdata\amazon\amazoncloudwatch\configs\ApplicationDefaults.json (Filevine Core Defaults)
+        * `Restart-service amazoncloudwatch`
 
 ### Things to do (Cleanup)
 * move start_infra flow into the TF Stack (design discussion)
@@ -45,6 +49,7 @@ As part of the build process, we reach out and grab that s3 bucket directory and
 
 ### Other Notes (CJIS Specific)
 * [Secure Tunnel to CJIS Import Tools](https://filevine.atlassian.net/wiki/spaces/DEVOPS/pages/1134362629/Secure+Tunnel+to+CJIS+Import+Tools)
+
 #### Copy <5G files around
 To move all <5G files around.
 1. Created an AWS S3 Inventory of the Million+ files folder into a CSV format.  
