@@ -10,10 +10,9 @@
 # # see https://docs.gitlab.com/ce/ci/yaml/README.html
 # for all available options
 variables:
-  projectname: "00 - Deploy New CloverDX Server"
+  projectname: "Deploy CloverDX Server"
   projectpkgname: "cloverdx"
-  octopusspace: "Metal"
-  #  fv_octopusspace: "Filevine"
+  octopusspace: "MigrateTech-CloverDX"
   fileincludeglob: "**/**"
 
 stages:
@@ -64,6 +63,7 @@ push-master:
 pack-branch:
   stage: octopus-pack
   script:
+    - gitversion
     - $gitversion = gitversion | convertfrom-json
     - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
     - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel

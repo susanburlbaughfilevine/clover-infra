@@ -1,23 +1,14 @@
-variable "shorturl_dns_domain" {
-  description = "DNS Domain used for URL sharing creation.  Shorter than normal domain."
-  default     = "filev.io"
-}
+
 variable "envName" {
   description = ""
   type        = string
   default     = "dev"
 }
 
-variable "key_name" {
-  default = "dedicated_shards"
-}
-
-variable "instance_profile" {
-}
-
 variable "aws_role" {
   description = "Role ARN to assume the target of where to run this given terraform against"
 }
+
 variable "assume_role_arn" {
   description = "Role ARN to assume for the target of where to run this given terraform against"
 }
@@ -28,12 +19,16 @@ variable "region" {
 }
 variable "dns_domain" {
   description = "DNS Domain this system lives in"
-  default     = "filevinegov.com"
+  default     = "filevinedev.com"
 }
 
 variable "subdomain" {
   description = "Subdomain to uniquely identify this frontend"
-  default     = "clover-cjis"
+}
+
+variable "shorturl_dns_domain" {
+  description = "DNS Domain used for URL sharing creation.  Shorter than normal domain."
+  default     = "filev.io"
 }
 
 variable "ami_status" {
