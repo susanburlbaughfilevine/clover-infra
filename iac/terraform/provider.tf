@@ -10,14 +10,15 @@ provider "aws" {
   alias = "filevine"
 }
 
-provider "octopusdeploy" {
-  address = var.octopus_provider_server_address
-  apikey  = var.octopus_api_key
-  space   = var.octopus_space
+provider "aws" {
+  alias = "platform"
+  assume_role {
+    role_arn = "arn:aws:iam::358974996326:role/Terraform"
+  }
 }
 
 # this sets up future configuration to use the remote backend created in the backend directory
-# Note that the workspaces prefix doesn't allow interporlation, so this is the same as what's set in variables
+# Note that the workspaces prefix doesn't allow interpolation, so this is the same as what's set in variables
 terraform {
   backend "s3" {
     bucket               = "fv-global-fv-tf-backend"
