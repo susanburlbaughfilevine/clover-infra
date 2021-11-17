@@ -1,3 +1,9 @@
+
+locals {
+  iam_instance_profile = "${var.envName}-CloverApp-InstanceProfile"
+  key_name             = aws_key_pair.clover.key_name
+}
+
 resource "aws_lb" "clover_alb" {
   name               = "${var.envName}-clover-alb"
   internal           = false
@@ -34,16 +40,16 @@ resource "aws_security_group" "internal_alb_sg" {
   ingress {
     description = "Ingress HTTP traffic from local VPC subnets"
     from_port   = 80
-    to_port = 80
-    protocol = "tcp"
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["172.17.88.0/21"]
   }
 
   ingress {
     description = "Ingress HTTPS traffic from local VPC subnets"
     from_port   = 443
-    to_port = 443
-    protocol = "tcp"
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["172.17.88.0/21"]
   }
 
@@ -54,7 +60,7 @@ resource "aws_security_group" "internal_alb_sg" {
     protocol    = "tcp"
     cidr_blocks = ["172.17.80.0/21"]
   }
-  
+
   egress {
     description = "Egress traffic from load balancer to filevine platform services VPC subnet"
     from_port   = 443
@@ -70,7 +76,7 @@ resource "aws_security_group" "internal_alb_sg" {
     protocol    = "tcp"
     cidr_blocks = ["172.17.88.0/21"]
   }
-egress {
+  egress {
     description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
     from_port   = 443
     to_port     = 443
@@ -215,7 +221,7 @@ resource "aws_lb_target_group_attachment" "tg_attach_internal" {
 }
 
 resource "aws_instance" "clover" {
-  ami           = "ami-04d4207792608f8e8" #data.aws_ami.windows.id - temporary hack to prevent instance replacement
+  ami           = data.aws_ami.windows.id
   instance_type = var.instance_type
 
   tags = {
@@ -225,17 +231,17 @@ resource "aws_instance" "clover" {
   }
 
   vpc_security_group_ids = [
-    data.aws_security_group.backend.id,
-    data.aws_security_group.frontend.id,
-    data.aws_security_group.build.id,
-    data.aws_security_group.techaccess.id,
-    data.aws_security_group.dataaccess.id
+    aws_security_group.backend.id,
+    aws_security_group.frontend.id,
+    aws_security_group.build.id,
+    aws_security_group.techaccess.id,
+    aws_security_group.dataaccess.id
   ]
 
-  iam_instance_profile = "${var.envName}-CloverApp-InstanceProfile"
+  iam_instance_profile = local.iam_instance_profile
   subnet_id            = element(tolist(data.aws_subnet_ids.private.ids), 0)
-  key_name             = "dedicated-shards"
-  user_data = templatefile("${path.module}/templates/userdata.ps1", {
+  key_name             = local.key_name
+  user_data = templatefile("${path.module}/userdata.ps1", {
 
     octopus_api_key            = var.octopus_api_key
     octopus_server_address     = var.octopus_server_address
@@ -251,6 +257,9 @@ resource "aws_instance" "clover" {
     volume_size = 200
     encrypted   = true
     kms_key_id  = data.aws_kms_alias.backend.target_key_arn
+  }
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
