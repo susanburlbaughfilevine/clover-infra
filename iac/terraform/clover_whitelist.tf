@@ -1,5 +1,5 @@
 variable "clover_whitelist" {
-  type = "list"
+  type = list(string)
 
   default = [
     #Austin Patterson

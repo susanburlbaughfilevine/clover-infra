@@ -46,51 +46,6 @@ data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
-data "aws_security_group" "frontend" {
-  name = "${var.envName}-clover-FrontEnd"
-}
-
-output "frontend-security-group-arn" {
-  value = "frontend-security group: ${data.aws_security_group.frontend.arn}"
-}
-
-data "aws_security_group" "backend" {
-  name = "${var.envName}-clover-Backend"
-}
-
-output "backend-security-group-arn" {
-  value = "backend-security group: ${data.aws_security_group.backend.arn}"
-}
-
-data "aws_security_group" "techaccess" {
-  name = "${var.envName}-Clover-TechAccess"
-}
-
-output "techaccess-security-group-arn" {
-  value = "techaccess-security group: ${data.aws_security_group.techaccess.arn}"
-}
-
-data "aws_security_group" "dataaccess" {
-  name = "${var.envName}-clover-DatastoresAccess"
-}
-
-output "datastores-security-group" {
-  value = "dataaccess-security group: ${data.aws_security_group.dataaccess.arn}"
-}
-
-data "aws_security_group" "build" {
-  name = "${var.envName}-clover-Build"
-}
-
-output "build-security-group-arn" {
-  value = "build-security group: ${data.aws_security_group.build.arn}"
-}
-
-data "aws_iam_instance_profile" "filevineApp" {
-  name = var.instance_profile
-}
-
-
 data "aws_s3_bucket" "accesslogs" {
   bucket = "${data.aws_iam_account_alias.current.account_alias}-lblogs-${var.region}"
 }
