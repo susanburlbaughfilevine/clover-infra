@@ -10,7 +10,7 @@ resource "aws_route53_record" "tools_internal_record" {
 resource "aws_ebs_volume" "tools_instance_volume_1" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
+  kms_key_id        = data.aws_kms_alias.backend.target_key_arn
   encrypted         = true
 
   tags = {
@@ -21,7 +21,7 @@ resource "aws_ebs_volume" "tools_instance_volume_1" {
 resource "aws_ebs_volume" "tools_instance_volume_2" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
+  kms_key_id        = data.aws_kms_alias.backend.target_key_arn
   encrypted         = true
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_ebs_volume" "tools_instance_volume_2" {
 resource "aws_ebs_volume" "tools_instance_volume_3" {
   availability_zone = aws_instance.tools_instance.availability_zone
   size              = 3200
-  kms_key_id        = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8"
+  kms_key_id        = data.aws_kms_alias.backend.target_key_arn
   encrypted         = true
 
   tags = {
@@ -42,7 +42,7 @@ resource "aws_ebs_volume" "tools_instance_volume_3" {
 
 
 resource "aws_instance" "tools_instance" {
-  ami           = "ami-072452834855d33b9" //ami id is hardcoded due to resource import. dynamic ami would cause instance recreation
+  ami           = data.aws_ami.windows.id
   instance_type = var.tools_instance_type
   ebs_optimized = true
 
@@ -52,18 +52,21 @@ resource "aws_instance" "tools_instance" {
     env        = var.envName
   }
 
-  vpc_security_group_ids = [data.aws_security_group.backend.id, data.aws_security_group.build.id, data.aws_security_group.techaccess.id, data.aws_security_group.dataaccess.id]
-  iam_instance_profile   = "${var.envName}-CloverApp-InstanceProfile"
+  vpc_security_group_ids = [aws_security_group.backend.id, aws_security_group.build.id, aws_security_group.techaccess.id, aws_security_group.dataaccess.id]
+  iam_instance_profile   = local.iam_instance_profile
   subnet_id              = element(tolist(data.aws_subnet_ids.private.ids), 0)
-  key_name               = "dedicated-shards"
+  key_name               = local.key_name
 
   monitoring = false
 
   root_block_device {
     volume_size = 200
     encrypted   = true
-    kms_key_id  = "arn:aws:kms:us-west-2:608624018002:key/e793c165-23c7-495a-a112-81fd3f0ce5c8" //hardcoded to prevent instance recreation for now
+    kms_key_id  = data.aws_kms_alias.backend.target_key_arn
 
+  }
+  lifecycle {
+    prevent_destroy = true
   }
 }
 

@@ -64,6 +64,7 @@ push-master:
 pack-branch:
   stage: octopus-pack
   script:
+    - gitversion
     - $gitversion = gitversion | convertfrom-json
     - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
     - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
