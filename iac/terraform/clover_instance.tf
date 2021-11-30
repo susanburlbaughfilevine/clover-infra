@@ -243,8 +243,8 @@ resource "aws_instance" "clover" {
   user_data = templatefile("${path.module}/userdata.ps1", {
     octopus_api_key            = var.octopus_api_key
     octopus_server_address     = var.octopus_server_address
-    octopus_space              = var.octopus_space
     octopus_server_environment = var.octopus_server_environment
+    octopus_space              = var.octopus_space
     octopus_tenant             = var.octopus_tenant
     server_roles               = "clover-server"
     scaleft_config             = file("${path.root}/sftd.yaml")
@@ -257,7 +257,8 @@ resource "aws_instance" "clover" {
     kms_key_id  = data.aws_kms_alias.backend.target_key_arn
   }
   lifecycle {
-    prevent_destroy = true
+  # uncomment when ready for production
+  #  prevent_destroy = true
   }
 }
 
