@@ -6,6 +6,10 @@ data "aws_iam_policy" "amazon_ssm_managed_instance_core" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+data "aws_iam_policy" "amazon_s3_readonly_access" {
+  arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
 resource "aws_iam_role" "clover" {
   name               = local.iam_instance_profile
   description        = "This role is for CloverDX Application to have access to appropriate resources"
@@ -39,6 +43,11 @@ resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_co
 resource "aws_iam_role_policy_attachment" "cloudwatch_agent_server_policy" {
   role       = aws_iam_role.clover.name
   policy_arn = data.aws_iam_policy.cloudwatch_agent_server_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "s3_readonly_access_policy" {
+  role       = aws_iam_role.clover.name
+  policy_arn = data.aws_iam_policy.amazon_s3_readonly_access.arn
 }
 
 resource "aws_iam_instance_profile" "clover" {
