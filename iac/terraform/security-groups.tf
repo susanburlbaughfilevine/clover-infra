@@ -131,7 +131,7 @@ resource "aws_security_group" "dataaccess" {
 
 resource "aws_security_group" "techaccess" {
   name        = "${var.envName}-TechAccess"
-  description = "Tech Support Access into these environments"
+  description = "Tech Support and Build Access - managed by octopus"
   vpc_id      = data.aws_vpc.clover.id
 
   tags = {
@@ -155,18 +155,6 @@ resource "aws_security_group" "techaccess" {
     protocol    = "tcp"
     self        = true
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-}
-
-resource "aws_security_group" "build" {
-  name        = "${var.envName}-Build"
-  description = "Access to shared entities in the Common for Builds etc"
-  vpc_id      = data.aws_vpc.clover.id
-
-  tags = {
-    Name       = "${var.envName}-Build"
-    managed_by = "Octopus via Terraform"
   }
 
   ingress {

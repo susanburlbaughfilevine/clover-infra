@@ -233,7 +233,6 @@ resource "aws_instance" "clover" {
   vpc_security_group_ids = [
     aws_security_group.backend.id,
     aws_security_group.frontend.id,
-    aws_security_group.build.id,
     aws_security_group.techaccess.id,
     aws_security_group.dataaccess.id
   ]
@@ -242,7 +241,6 @@ resource "aws_instance" "clover" {
   subnet_id            = element(tolist(data.aws_subnet_ids.private.ids), 0)
   key_name             = local.key_name
   user_data = templatefile("${path.module}/userdata.ps1", {
-
     octopus_api_key            = var.octopus_api_key
     octopus_server_address     = var.octopus_server_address
     octopus_space              = var.octopus_space
