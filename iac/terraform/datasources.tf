@@ -45,6 +45,10 @@ data "aws_kms_alias" "backend" {
   name = "alias/fv/server"
 }
 
+data "aws_kms_alias" "default" {
+  name = "alias/fv/default"
+}
+
 data "aws_s3_bucket" "accesslogs" {
   bucket = "${data.aws_iam_account_alias.current.account_alias}-lblogs-${var.region}"
 }

@@ -257,8 +257,8 @@ resource "aws_instance" "clover" {
     kms_key_id  = data.aws_kms_alias.backend.target_key_arn
   }
   lifecycle {
-  # uncomment when ready for production
-  #  prevent_destroy = true
+    # uncomment when ready for production
+    #  prevent_destroy = true
   }
 }
 
