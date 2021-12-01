@@ -26,6 +26,10 @@ variable "subdomain" {
   description = "Subdomain to uniquely identify this frontend"
 }
 
+variable "clover_domain" {
+  description = "CloverDX endpoint"
+}
+
 variable "shorturl_dns_domain" {
   description = "DNS Domain used for URL sharing creation.  Shorter than normal domain."
   default     = "filev.io"
