@@ -3,6 +3,7 @@ region              = "#{aws_region}"
 dns_domain          = "#{dns_domain}"
 subdomain           = "#{subdomain}"
 shorturl_dns_domain = "#{shorturl_dns_domain}"
+clover_domain = "#{clover_domain}"
 
 octopus_tenant                  = "#{Octopus.Deployment.Tenant.Name}"
 octopus_space                   = "#{Octopus.Space.Name}"

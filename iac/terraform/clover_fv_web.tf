@@ -74,7 +74,7 @@ data "aws_route53_zone" "master" {
 resource "aws_route53_record" "clover_frontend_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "${var.subdomain}.${var.dns_domain}"
+  name     = var.clover_domain
   type     = "A"
 
   alias {
@@ -90,7 +90,7 @@ resource "aws_route53_record" "import_internal_record" {
   name     = "internal-${var.envName}-import.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
-  records  = ["${aws_instance.tools_instance.private_dns}"]
+  records  = ["${aws_instance.clover.private_dns}"]
 }
 
 resource "aws_route53_record" "clover_internal_record" {

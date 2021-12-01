@@ -19,7 +19,7 @@ There is an S3 bucket for the filevine-devops group, and we have a directory for
 As part of the build process, we reach out and grab that s3 bucket directory and put that into a local working directory of "C:\clover_assets"
 
 ## Installing CloverDX
-* [Local Development](./LOCAL.md) - Via terraform to AWS systems
+* [Local Development](./deployment/LOCAL.md) - Via terraform to AWS systems
 * [Deployment Instructions](./deployment/README.md)
 * [After Server Setup](./deployment/after_server_setup.md)
 * [Runbooks](./deployment/runbooks/README.md)

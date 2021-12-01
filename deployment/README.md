@@ -4,17 +4,17 @@
 Gitlab will automatically build deploy packages and push those to octopus as necessary.
 
 ## Deploying Clover DX Server
-All of the things are to setup Clover DX are located in the [Team Metal Octopus Work Space](https://octopus.filevinedev.com/app#/Spaces-42).
+All of the things are to setup Clover DX are located in the [MigrateTech-CloverDX Work Space](https://octopus.filevinedev.com/app#/Spaces-243).
 
 ### Setting up a tenant
-Go through and configure a [Tenant for the environment in the Team Metal Space](https://octopus.filevinedev.com/app#/Spaces-42/tenants)
+Go through and configure a [Tenant for the environment in the MigrateTech-CloverDX Space](https://octopus.filevinedev.com/app#/Spaces-243/tenants)
 
 Connect the 00 - Deploy New CloverDX Server Project and assign it to an Environment.
 
 (There are a few untenanted environments).
 
 ### Deploying the EC2 server
-* Select a [Release](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/deployments/releases) (preferably a Master branch ...)
+* Select a [Release](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/deployments/releases) (preferably a Master branch ...)
   * You may have to wait a few minutes for the server to deploy and report back to ScaleFT and Octopus (grab some coffee)
 
 The ec2 server that we pull is the standard EC2 (AMI) instance we use for our other servers.
@@ -47,24 +47,24 @@ EXEC sp_addrolemember 'db_owner', 'clover';
 * RDS does not have sysadmin capabilities
 
 ##### CJIS Configuration
-* [Setup RDS Instance](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-506/overview)
+* [Setup RDS Instance](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-506/overview)
 
 Some of the settings are currently hardcoded for CJIS.
 
 ### After the EC2 server has been deployed
-* Go through the process of the [Attached Runbooks](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/operations/runbooks) in the project
-  * Once the EC2 server has been deployed (verify by going to [infrastructure](https://octopus.filevinedev.com/app#/Spaces-42/infrastructure/machines?roles=clover-server)) - Click refresh until you see the clover deployed for your tenant.
+* Go through the process of the [Attached Runbooks](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/operations/runbooks) in the project
+  * Once the EC2 server has been deployed (verify by going to [infrastructure](https://octopus.filevinedev.com/app#/Spaces-243/infrastructure/machines?roles=clover-server)) - Click refresh until you see the clover deployed for your tenant.
 
 Now that the server has been deployed, and is reachable by octopus, we can begin the next steps in the process.
 #### Connecting Helper S3 bucket
-* [01 - Download s3 Data to Clover system](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-426/runslist)
+* [01 - Download s3 Data to Clover system](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-426/runslist)
   * You will be asked for questions around AWS credentials, Grab the credentials for the `filevine-prod` environment.
   * You may use the Monitoring Access Credentials.
 
 We are using this method of getting data onto the server, mostly because this will allow us to pull data from a different aws account, and pull that information into the EC2 Instance.
 
 #### Deploy Clover to Systems
-* [02 - Deploy Clover to Systems](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-427/overview)
+* [02 - Deploy Clover to Systems](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-427/overview)
   * Clover will run the port 80, and sometimes has issues shutting down IIS properly
   * In other words, you may need to disable the IIS server manually
     * Set IIS to disabled / so that it no longer starts on startup
@@ -87,7 +87,7 @@ This is actually the entire script that will do the following
 
 #### Update Clover credentials
 * In the event that you did not have the correct credentials populated in octopus, you may update the credentials using this step.
-* [03 - Update Clover Database Credentials](https://octopus.filevinedev.com/app#/Spaces-42/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-428/overview)
+* [03 - Update Clover Database Credentials](https://octopus.filevinedev.com/app#/Spaces-243/projects/00-deploy-new-cloverdx-server/operations/runbooks/Runbooks-428/overview)
   * This will update the clover system to point to the database that you configured in the previous step.
 
 #### Going to the website for the first time 
@@ -149,7 +149,7 @@ See the "SQL Server Setup" for additional setup/instructions
 * verify octopus tentacle connection
    * Space: Metal
    * Tag: clover-server
-* Execute commands from [Octopus Runbook](https://octopus.filevinedev.com/app#/Spaces-42/projects/01-runbook-cloverdx-server/operations/runbooks)
+* Execute commands from [Octopus Runbook](https://octopus.filevinedev.com/app#/Spaces-243/projects/01-runbook-cloverdx-server/operations/runbooks)
    * Download Assets from S3 (you'll need to grab temporary keys)
    * Install Clover - Push button
    * Install Extra Software (Manual Process?)
