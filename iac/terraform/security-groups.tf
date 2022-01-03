@@ -97,8 +97,8 @@ resource "aws_security_group" "dataaccess" {
 
   ingress {
     description     = "SQL Server"
-    from_port       = 1433
-    to_port         = 1433
+    from_port       = local.db_options[var.rds_engine].port
+    to_port         = local.db_options[var.rds_engine].port
     protocol        = "tcp"
     self            = true
     security_groups = [aws_security_group.frontend.id, aws_security_group.backend.id]

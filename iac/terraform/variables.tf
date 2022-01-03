@@ -41,7 +41,6 @@ variable "ami_status" {
   default     = "released"
 }
 
-
 variable "octopus_server_address" {
   description = "Octopus Server Address when running from inside AWS (Private IP typically) - Viewpoint of server being built"
   default     = "http://internal-octopus.filevinedev.com:88"
@@ -82,32 +81,48 @@ variable "instance_type" {
   default     = "c5.xlarge"
 }
 
-variable "tools_instance_type" {
-  description = "AWS Instance Type"
-  default     = "m5a.8xlarge"
+variable "rds_storage" {
+  description = "Storage for the MS SQL Server"
+  default     = "200"
 }
 
-# Clover Specific settings
-variable "clover_database_url" {
-  description = "clover database url"
-  type        = string
-  default     = "import.filevinedev.com"
+variable "rds_max_storage" {
+  description = "Maximum Allocated Storage for SQL server to grow into"
+  default     = "1024"
 }
 
-variable "clover_database_db" {
-  description = "clover_database_db"
-  type        = string
-  default     = "clover_db"
+variable "rds_storage_type" {
+  description = "Storage Type for RDS"
+  default     = "gp2"
 }
 
-variable "clover_database_user" {
-  description = "clover_database_user"
-  type        = string
-  default     = "database_user"
+#
+# Database Engine and version supported by CloverDX - https://doc.cloverdx.com/latest/server/system-requirements-for-cloverdx-server.html#d5e797"
+#
+variable "rds_engine" {
+  description = "Database Engine supported by CloverDX"
+  default     = "sqlserver-se"
 }
 
-variable "clover_database_pass" {
-  description = "clover database pass"
-  type        = string
-  default     = "database_pass"
+variable "rds_engine_version" {
+  description = "Database Engine version supported by CloverDX"
+  default     = "13.00.5882.1.v1"
+}
+
+variable "rds_instance_class" {
+  description = "Instance class for size of instances to use"
+  default     = "db.r5.large"
+}
+
+variable "rds_multi_az" {
+  description = "Is this deployment setup for Multi-AZ?"
+  default     = "false"
+}
+
+variable "rds_user_name" {
+  description = "RDS instance user name"
+}
+
+variable "rds_user_password" {
+  description = "RDS instance password"
 }

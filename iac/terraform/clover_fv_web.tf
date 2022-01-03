@@ -90,7 +90,7 @@ resource "aws_route53_record" "import_internal_record" {
   name     = "internal-${var.envName}-import.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
-  records  = ["${aws_instance.clover.private_dns}"]
+  records  = [aws_instance.clover.private_dns]
 }
 
 resource "aws_route53_record" "clover_internal_record" {
@@ -99,5 +99,5 @@ resource "aws_route53_record" "clover_internal_record" {
   name     = "internal-clover-cjis.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
-  records  = ["${aws_lb.clover_alb_internal.dns_name}"]
+  records  = [aws_lb.clover_alb_internal.dns_name]
 }
