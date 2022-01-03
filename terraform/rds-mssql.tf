@@ -1,4 +1,3 @@
-
 locals {
   db_options = {
     sqlserver-se = {
@@ -18,7 +17,6 @@ locals {
     }
   }
 }
-
 
 resource "aws_db_instance" "sqlserver" {
   identifier = lower("${var.envName}-cloverdx")

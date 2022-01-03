@@ -152,7 +152,6 @@ resource "aws_lb_target_group" "clover_tg" {
     managed_by = "Octopus via Terraform"
     env        = var.envName
   }
-
 }
 
 resource "aws_lb_target_group" "clover_tg_internal" {

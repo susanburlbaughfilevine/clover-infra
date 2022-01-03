@@ -1,4 +1,3 @@
----
 # For gitlab what are the things we want to do?
 # On commit/Merge into master
 # What needs to happen?
@@ -21,7 +20,7 @@ stages:
   - octopus-pack
   - octopus-push
 
-image: node:latest
+image: node:latest # this needs to be updated to use a sanctioned docker image
 
 build:
   stage: build

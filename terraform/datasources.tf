@@ -1,8 +1,3 @@
-
-data "aws_region" "current" {
-  name = var.region
-}
-
 data "aws_caller_identity" "current" {}
 
 data "aws_iam_account_alias" "current" {}
@@ -13,17 +8,17 @@ data "aws_vpc" "clover" {
     values = ["Name"]
   }
   filter {
-    name = "tag-value"
-    # values = [data.aws_iam_account_alias.current.account_alias]
+    name   = "tag-value"
     values = ["${data.aws_iam_account_alias.current.account_alias}-vpc"]
-
   }
 }
 
+data "aws_region" "current" {
+  name = var.region
+}
 output "vpc-id" {
   value = "vpc-id: ${data.aws_vpc.clover.id}"
 }
-
 
 data "aws_subnet_ids" "private" {
   vpc_id = data.aws_vpc.clover.id
