@@ -9,8 +9,8 @@
 # # see https://docs.gitlab.com/ce/ci/yaml/README.html
 # for all available options
 variables:
-  projectname: "Deploy CloverDX Server"
-  projectpkgname: "cloverdx"
+  projectname: "Deploy CloverDX Server - Windows"
+  projectpkgname: "cloverdx-windows"
   octopusspace: "MigrateTech-CloverDX"
   #  fv_octopusspace: "Filevine"
   fileincludeglob: "**/**"
