@@ -66,5 +66,5 @@ data "aws_ami" "windows" {
     values = [var.ami_status]
   }
 
-  owners = ["530929067887"] # Filevine
+  owners = ["358974996326"] # Filevine Platform Services
 }
