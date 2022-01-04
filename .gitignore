@@ -1,2 +1,3 @@
 local_vars.tfvars
 .terraform/
+destroy/
