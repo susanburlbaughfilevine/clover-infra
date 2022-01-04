@@ -102,6 +102,43 @@ data "aws_iam_policy_document" "textract-trust" {
       identifiers = ["textract.amazonaws.com"]
     }
   }
+}
+resource "aws_iam_role_policy" "ec2describe" {
+  name = "EC2-Describe"
+  role = aws_iam_role.clover.id
 
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+                  "ec2:DescribeInstances",
+                  "elasticloadbalancing:DescribeLoadBalancers"
+                ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+data "aws_iam_policy_document" "ec2taggingPol" {
+  statement {
+    sid    = "AllowEc2Tagging"
+    effect = "Allow"
+    actions = [
+      "ec2:DeleteTags",
+      "ec2:CreateTags"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "ec2tagging" {
+  name   = "Ec2Tagging"
+  policy = data.aws_iam_policy_document.ec2taggingPol.json
+  role   = aws_iam_role.clover.id
 }
 
