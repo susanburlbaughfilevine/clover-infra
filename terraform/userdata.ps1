@@ -1,5 +1,5 @@
 <powershell>
-Import-Module AWSPowerShell
+
 $userdata_start_time = Get-Date
 
 $folder = "c:\dsc\config"
@@ -7,33 +7,12 @@ Push-Location $folder
 
 # How do you get the Private IP that is generated from the EC2 Instance?
 # Hit the metadata server for info
-$instanceName = "${octopus_tenant}-clover-"
 $ipv4 = (Invoke-WebRequest -Uri http://169.254.169.254/latest/meta-data/local-ipv4 -UseBasicParsing).Content
 $instanceId = (Invoke-WebRequest -Uri http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing).Content
-# Gets current tags based on the instance name and iterates to insure there are no instances with the same name
-# Auto-scaling does not allow dynamic tags hence the workaround
-$tagValues = (Get-EC2Tag -Filter @{Name="tag:Name";Value="$instanceName*"} | Where-Object ResourceType -eq "instance").Value
-$nextAvailable = 0
-$currentNums = @()
-foreach ($tag in $tagValues)
-{
-    $endNum = $tag.substring($tag.length - 2)
-    $endNum = $endNum.replace("-", "")
-    $currentNums += $endNum
-}
-# Checks current tags and insures that is can use it (starting at 0 so it doesn't iterate forever over the coming months), if not it increases by 1
-if ($currentNums.Contains([String]$nextAvailable)) {
-    $nextAvailable = $currentNums | Sort-Object | Select-Object -Last 1
-    [int]$nextAvailable += 1
-    $instanceName = $instanceName+$nextAvailable
-} else {
-    $instanceName = $instanceName+$nextAvailable
-}
-# adds the 'Name' tag with the value as the new instance name above
-$tag = New-Object Amazon.EC2.Model.Tag
-$tag.Key = "Name"
-$tag.Value = $instanceName
-New-EC2Tag -Resource $instanceId -Tag $tag
+
+# Get the value of the 'Name' Tag
+# Requires Role Policy ec2DescribeTags
+$instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
 
 Write-Output "ipv4: $ipv4"
 
@@ -66,7 +45,7 @@ Configuration InstallOctopus
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     Import-DscResource -ModuleName 'ComputerManagementDsc'
     Import-DscResource -ModuleName 'OctopusDSC'
-    
+
     cTentacleAgent OctopusTentacle
     {
         Ensure = "Present"
@@ -84,7 +63,7 @@ Configuration InstallOctopus
         ApiKey = "${octopus_api_key}"
         OctopusServerUrl = "${octopus_server_address}"
         Environments = "${octopus_server_environment}"
-        Tenants =  "${octopus_tenant}"
+        Tenants = "${octopus_tenant}"
         Roles = "${server_roles}"
     }
 }
@@ -96,7 +75,7 @@ Configuration ScriptRenameComputer
     param
     (
         [String]
-        $NewComputerName = $env:COMPUTERNAME
+        $NewComputerName
     )
 
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
@@ -106,13 +85,13 @@ Configuration ScriptRenameComputer
     {
         Script RenameComputerScript
         {
-            SetScript = { 
+            SetScript = {
                 Write-Verbose "Setting the name to $using:NewComputerName"
-                Rename-Computer -NewName "$using:NewComputerName" -Force 
+                Rename-Computer -NewName "$using:NewComputerName" -Force
             }
-            TestScript = { 
+            TestScript = {
                 Write-Verbose "Checking if $using:NewComputerName matches $env:COMPUTERNAME"
-                $using:NewComputerName -match $env:COMPUTERNAME 
+                $using:NewComputerName -match $env:COMPUTERNAME
             }
             GetScript = { @{ Result = ($env:COMPUTERNAME) } }
         }
@@ -126,79 +105,140 @@ Configuration ScriptRenameComputer
 
 Install-Module xPsDesiredStateConfiguration -Force -Verbose
 
-Configuration InstallScaleFT
-{
-    Import-DscResource -ModuleName 'xPsDesiredStateConfiguration'
+
+Configuration SftEthernetAssignment
+    {
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName 'ComputerManagementDSC'
 
-    xRemoteFile ScaleFTDownload
+    Script SftEthernetAssignment
     {
-        Uri             = "https://dist.scaleft.com/server-tools/windows/v1.49.2/ScaleFT-Server-Tools-1.49.2.msi"
-        DestinationPath = "$($env:SystemRoot)\Temp\scaleft.msi"
-    }
-
-    File ScaleFTDirectory
-    {
-        Type = 'Directory'
-        DestinationPath = 'c:\windows\System32\config\systemprofile\AppData\Local\ScaleFT\'
-        Ensure = "Present"
-    }
-
-    File ScaleFTConfig
-    {
-        DestinationPath = "c:\windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml"
-        Ensure = "Present"
-        Contents   = "${scaleft_config}"
-    }
-
-    Package ScaleFTInstall
-    {
-        Ensure    = "Present"
-        Name      = "ScaleFT Server Tools"
-        Path      = "$($env:SystemRoot)\Temp\scaleft.msi"
-        DependsOn = '[xRemoteFile]ScaleFTDownload'
-        Arguments = "/qn"
-        ProductId = "C7306BF4-1BA4-45BF-B557-F96D793BAA00"
-        ReturnCode = 0
+        SetScript = {
+            $activeEthernetInterface = (Get-NetAdapter) | Where {($_.InterfaceDescription -like "Amazon Elastic Network Adapter*")} | Select-Object -First 1 Name
+            $activeEthernetInterfaceName = $activeEthernetInterface.name
+            "`nAccessInterface: $activeEthernetInterfaceName" | Out-File -Encoding "utf8" -append "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml"
+            Restart-Service *scaleft*
+        }
+        TestScript = {
+            (Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" | Select-String -Pattern "AccessInterface" -AllMatches).Count -eq 1
+        }
+        GetScript = { @{ Result = Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" } }
     }
 }
 
+Configuration NewRelicInfraAgent
+{
+    param(
+        [Parameter(Mandatory)]
+        [string]$StartupType,
 
-# Create a universally unique tentacle name to always kick off the trigger
-$tentaclename = "$instancename" + "-" + (Get-Date -format "yyyyMMddHHmm")
+        [Parameter(Mandatory)]
+        [string]$State
+    )
 
+    Service NewRelicSvc
+    {
+        Name        = 'newrelic-infra'
+        StartupType = $StartupType
+        State       = $State
+    }
+}
+
+Configuration NewRelicNetAgent
+{
+    param(
+        [Parameter(Mandatory)]
+        [bool]$AgentEnabled
+    )
+
+    Script NewRelicAgentEnabled
+    {
+        GetScript = {
+            $progData = [Environment]::GetFolderPath('CommonApplicationData')
+            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+            return @{Result = [bool]$conf.configuration.agentEnabled}
+        }
+
+        SetScript = {
+            $progData = [Environment]::GetFolderPath('CommonApplicationData')
+            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+            $conf.configuration.agentEnabled = ([string]$using:AgentEnabled).ToLower()
+            $conf.Save($configPath)
+        }
+
+        TestScript = {
+            $progData = [Environment]::GetFolderPath('CommonApplicationData')
+            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+            $conf.configuration.agentEnabled -eq ([string]$using:AgentEnabled).ToLower()
+        }
+    }
+}
+
+# Execute AllInOne Module made up of combined modules from above.
 Configuration AllInOne {
-    param ( [string] $newcomputername ) 
+    param (
+        [Parameter(Mandatory)]
+        [string]$newcomputername,
+
+        [Parameter(Mandatory)]
+        [string]$NrStartupType,
+
+        [Parameter(Mandatory)]
+        [string]$NrState,
+
+        [Parameter(Mandatory)]
+        [bool]$NrNetEnabled
+        )
 
     node localhost {
 
         ScriptRenameComputer myrename
-        {
+		{
             NewComputerName = $newcomputername
-        }
-
-        InstallScaleFT scale
-        {
         }
 
         InstallOctopus mytentacle
         {
-            ComputerName = $tentaclename
+            ComputerName = $newcomputername
+        }
+
+        SftEthernetAssignment EthernetAssignment {}
+
+        NewRelicInfraAgent nrinfra
+        {
+            StartupType = $NrStartupType
+            State = $NrState
+        }
+
+        NewRelicNetAgent nrnet
+        {
+            AgentEnabled = $NrNetEnabled
         }
     }
 }
 
 # Begin LCM for management of reboots
 LCMConfig
-Set-DscLocalConfigurationManager -Path .\LCMConfig
-
+Set-DscLocalConfigurationManager -Path .\LCMConfig -Verbose
 
 # Enable rebooting if needed
 $global:DSCMachineStatus = 1
 
+$nrState = 'Stopped'
+$nrStartupType = 'Disabled'
+$nrNetEnabled = $false
+if ("${newrelic_enabled}" -eq 'true')
+{
+    $nrState = 'Running'
+    $nrStartupType = 'Automatic'
+    $nrNetEnabled = $true
+}
+
 # Compile and apply the AllinOne configuration
-AllInOne -NewComputerName $instanceName
+AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
 
 </powershell>
-
