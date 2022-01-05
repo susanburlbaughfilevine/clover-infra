@@ -3,6 +3,13 @@
 data "aws_iam_policy" "amazon_s3_readonly_access" {
   arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
+data "aws_iam_policy" "amazon_ssm_managed_instance_core" {
+  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_core" {
+  role       = aws_iam_role.clover.name
+  policy_arn = data.aws_iam_policy.amazon_ssm_managed_instance_core.arn
+}
 
 resource "aws_iam_role" "clover" {
   name               = local.iam_instance_profile
