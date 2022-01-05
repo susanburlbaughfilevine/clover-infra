@@ -247,6 +247,7 @@ resource "aws_instance" "clover" {
     octopus_tenant             = var.octopus_tenant
     server_roles               = "clover-server"
     scaleft_config             = file("${path.root}/sftd.yaml")
+    newrelic_enabled           = var.newrelic_enabled
   })
   monitoring = false
 

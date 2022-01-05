@@ -126,3 +126,7 @@ variable "rds_user_name" {
 variable "rds_user_password" {
   description = "RDS instance password"
 }
+
+variable "newrelic_enabled" {
+  default = "false"
+}
