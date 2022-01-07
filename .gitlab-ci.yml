@@ -27,6 +27,7 @@ build:
   script:
     - Write-Output "Remove the Git Directory (causes issues)"
     - Remove-Item -Recurse -Force .git/
+    - [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     - Import-Module ./etc/New-CloverAssetsPackage.ps1
     - $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
     - New-CloverAssetsPackage -DependancyManifest $manifest
