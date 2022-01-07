@@ -7,8 +7,6 @@ function New-CloverAssetsPackage
         [HashTable]$DependancyManifest
     )
 
-   [Net.ServicePointManager]::SecurityProtocol = "Ssl3, Tls, Tls11, Tls12, Tls13"
-
     if (($null -eq $DependancyManifest) -or ($DependancyManifest.Count -lt 1))
     {
         Write-Output "No packages to download or update! Exiting."
@@ -16,13 +14,10 @@ function New-CloverAssetsPackage
     }
     else
     {
-        $c = New-Object System.Net.WebClient
-
         $packageDirectory = New-Item -Type Directory -Name clover-assets
 
         foreach ($dependancy in $DependancyManifest.GetEnumerator())
         {
-
             if (($null -eq $dependancy.Value.FileLink) -or ([string]::IsNullOrEmpty($dependancy.Value.FileLink)))
             {
                 throw "Dependancy $($dependancy.Value.PackageName) was specified but no download link was provided."
@@ -38,7 +33,7 @@ function New-CloverAssetsPackage
 
             $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
 
-            $c.DownloadFile($dependancy.Value.FileLink, $outputPath)
+            Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath | Out-Null
 
             if ($dependancy.Value.Checksum -ne "none")
             {
