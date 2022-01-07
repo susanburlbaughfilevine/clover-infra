@@ -14,39 +14,48 @@ function New-CloverAssetsPackage
     }
     else
     {
-        $packageDirectory = New-Item -Type Directory -Name clover-assets
-
-        foreach ($dependancy in $DependancyManifest.GetEnumerator())
+        try
         {
-            if (($null -eq $dependancy.Value.FileLink) -or ([string]::IsNullOrEmpty($dependancy.Value.FileLink)))
+            $packageDirectory = New-Item -Type Directory -Name clover-assets
+
+            foreach ($dependancy in $DependancyManifest.GetEnumerator())
             {
-                throw "Dependancy $($dependancy.Value.PackageName) was specified but no download link was provided."
-            }
-
-            if ($dependancy.Value.FileLink -eq "octopus")
-            {
-                Write-Output "Package $($dependancy.Value.PackageName) is assumed to be an Octopus package. Not downloading"
-                continue
-            }
-
-            Write-Output "Downloading $($dependancy.Value.PackageName)..."
-
-            $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
-
-            Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath | Out-Null
-
-            if ($dependancy.Value.Checksum -ne "none")
-            {
-                $theirHash = $dependancy.Value.Checksum
-                $ourHash = (Get-FileHash -Path $outputPath -Algorithm $dependancy.Value.ChecksumType).Hash
-
-                if ($theirHash -ne $ourHash)
+                if (($null -eq $dependancy.Value.FileLink) -or ([string]::IsNullOrEmpty($dependancy.Value.FileLink)))
                 {
-                    Write-Output "Checksum verification failure. Ours: $($ourHash) Theirs: $($theirHash)"
-                    throw "Checksum verification failed for $($dependancy.Value.PackageName)!!!!"
+                    throw "Dependancy $($dependancy.Value.PackageName) was specified but no download link was provided."
+                }
+
+                if ($dependancy.Value.FileLink -eq "octopus")
+                {
+                    Write-Output "Package $($dependancy.Value.PackageName) is assumed to be an Octopus package. Not downloading"
+                    continue
+                }
+
+                Write-Output "Downloading $($dependancy.Value.PackageName)..."
+
+                $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
+
+                Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
+
+                if ($dependancy.Value.Checksum -ne "none")
+                {
+                    $theirHash = $dependancy.Value.Checksum
+                    $ourHash = (Get-FileHash -Path $outputPath -Algorithm $dependancy.Value.ChecksumType).Hash
+
+                    if ($theirHash -ne $ourHash)
+                    {
+                        Write-Output "Checksum verification failure. Ours: $($ourHash) Theirs: $($theirHash)"
+                        throw "Checksum verification failed for $($dependancy.Value.PackageName)!!!!"
+                    }
                 }
             }
+            Compress-Archive -Path $packageDirectory.FullName -DestinationPath clover-assets.zip -Verbose
         }
-        Compress-Archive -Path $packageDirectory.FullName -DestinationPath clover-assets.zip -Verbose
+        catch
+        {
+            Write-Output $_.Exception
+            Write-Output $_.ErrorDetails
+            Write-Output $_.ScriptStackTrace
+        }
     }
 }
