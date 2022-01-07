@@ -20,16 +20,19 @@ stages:
   - octopus-pack
   - octopus-push
 
-image: node:latest # this needs to be updated to use a sanctioned docker image
+image: registry.gitlab.com/filevine/technology/project/filevine-platform/docker-gitlab-runner-linux/master:latest
 
 build:
   stage: build
   script:
-    - Write-Output "Remove the Git Directory (causes issues)"
-    - Remove-Item -Recurse -Force .git/
-    - Import-Module ./etc/New-CloverAssetsPackage.ps1
-    - $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
-    - New-CloverAssetsPackage -DependancyManifest $manifest
+    - |
+      pwsh -c '
+        Write-Output "Remove the Git Directory (causes issues)"
+        Remove-Item -Recurse -Force .git/
+        Import-Module ./etc/New-CloverAssetsPackage.ps1
+        $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
+        New-CloverAssetsPackage -DependancyManifest $manifest
+        '
   artifacts:
     paths:
       - "."
@@ -39,12 +42,15 @@ build:
 pack-master:
   stage: octopus-pack
   script:
-    - dir
-    - $gitversion = (gitversion | convertfrom-json).SemVer
-    - Write-Output "Remove the Git Directory (causes issues)"
-    - Remove-Item -Recurse -Force .git/
-    - octo version
-    - octo pack --id="${projectpkgname}" --version="${gitversion}" --include="${fileincludeglob}"
+    - |
+      pwsh -c '
+        dir
+        $gitversion = (gitversion | convertfrom-json).SemVer
+        Write-Output "Remove the Git Directory (causes issues)"
+        Remove-Item -Recurse -Force .git/
+        octo version
+        octo pack --id="${projectpkgname}" --version="${gitversion}" --include="${fileincludeglob}"
+        '
   artifacts:
     paths:
       - "*nupkg"
@@ -56,26 +62,29 @@ pack-master:
 push-master:
   stage: octopus-push
   script:
-    - $gitversion = (gitversion | convertfrom-json).SemVer
-    - octo version
-    - octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
-    - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+      pwsh -c '
+        $gitversion = (gitversion | convertfrom-json).SemVer
+        octo version
+        octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting'
   only:
     - master
 
 pack-branch:
   stage: octopus-pack
   script:
-    - gitversion
-    - $gitversion = gitversion | convertfrom-json
-    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
-    - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
-    - $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
-    - Write-Output "Remove the Git Directory (causes issues)"
-    - Remove-Item -Recurse -Force .git/
-    - octo version
-    - octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
-    - octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"
+    - |
+      pwsh -c '
+        gitversion
+        $gitversion = gitversion | convertfrom-json
+        $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
+        $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
+        $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
+        Write-Output "Remove the Git Directory (causes issues)"
+        Remove-Item -Recurse -Force .git/
+        octo version
+        octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
+        octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"'
   artifacts:
     paths:
       - "*nupkg"
@@ -88,16 +97,18 @@ pack-branch:
 push-branch:
   stage: octopus-push
   script:
-    - $gitversion = gitversion | convertfrom-json
-    - $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
-    - $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
-    - $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
-    - octo version
-    - octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
-    - octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
-      # Also create release for Clover Assets project
-    - octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
-    - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --package clover-assets:${nupkgversion} --version="${releaseversion}" --ignoreExisting
+    - |
+      pwsh -c '
+        $gitversion = gitversion | convertfrom-json
+        $gitbranchkey = ((${gitversion}.BranchName).split('/')[1]).replace('_','-')
+        $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
+        $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
+        octo version
+        octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        # Also create release for Clover Assets project
+        octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
+        octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --package clover-assets:${nupkgversion} --version="${releaseversion}" --ignoreExisting'
   except:
     - master
     - tags
