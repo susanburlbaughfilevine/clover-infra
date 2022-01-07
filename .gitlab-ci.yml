@@ -20,7 +20,13 @@ stages:
   - octopus-pack
   - octopus-push
 
-image: registry.gitlab.com/filevine/technology/project/filevine-platform/docker-gitlab-runner-linux/master:latest
+image: 
+  name: registry.gitlab.com/filevine/technology/project/filevine-platform/docker-gitlab-runner-linux/master:latest
+
+default:
+  tags:
+    - internal
+    - linux
 
 build:
   stage: build
