@@ -27,6 +27,9 @@ build:
   script:
     - Write-Output "Remove the Git Directory (causes issues)"
     - Remove-Item -Recurse -Force .git/
+    - Import-Module ./etc/New-CloverAssetsPackage.ps1
+    - $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
+    - New-CloverAssetsPackage -DependancyManifest $manifest
   artifacts:
     paths:
       - "."
@@ -72,6 +75,7 @@ pack-branch:
     - Remove-Item -Recurse -Force .git/
     - octo version
     - octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
+    - octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"
   artifacts:
     paths:
       - "*nupkg"
@@ -90,12 +94,10 @@ push-branch:
     - $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
     - octo version
     - octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+    - octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
       # Also create release for Clover Assets project
     - octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
     - octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
-      # -- TEMP - Filevine
-      #- octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${fv_octopusspace}" --overwrite-mode="OverwriteExisting"
-      #- octo create-release --project="${projectname}" --space="${fv_octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
   except:
     - master
     - tags

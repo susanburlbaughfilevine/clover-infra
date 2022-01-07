@@ -1,5 +1,7 @@
 <powershell>
 
+Remove-WindowsFeature Web-Server
+
 $userdata_start_time = Get-Date
 
 $folder = "c:\dsc\config"
