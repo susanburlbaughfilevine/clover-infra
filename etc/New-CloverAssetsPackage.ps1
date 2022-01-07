@@ -7,8 +7,6 @@ function New-CloverAssetsPackage
         [HashTable]$DependancyManifest
     )
 
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
     if (($null -eq $DependancyManifest) -or ($DependancyManifest.Count -lt 1))
     {
         Write-Output "No packages to download or update! Exiting."
