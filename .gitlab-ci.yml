@@ -100,10 +100,10 @@ push-branch:
         octo version
         ls -la
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
-        #octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         # Also create release for Clover Assets project
-        #octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
-        #octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${nupkgversion}" --package clover-assets:${nupkgversion} --version="${releaseversion}" --ignoreExisting'
+        octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
+        octo create-release --project="Deploy CloverDX Server - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --package cloverdx-windows:${nupkgversion} --package clover-assets:${nupkgversion} --version="${releaseversion}" --ignoreExisting'
   except:
     - master
     - tags
