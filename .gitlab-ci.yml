@@ -41,7 +41,7 @@ build:
         '
   artifacts:
     paths:
-      - "."
+      - "./"
     expire_in:
       12 hours
 
