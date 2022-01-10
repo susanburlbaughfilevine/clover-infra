@@ -98,7 +98,7 @@ push-branch:
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
         octo version
-        dir
+        ls -la
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         #octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         # Also create release for Clover Assets project
