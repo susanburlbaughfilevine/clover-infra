@@ -1,18 +1,6 @@
-# For gitlab what are the things we want to do?
-# On commit/Merge into master
-# What needs to happen?
-# Compile assets
-# Deploy to servers (import servers, US and Canada)
-#
-# This file is a template, and might need editing
-# before it works on your project.
-# # see https://docs.gitlab.com/ce/ci/yaml/README.html
-# for all available options
 variables:
   projectname: "Deploy CloverDX Server - Windows"
-  projectpkgname: "cloverdx-windows"
   octopusspace: "MigrateTech-CloverDX"
-  #  fv_octopusspace: "Filevine"
   fileincludeglob: "**/**"
 
 stages:
@@ -55,7 +43,7 @@ pack-master:
         Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
         octo version
-        octo pack --id="${projectpkgname}" --version="${gitversion}" --include="${fileincludeglob}"
+        octo pack --id="cloverdx-windows" --version="${gitversion}" --include="${fileincludeglob}"
         '
   artifacts:
     paths:
@@ -71,7 +59,7 @@ push-master:
       pwsh -c '
         $gitversion = (gitversion | convertfrom-json).SemVer
         octo version
-        octo push --package="${projectpkgname}.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         octo create-release --project="${projectname}" --space="${octopusspace}" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting'
   only:
     - master
@@ -89,7 +77,7 @@ pack-branch:
         Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
         octo version
-        octo pack --id="${projectpkgname}" --version="${nupkgversion}" --include="${fileincludeglob}"
+        octo pack --id="cloverdx-windows" --version="${nupkgversion}" --include="${fileincludeglob}"
         octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"'
   artifacts:
     paths:
@@ -110,7 +98,7 @@ push-branch:
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
         octo version
-        octo push --package="${projectpkgname}.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
+        octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         #octo push --package="clover-assets.${nupkgversion}.nupkg" --space="${octopusspace}" --overwrite-mode="OverwriteExisting"
         # Also create release for Clover Assets project
         #octo create-release --project="Deploy CloverDX Assets - Windows" --space="${octopusspace}" --packageVersion="${nupkgversion}" --version="${releaseversion}" --ignoreExisting
