@@ -83,7 +83,7 @@ pack-branch:
       pwsh -c '
         gitversion
         $gitversion = gitversion | convertfrom-json
-        $gitbranchkey = ((${gitversion}.BranchName).split("/"")[1]).replace("_","-"")
+        $gitbranchkey = ((${gitversion}.BranchName).split("/")[1]).replace("_","-")
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
         Write-Output "Remove the Git Directory (causes issues)"
