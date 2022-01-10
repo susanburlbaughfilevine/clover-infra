@@ -37,7 +37,6 @@ pack-master:
   script:
     - |
       pwsh -c '
-        dir
         $gitversion = (gitversion | convertfrom-json).SemVer
         Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
@@ -70,7 +69,6 @@ pack-branch:
       pwsh -c '
         gitversion
         $gitversion = gitversion | convertfrom-json
-        $gitbranchkey = ((${gitversion}.BranchName).split("/")[1]).replace("_","-")
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
         Write-Output "Remove the Git Directory (causes issues)"
@@ -93,11 +91,8 @@ push-branch:
     - |
       pwsh -c '
         $gitversion = gitversion | convertfrom-json
-        $gitbranchkey = ((${gitversion}.BranchName).split("/")[1]).replace("_","-")
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
-        octo version
-        ls -la
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         # Also create release for Clover Assets project
