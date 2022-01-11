@@ -49,6 +49,8 @@ function New-CloverAssetsPackage
                     }
                 }
             }
+
+            Copy-Item -Path ./clover-assets-manifest.psd1 -Destination clover-assets/
             Compress-Archive -Path $packageDirectory.FullName -DestinationPath clover-assets.zip -Verbose
         }
         catch
