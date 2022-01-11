@@ -25,31 +25,28 @@
         ChecksumType     = "sha1"
     }
 
-    # must be downloaded via clover account console and manually uploaded to octopus
     securecfg = @{
-        PackageName      = "secure-cfg-tool"
-        FileLink         = "octopus"
-        Version          = "5.7.0"
-        Checksum         = "none"
-        ChecksumType     = "none"
+        PackageName      = "secure-cfg-tool.5.13.1.zip"
+        FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/common/Utilities/secure-cfg-tool.5.13.1.zip"
+        Version          = "5.13.1"
+        Checksum         = "9acedcdc5118f22e28658a88268cbb3b5c4c7fc8437d8bcbc3d04015a24cc3ae "
+        ChecksumType     = "sha256"
     }
 
-    # must be downloaded via clover account console and manually uploaded to octopus
     clover = @{
-        PackageName      = "clover"
-        FileLink         = "octopus"
-        Version          = "5.6.0.18"
-        Checksum         = "none"
-        ChecksumType     = "none"
+        PackageName      = "clover.war"
+        FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/deploy/tomcat7-9/Application%20Files/clover.war"
+        Version          = "5.13.1"
+        Checksum         = "e628419229b491cb1599e64524f5d444a82e79a7f0b9bbdf08f07658793c30f4"
+        ChecksumType     = "sha256"
     }
 
-    # must be downloaded via clover account console and manually uploaded to octopus
     profiler = @{
-        PackageName      = "profiler"
-        FileLink         = "octopus"
-        Version          = "none"
-        Checksum         = "none"
-        ChecksumType     = "none"
+        PackageName      = "profiler.war"
+        FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/deploy/tomcat7-9/Application%20Files/profiler.war"
+        Version          = "5.13.1"
+        Checksum         = "e0edfe23a2fbab178211633042c65b83e9b7d7d9ee806a25dd676fe4152ea465"
+        ChecksumType     = "sha256"
     }
 
     pg_jdbc = @{
