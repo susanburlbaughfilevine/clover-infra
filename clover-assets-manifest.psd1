@@ -29,7 +29,7 @@
         PackageName      = "secure-cfg-tool.5.13.1.zip"
         FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/common/Utilities/secure-cfg-tool.5.13.1.zip"
         Version          = "5.13.1"
-        Checksum         = "9acedcdc5118f22e28658a88268cbb3b5c4c7fc8437d8bcbc3d04015a24cc3ae "
+        Checksum         = "9acedcdc5118f22e28658a88268cbb3b5c4c7fc8437d8bcbc3d04015a24cc3ae"
         ChecksumType     = "sha256"
     }
 
