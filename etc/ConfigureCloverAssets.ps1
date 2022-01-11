@@ -18,7 +18,7 @@ Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Des
 $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties -Destination "$tomcatPath\conf\"
-$setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
+$setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
 New-Item -Type File -Path "$tomcatPath\bin\setenv.bat" -Value $setEnvScript
 
 #Start-Process -FilePath $tomcatPath\bin\startup.bat -Wait
