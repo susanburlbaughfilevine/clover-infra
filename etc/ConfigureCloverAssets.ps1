@@ -18,7 +18,7 @@ Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Des
 $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties -Destination "$tomcatPath\conf\"
-Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\"
+Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
 $setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
 New-Item -Type File -Path "$tomcatPath\bin\setenv.bat" -Value $setEnvScript
 
@@ -31,4 +31,13 @@ New-Item -Type Directory -Path $tomcatPath\webapps\profiler
 Set-Location $tomcatPath\webApps\profiler\
 & "$($env:JAVA_HOME)\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\profiler.war
 
-#Start-Process -FilePath $tomcatPath\bin\startup.bat -Wait
+# BouncyCastle Install
+Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapp\clover\WEB-INF\lib\"
+
+#SecureCfgTool install
+New-Item -Type Directory -Path $($env:SYSTEMDRIVE)\clover-assets\securecfg
+Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
+Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\lib\" -Destination "$($tomcatPath)\webapp\clover\WEB-INF\lib\" -Recurse
+
+Write-Output "Starting Apache Tomcat"
+Start-Process -FilePath $tomcatPath\bin\startup.bat -WorkingDirectory $tomcatPath\bin\ -PassThru

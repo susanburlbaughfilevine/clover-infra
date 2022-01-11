@@ -18,7 +18,7 @@
 
     # Pulling from maven mirror because primary BC site only uses SSLv3, with ciphers .NET5/Powershell 7.1.0+ won't respect without OS confg tweaks
     bouncycastle = @{
-        PackageName      = "bouncycastle.jar"
+        PackageName      = "bcprov-jdk15on-1.70.jar"
         FileLink         = "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar"
         Version          = "1.70"
         Checksum         = "4636a0d01f74acaf28082fb62b317f1080118371"
