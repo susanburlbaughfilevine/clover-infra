@@ -9,10 +9,10 @@
     }
 
     tomcat = @{
-        PackageName      = "apache-tomcat-9.0.56.zip"
-        FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.zip"
+        PackageName      = "apache-tomcat-9.0.56-windows-x64.zip"
+        FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56-windows-x64.zip"
         Version          = "9.0.56"
-        Checksum         = "d575df6ffe46b48105aac3b95af39eddf230c588d2d30ed8cac0184f8f3679c4926818533e3047d0cd001106761887a36e2d12a8941d198071cc71bda0fe6fbb"
+        Checksum         = "63a73d6370920bb7ac383f38f10f66a437dc066d72c59075091a86711c604d0f0ffd917379251a0a5d3caafee3c4e15e21643194d4fb887722920c7afbec23ad"
         ChecksumType     = "sha512"
     }
 
