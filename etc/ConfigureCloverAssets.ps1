@@ -1,5 +1,8 @@
 $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets-manifest.psd1
 
+# Stop any running Java processes. This must be done, or the jdk directory cannot be replaced on a running Clover instance
+Get-Process "*java*" | Stop-Process -Verbose -Force
+
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
 if (Test-Path "$($env:SYSTEMDRIVE)\tomcat") {Remove-Item $env:SYSTEMDRIVE\tomcat -Recurse -Force}
