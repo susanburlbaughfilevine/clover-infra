@@ -37,7 +37,7 @@ Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].Pac
 #SecureCfgTool install
 Set-Location $env:SYSTEMDRIVE\clover-assets\
 Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
-Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
+Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 Write-Output "Starting Apache Tomcat"
 Start-Process -FilePath $tomcatPath\bin\startup.bat -WorkingDirectory $tomcatPath\bin\ -PassThru
