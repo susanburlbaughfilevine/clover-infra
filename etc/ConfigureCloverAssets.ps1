@@ -29,11 +29,11 @@ $setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat"
 # CloverDX Server and Profiler Server Installation
 New-Item -Type Directory -Path $tomcatPath\webapps\clover\
 Set-Location $tomcatPath\webapps\clover\
-& "$($env:JAVA_HOME)\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\clover.war
+& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\clover.war
 
 New-Item -Type Directory -Path $tomcatPath\webapps\profiler
 Set-Location $tomcatPath\webapps\profiler\
-& "$($env:JAVA_HOME)\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\profiler.war
+& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\profiler.war
 
 # BouncyCastle Install
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
