@@ -16,8 +16,8 @@ Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["tomcat"].PackageName) -
 Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
 
 # Configure Tomcat installation
-[Environment]::SetEnvironmentVariable("JAVA_HOME", "$jdkPath\bin", "Machine")
-[Environment]::SetEnvironmentVariable("JRE_HOME", "$jdkPath", "Machine")
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "$jdkPath", "Machine")
+[Environment]::SetEnvironmentVariable("JRE_HOME", "$jdkPath\bin", "Machine")
 $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties -Destination "$tomcatPath\conf\"
@@ -43,6 +43,9 @@ Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].Package
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 # Apache Tomcat service install
-$serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\clover-setup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
-$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\clover-setup.bat"
-Start-Process -FilePath "$tomcatPath\bin\clover-setup.bat" -WorkingDirectory $tomcatPath\bin\ -Wait
+$serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
+$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat"
+Start-Process -FilePath "$tomcatPath\bin\cloversetup.bat" -WorkingDirectory $tomcatPath\bin\ -Wait
+$tomcatService = Get-Service "tomcat9"
+$tomcatService | Start-Service -Verbose
+$tomcatService | Set-Service -StartupType Automatic
