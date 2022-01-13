@@ -1,6 +1,7 @@
 $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets-manifest.psd1
 
 # Stop any running Java and Tomcat processes. This must be done, or the jdk directory cannot be replaced on a running Clover instance
+(Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
 $processes = Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}
 $processes.ForEach({$_ | Stop-Process -Verbose -Force})
 
@@ -21,6 +22,11 @@ Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Des
 [Environment]::SetEnvironmentVariable("JRE_HOME", "$jdkPath\bin", "Machine")
 $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
+
+$serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties)
+$serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
+$serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
+
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties -Destination "$tomcatPath\conf\"
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
 $setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
