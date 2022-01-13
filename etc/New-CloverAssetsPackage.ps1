@@ -52,6 +52,7 @@ function New-CloverAssetsPackage
 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
             Copy-Item -Path ./etc/ConfigureCloverAssets.ps1 -Destination clover-assets/
+            Copy-Item -Path ./etc/Set-UserWritablePermissions.ps1 -Destination clover-assets/
             Copy-Item -Path ./clover-assets-manifest.psd1 -Destination clover-assets/
             Compress-Archive -Path $packageDirectory.FullName -DestinationPath clover-assets.zip -Verbose
             Remove-Item -Path $packageDirectory.FullName -Recurse -Force

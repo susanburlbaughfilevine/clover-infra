@@ -53,6 +53,10 @@ Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].Packag
 # PostgreSql JDBC driver installation
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName) -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
 
+# properties files must be writable by CloverDX
+Import-Module ./Set-UserWritablePermissions.ps1
+Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
+
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
 $serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat"
