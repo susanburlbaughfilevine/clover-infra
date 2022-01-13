@@ -27,11 +27,11 @@ $serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\clo
 $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
 $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
 $serverProperties = $serverProperties.Replace("##rdsDbPassword##",$env:RDS_INSTANCE_PASSWORD)
-$serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties"
+$serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties" -Encoding utf8
 
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
 $setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
-$setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat"
+$setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat" -Encoding utf8
 
 # CloverDX Server and Profiler Server Installation
 New-Item -Type Directory -Path $tomcatPath\webapps\clover\
@@ -59,7 +59,7 @@ Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
-$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat"
+$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat" -Encoding utf8
 Start-Process -FilePath "$tomcatPath\bin\cloversetup.bat" -WorkingDirectory $tomcatPath\bin\ -Wait
 $tomcatService = Get-Service "tomcat9"
 $tomcatService | Start-Service -Verbose
