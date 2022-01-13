@@ -50,6 +50,9 @@ Set-Location $env:SYSTEMDRIVE\clover-assets\
 Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
+# PostgreSql JDBC driver installation
+Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName) -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
+
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
 $serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat"
