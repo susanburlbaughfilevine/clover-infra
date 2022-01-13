@@ -24,10 +24,11 @@ $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machi
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 
 $serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties)
-$serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
-$serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
+$serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
+$serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
+$serverProperties = $serverProperties.Replace("##rdsDbPassword##",$env:RDS_INSTANCE_PASSWORD)
+$serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties"
 
-Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties -Destination "$tomcatPath\conf\"
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
 $setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
 $setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat"
