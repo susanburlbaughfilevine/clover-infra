@@ -52,32 +52,6 @@ resource "aws_lb_listener" "http_internal" {
   }
 }
 
-
-resource "aws_lb_target_group" "clover_tg" {
-  name     = "${var.envName}-front-web"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.clover.id
-  stickiness {
-    type            = "lb_cookie"
-    cookie_duration = 7200
-  }
-
-  health_check {
-    path                = "/clover/"
-    healthy_threshold   = "5"
-    unhealthy_threshold = "2"
-    matcher             = "302"
-    port                = 80
-  }
-
-  tags = {
-    Name       = "${var.envName}-clover-tg"
-    managed_by = "Octopus via Terraform"
-    env        = var.envName
-  }
-}
-
 resource "aws_lb_target_group" "clover_tg_internal" {
   name     = "${var.envName}-front-web-internal"
   port     = 80
@@ -101,40 +75,6 @@ resource "aws_lb_target_group" "clover_tg_internal" {
     managed_by = "Octopus via Terraform"
     env        = var.envName
   }
-}
-
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.clover_alb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-FS-1-2-2019-08"
-  certificate_arn   = aws_acm_certificate.frontend_certificate.arn
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.clover_tg.arn
-  }
-}
-
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.clover_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
-resource "aws_lb_target_group_attachment" "tg_attach" {
-  target_group_arn = aws_lb_target_group.clover_tg.arn
-  target_id        = aws_instance.clover.id
-  port             = 80
 }
 
 resource "aws_lb_target_group_attachment" "tg_attach_internal" {
