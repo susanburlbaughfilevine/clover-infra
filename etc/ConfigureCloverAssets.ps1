@@ -1,9 +1,27 @@
 $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets-manifest.psd1
 
 # Stop any running Java and Tomcat processes. This must be done, or the jdk directory cannot be replaced on a running Clover instance
-(Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
-$processes = Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}
-$processes.ForEach({$_ | Stop-Process -Verbose -Force})
+# Attempt to perform this a maximum of 5 times, waiting 1 second after each
+
+$i = 0
+$stopped = $false
+do
+{
+    try
+    {
+        (Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
+        $processes = Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}
+        $processes.ForEach({$_ | Stop-Process -Verbose -Force})
+        $stopped = $true
+    }
+    catch
+    {
+        Write-Output "Failed to stop a required service. Attempt $($i) of 5"
+        Write-Output $_.Exception
+        Start-Sleep 1
+    }
+}
+while (($i -lt 5) -or ($stopped -ne $true))
 
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
@@ -62,7 +80,7 @@ Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
 # Make CloverDX the root webapp
 Remove-Item -Path "$tomcatPath\webapps\ROOT\" -Recurse -Force
-Move-Item -Path "$($tomcatPath)\webapps\clover" -Destination "$($tomcatPath)\webapps\ROOT)"
+Move-Item -Path "$($tomcatPath)\webapps\clover" -Destination "$($tomcatPath)\webapps\ROOT"
 
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
