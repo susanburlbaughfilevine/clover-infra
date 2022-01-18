@@ -60,6 +60,10 @@ Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName)
 Import-Module ./Set-UserWritablePermissions.ps1
 Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
+# Make CloverDX the root webapp
+Remove-Item -Path "$tomcatPath\webapps\ROOT\" -Recurse -Force
+Move-Item -Path "$($tomcatPath)\webapps\clover" -Destination "$($tomcatPath)\webapps\ROOT)"
+
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
 $serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat" -Encoding utf8

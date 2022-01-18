@@ -83,7 +83,7 @@ resource "aws_route53_record" "import_internal_record" {
 resource "aws_route53_record" "clover_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "internal-clover-${var.envName}.${var.dns_domain}"
+  name     = "clover-${var.envName}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
   records  = [aws_lb.clover_alb_internal.dns_name]
