@@ -30,7 +30,6 @@ resource "aws_rds_cluster" "sqlserver" {
   vpc_security_group_ids          = [aws_security_group.dataaccess.id]
   storage_encrypted               = true
   kms_key_id                      = data.aws_kms_alias.default.target_key_arn
-  enabled_cloudwatch_logs_exports = local.db_options[var.rds_engine].export_logs
   deletion_protection             = false
   db_subnet_group_name            = aws_db_subnet_group.sqlserver.name
   copy_tags_to_snapshot           = true
