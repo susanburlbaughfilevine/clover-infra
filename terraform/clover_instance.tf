@@ -3,86 +3,10 @@ locals {
   iam_instance_profile = "${var.envName}-CloverApp-InstanceProfile"
   key_name             = aws_key_pair.clover.key_name
 }
-
-resource "aws_lb" "clover_alb" {
-  name               = "${var.envName}-clover-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.clover_whitelist.id]
-  subnets            = data.aws_subnet_ids.public.ids
-  ip_address_type    = "ipv4"
-  tags = {
-    Name = "${var.envName}-clover-alb"
-  }
-}
-
 resource "aws_security_group" "internal_alb_sg" {
   name        = "${var.envName}-clover-alb-internal"
   description = "Allow web traffic from ZPA"
   vpc_id      = data.aws_vpc.clover.id
-
-  ingress {
-    description = "Ingress HTTPS traffic from Filevine platform services CJIS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.80.0/21"]
-  }
-
-  ingress {
-    description = "Ingress HTTP traffic from Filevine platform services CJIS"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.80.0/21"]
-  }
-
-  ingress {
-    description = "Ingress HTTP traffic from local VPC subnets"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.88.0/21"]
-  }
-
-  ingress {
-    description = "Ingress HTTPS traffic from local VPC subnets"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.88.0/21"]
-  }
-
-  egress {
-    description = "Egress traffic from load balancer to filevine platofmr services VPC subnet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.80.0/21"]
-  }
-
-  egress {
-    description = "Egress traffic from load balancer to filevine platform services VPC subnet"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.80.0/21"]
-  }
-
-  egress {
-    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.88.0/21"]
-  }
-  egress {
-    description = "Egress traffic from load balancer to DM-CJIS VPC subnet"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.88.0/21"]
-  }
   tags = {
     Name = "${var.envName}-clover-alb-interal-sg"
   }
@@ -92,7 +16,7 @@ resource "aws_lb" "clover_alb_internal" {
   name               = "${var.envName}-clover-alb-internal"
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.internal_alb_sg.id]
+  security_groups    = [aws_security_group.frontend.id]
   subnets            = data.aws_subnet_ids.public.ids
   ip_address_type    = "ipv4"
   tags = {

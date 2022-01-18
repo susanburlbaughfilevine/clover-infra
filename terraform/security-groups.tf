@@ -15,7 +15,7 @@ resource "aws_security_group" "frontend" {
     to_port         = 80
     protocol        = "tcp"
     self            = true
-    security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id, aws_security_group.clover_whitelist.id]
+    security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id]
   }
 
   ingress {
@@ -25,6 +25,7 @@ resource "aws_security_group" "frontend" {
     protocol        = "tcp"
     self            = true
     security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id]
+    cidr_blocks     = [var.zpa_subnet_cidr]
   }
 
   ingress {
