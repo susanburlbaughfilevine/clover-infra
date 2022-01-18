@@ -7,7 +7,7 @@ locals {
     }
     postgres = {
       license_model = "postgresql-license"
-      export_logs   = ["postgresql", "upgrade"]
+      export_logs   = ["postgresql"]
       port          = 5432
     }
     mysql = {
