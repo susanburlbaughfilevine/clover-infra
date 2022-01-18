@@ -3,7 +3,7 @@ output "clover_server_ip" {
 }
 
 output "rds_instance_address" {
-  value = aws_db_instance.sqlserver.address
+  value = aws_rds_cluster.sqlserver.endpoint
 }
 
 output "clover_url" {
