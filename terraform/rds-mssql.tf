@@ -34,6 +34,7 @@ resource "aws_rds_cluster" "sqlserver" {
   db_subnet_group_name         = aws_db_subnet_group.sqlserver.name
   copy_tags_to_snapshot        = true
   preferred_maintenance_window = "sun:09:00-sun:11:00"
+  skip_final_snapshot          = true
 
   scaling_configuration {
     max_capacity             = 16
