@@ -4,29 +4,8 @@ $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets
 # Attempt to perform this a maximum of 5 times, waiting 1 second after each
 
 
-@(
-    {(Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})},
-    {(Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})}
-).ForEach({
-    $i = 0
-    $stopped = $false
-    do
-    {
-        try
-        {
-            & $_
-            $stopped = $true
-        }
-        catch
-        {
-            Write-Output "Failed to stop a required service. Attempt $($i) of 5"
-            Write-Output $_.Exception
-            Start-Sleep 5
-            $i++
-        }
-    }
-    while (($i -lt 5) -or ($stopped -ne $true))
-})
+(Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
+(Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
 
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
