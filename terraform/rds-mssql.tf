@@ -35,7 +35,8 @@ resource "aws_rds_cluster" "sqlserver" {
   copy_tags_to_snapshot        = true
   preferred_maintenance_window = "sun:09:00-sun:11:00"
   skip_final_snapshot          = true
-  final_snapshot_identifier = "${var.envName}-cloverdx-final-snapshot"
+  final_snapshot_identifier    = "${var.envName}-cloverdx-final-snapshot"
+  database_name                = "clover_db"
 
   scaling_configuration {
     max_capacity             = 16
