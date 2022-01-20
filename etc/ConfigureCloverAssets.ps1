@@ -25,10 +25,18 @@ Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Des
 $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 
+# SecureCfgTool install
+Set-Location $env:SYSTEMDRIVE\clover-assets\
+Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
+Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
+
+# Encrypt RDS password
+$encryptedPass = .\encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $env:SYSTEMDRIVE\clover-assets\$($config["bouncycastle"].PackageName) --batch $env:RDS_INSTANCE_PASSWORD
+
 $serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties)
 $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
 $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
-$serverProperties = $serverProperties.Replace("##rdsDbPassword##",$env:RDS_INSTANCE_PASSWORD)
+$serverProperties = $serverProperties.Replace("##rdsDbPassword##", $encryptedPass)
 $serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties" -Encoding utf8
 
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
@@ -46,11 +54,6 @@ Set-Location $tomcatPath\webapps\profiler\
 
 # BouncyCastle Install
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
-
-# SecureCfgTool install
-Set-Location $env:SYSTEMDRIVE\clover-assets\
-Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
-Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 # Filevine Branding
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\FVBranding5.6.0.zip -Destination $tomcatDirectory
