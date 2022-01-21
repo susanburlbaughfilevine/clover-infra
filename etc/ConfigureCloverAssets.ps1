@@ -31,7 +31,8 @@ Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].Package
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 # Encrypt RDS password
-$encryptedPass = .\encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $env:SYSTEMDRIVE\clover-assets\$($config["bouncycastle"].PackageName) --batch $env:RDS_INSTANCE_PASSWORD
+$c = "cmd.exe /c .\encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName) --batch $($env:RDS_INSTANCE_PASSWORD)"
+$encryptedPass = Invoke-Expression $c
 
 $serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties)
 $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
