@@ -63,7 +63,7 @@ Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\FVBranding5.6.0.zip -Destination 
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName) -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
 
 # Properties files must be writable by CloverDX
-Import-Module ./Set-UserWritablePermissions.ps1
+Import-Module "$($env:SYSTEMDRIVE)\clover-assets\Set-UserWritablePermissions.ps1"
 Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
 # Make CloverDX the root webapp
