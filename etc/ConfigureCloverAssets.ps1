@@ -25,6 +25,7 @@ $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machi
 $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 
 # SecureCfgTool install
+New-Item -Type Directory -Path $tomcatPath\webapps\clover\
 Set-Location $env:SYSTEMDRIVE\clover-assets\
 Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
@@ -45,7 +46,6 @@ $setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.
 $setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat" -Encoding utf8
 
 # CloverDX Server and Profiler Server Installation
-New-Item -Type Directory -Path $tomcatPath\webapps\clover\
 Set-Location $tomcatPath\webapps\clover\
 & "$($env:JAVA_HOME)\bin\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\clover.war
 
