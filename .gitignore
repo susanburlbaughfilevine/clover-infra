@@ -1,2 +1,4 @@
 local_vars.tfvars
 .terraform/
+destroy/
+clover-assets/

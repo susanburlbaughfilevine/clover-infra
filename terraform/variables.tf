@@ -126,3 +126,12 @@ variable "rds_user_name" {
 variable "rds_user_password" {
   description = "RDS instance password"
 }
+
+variable "newrelic_enabled" {
+  default = "false"
+}
+
+variable "zpa_subnet_cidr" {
+  description = "Subnet (in CIDR notation) from which incoming ZPA requests will originate"
+  default     = "172.17.64.0/21"
+}

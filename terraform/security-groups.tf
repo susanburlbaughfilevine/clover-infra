@@ -1,4 +1,4 @@
-
+# Once ready for apply, be sure to check for conflicts between security groups in security-groups.tf and security_groups.tf
 resource "aws_security_group" "frontend" {
   name        = "${var.envName}-FrontEnd"
   description = "FrontEnd Systems of CloverDX - managed by octopus"
@@ -25,6 +25,7 @@ resource "aws_security_group" "frontend" {
     protocol        = "tcp"
     self            = true
     security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id]
+    cidr_blocks     = [var.zpa_subnet_cidr]
   }
 
   ingress {
@@ -192,4 +193,3 @@ resource "aws_security_group" "techaccess" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-

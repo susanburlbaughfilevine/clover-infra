@@ -71,19 +71,6 @@ data "aws_route53_zone" "master" {
   name     = var.dns_domain
 }
 
-resource "aws_route53_record" "clover_frontend_record" {
-  provider = aws.filevine
-  zone_id  = data.aws_route53_zone.master.id
-  name     = var.clover_domain
-  type     = "A"
-
-  alias {
-    name                   = aws_lb.clover_alb.dns_name
-    zone_id                = aws_lb.clover_alb.zone_id
-    evaluate_target_health = true
-  }
-}
-
 resource "aws_route53_record" "import_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
@@ -96,7 +83,7 @@ resource "aws_route53_record" "import_internal_record" {
 resource "aws_route53_record" "clover_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "internal-clover-cjis.${var.dns_domain}"
+  name     = "clover-${var.envName}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
   records  = [aws_lb.clover_alb_internal.dns_name]
