@@ -6,6 +6,8 @@ $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets
 (Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
 (Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
 
+Invoke-Expression 'cmd.exe /c "sc delete Tomcat9"'
+
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
 if (Test-Path "$($env:SYSTEMDRIVE)\tomcat") {Remove-Item $env:SYSTEMDRIVE\tomcat -Recurse -Force}
@@ -27,7 +29,7 @@ $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine
 # SecureCfgTool install
 New-Item -Type Directory -Path $tomcatPath\webapps\clover\
 Set-Location $env:SYSTEMDRIVE\clover-assets\
-Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)"
+Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)" -Force
 Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 # Encrypt RDS password
@@ -72,7 +74,7 @@ Move-Item -Path "$($tomcatPath)\webapps\clover" -Destination "$($tomcatPath)\web
 
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
-$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat" -Encoding utf8
+$serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat" -Encoding default
 Start-Process -FilePath "$tomcatPath\bin\cloversetup.bat" -WorkingDirectory $tomcatPath\bin\ -Wait
 $tomcatService = Get-Service "tomcat9"
 $tomcatService | Start-Service -Verbose
