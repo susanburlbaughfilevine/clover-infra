@@ -37,12 +37,12 @@ pack-master:
   script:
     - |
       pwsh -c '
+        gitversion
         $gitversion = (gitversion | convertfrom-json).SemVer
         Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
-        octo version
-        octo pack --id="cloverdx-windows" --version="${gitversion}" --include="${fileincludeglob}"
-        '
+        octo pack --id="cloverdx-windows" --version="${gitversion}" --include="terraform/"
+        octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets.zip"'
   artifacts:
     paths:
       - "*nupkg"
@@ -54,11 +54,14 @@ pack-master:
 push-master:
   stage: octopus-push
   script:
+    - |
       pwsh -c '
         $gitversion = (gitversion | convertfrom-json).SemVer
-        octo version
         octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
-        octo create-release --project="${projectname}" --space="MigrateTech-CloverDX" --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting'
+        octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
+        # Also create release for Clover Assets project
+        octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+        octo create-release --project="Deploy CloverDX Server - Windows" --space="MigrateTech-CloverDX" --packageVersion="${gitversion}" --package="Deploy a Release:${gitversion}" --version="${gitversion}" --ignoreExisting'
   only:
     - master
 
