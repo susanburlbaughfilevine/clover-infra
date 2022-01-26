@@ -1,21 +1,19 @@
 # Once ready for apply, be sure to check for conflicts between security groups in security-groups.tf and security_groups.tf
-resource "aws_security_group" "frontend" {
-  name        = "${var.envName}-FrontEnd"
-  description = "FrontEnd Systems of CloverDX - managed by octopus"
+resource "aws_security_group" "cloverdx" {
+  name        = "${var.envName}-cloverdx"
   vpc_id      = data.aws_vpc.clover.id
 
   tags = {
-    Name       = "${var.envName}-FrontEnd"
+    Name       = "${var.envName}-cloverdx"
     managed_by = "Octopus via Terraform"
   }
-
   ingress {
     description     = "HTTP"
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
     self            = true
-    security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id]
+    security_groups = [aws_security_group.internal_alb_sg.id]
   }
 
   ingress {
@@ -24,10 +22,9 @@ resource "aws_security_group" "frontend" {
     to_port         = 443
     protocol        = "tcp"
     self            = true
-    security_groups = [aws_security_group.internal_alb_sg.id, aws_security_group.backend.id]
+    security_groups = [aws_security_group.internal_alb_sg.id]
     cidr_blocks     = [var.zpa_subnet_cidr]
   }
-
   ingress {
     description = "Okta Advanced Server Access"
     from_port   = 4421
@@ -35,7 +32,6 @@ resource "aws_security_group" "frontend" {
     protocol    = "tcp"
     cidr_blocks = ["172.17.64.0/21"]
   }
-
   ingress {
     description = "Filevine Prod Import DB Server"
     from_port   = 1433
@@ -43,119 +39,6 @@ resource "aws_security_group" "frontend" {
     protocol    = "tcp"
     self        = true
     cidr_blocks = ["172.31.23.143/32"]
-  }
-
-  egress {
-    description = "Outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "backend" {
-  name        = "${var.envName}-Backend"
-  description = "Backend Systems of CloverDX - managed via octopus"
-  vpc_id      = data.aws_vpc.clover.id
-
-  egress {
-    description = "Outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "Filevine Prod Import DB Server"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["172.31.23.143/32"]
-  }
-
-  ingress {
-    description = "Okta Advanced Server Access"
-    from_port   = 4421
-    to_port     = 4421
-    protocol    = "tcp"
-    cidr_blocks = ["172.17.64.0/21"]
-  }
-
-  tags = {
-    Name       = "${var.envName}-Backend"
-    managed_by = "Octopus via Terraform"
-  }
-
-}
-
-resource "aws_security_group" "dataaccess" {
-  name        = "${var.envName}-DatastoresAccess"
-  description = "Used to access the Datastores - managed via octopus"
-  vpc_id      = data.aws_vpc.clover.id
-
-  ingress {
-    description     = "SQL Server"
-    from_port       = local.db_options[var.rds_engine].port
-    to_port         = local.db_options[var.rds_engine].port
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend.id, aws_security_group.backend.id]
-    cidr_blocks     = ["172.17.88.0/21"]
-  }
-
-  ingress {
-    description     = "Redis Access"
-    from_port       = 6379
-    to_port         = 6379
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend.id, aws_security_group.backend.id]
-  }
-
-  ingress {
-    description     = "ElasticSearch Access"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.frontend.id, aws_security_group.backend.id]
-  }
-
-  tags = {
-    Name       = "${var.envName}-DatastoresAccess"
-    managed_by = "Octopus via Terraform"
-  }
-}
-
-resource "aws_security_group" "techaccess" {
-  name        = "${var.envName}-TechAccess"
-  description = "Tech Support and Build Access - managed by octopus"
-  vpc_id      = data.aws_vpc.clover.id
-
-  tags = {
-    Name       = "${var.envName}-TechAccess"
-    managed_by = "Octopus via Terraform"
-  }
-
-  ingress {
-    description = "RDP from Tech Team"
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "SSH from Tech Team"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -191,5 +74,23 @@ resource "aws_security_group" "techaccess" {
     to_port     = 0
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "dataaccess" {
+  name        = "${var.envName}-DatabaseAccess"
+  description = "Used to access the Database - managed via octopus"
+  vpc_id      = data.aws_vpc.clover.id
+
+  ingress {
+    description     = "Database Server"
+    from_port       = local.db_options[var.rds_engine].port
+    to_port         = local.db_options[var.rds_engine].port
+    protocol        = "tcp"
+    self            = true
+  }
+  tags = {
+    Name       = "${var.envName}-DatabaseAccess"
+    managed_by = "Octopus via Terraform"
   }
 }

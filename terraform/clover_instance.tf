@@ -16,7 +16,7 @@ resource "aws_lb" "clover_alb_internal" {
   name               = "${var.envName}-clover-alb-internal"
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.frontend.id]
+  security_groups    = [aws_security_group.cloverdx.id]
   subnets            = data.aws_subnet_ids.public.ids
   ip_address_type    = "ipv4"
   tags = {
@@ -94,9 +94,7 @@ resource "aws_instance" "clover" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.backend.id,
-    aws_security_group.frontend.id,
-    aws_security_group.techaccess.id,
+    aws_security_group.cloverdx.id,
     aws_security_group.dataaccess.id
   ]
 

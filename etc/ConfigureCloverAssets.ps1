@@ -79,3 +79,6 @@ Start-Process -FilePath "$tomcatPath\bin\cloversetup.bat" -WorkingDirectory $tom
 $tomcatService = Get-Service "tomcat9"
 $tomcatService | Start-Service -Verbose
 $tomcatService | Set-Service -StartupType Automatic
+
+# Create firewall rule for inbound web traffic
+New-NetFirewallRule -DisplayName clover-web -Protocol tcp -Name clover-web -Enabled True -Direction Inbound -Action Allow -LocalPort 80
