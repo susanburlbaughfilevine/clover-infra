@@ -1,7 +1,7 @@
 # Clover DX Server Application &  Infrastructure
 This repository is home to the infrastructure used to support the CloverDX server application, and the processes used to deploy it.
 
-Below you find answers to what are assumed to be common questions regarding deploying this project and maintaining it.
+Below you'll find answers to what are assumed to be common questions regarding deploying this project and maintaining it.
 
 ### I need to deploy a release of CloverDX server and its supporting infrastructure to an existing environment.
 - Navigate to the Octopus Deploy project [Deploy CloverDX Server - Windows](https://octopus.filevinedev.com/app#/Spaces-243/projects/deploy-cloverdx-server-windows/deployments). Select a release and deploy to the environment of your choice.
