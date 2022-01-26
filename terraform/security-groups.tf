@@ -41,6 +41,33 @@ resource "aws_security_group" "cloverdx" {
     cidr_blocks = ["172.31.23.143/32"]
   }
 
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
+  }
+
+  ingress {
+    description = "Octopus"
+    from_port   = 10933
+    to_port     = 10935
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
+  }
+
   egress {
     description = "Outbound"
     from_port   = 0
