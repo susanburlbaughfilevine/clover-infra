@@ -41,6 +41,7 @@ $serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\clo
 $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
 $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
 $serverProperties = $serverProperties.Replace("##rdsDbPassword##", $encryptedPass)
+$serverProperties = $serverProperties.Replace("##sandboxbase##", "$($env:SYSTEMDRIVE)/")
 $serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties" -Encoding utf8
 
 Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
