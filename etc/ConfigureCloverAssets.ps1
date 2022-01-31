@@ -69,9 +69,11 @@ Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName)
 Import-Module "$($env:SYSTEMDRIVE)\clover-assets\Set-UserWritablePermissions.ps1"
 Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
-# Make CloverDX the root webapp
+# Create HTTP redirect to /clover. Not doing this
 Remove-Item -Path "$tomcatPath\webapps\ROOT\" -Recurse -Force
-Move-Item -Path "$($tomcatPath)\webapps\clover" -Destination "$($tomcatPath)\webapps\ROOT"
+New-Item -Type Directory -Path "$($tomcatPath)\webapps\ROOT"
+New-Item -Type File -Path "$($tomcatPath)\webapps\ROOT\index.jsp"
+Set-Content -Value '<% response.sendRedirect("/clover"); %>' -Path "$($tomcatPath)\webapps\ROOT\index.jsp"
 
 # Apache Tomcat service install
 $serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
