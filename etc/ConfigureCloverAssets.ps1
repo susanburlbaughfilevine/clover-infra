@@ -84,4 +84,6 @@ $tomcatService | Start-Service -Verbose
 $tomcatService | Set-Service -StartupType Automatic
 
 # Create firewall rule for inbound web traffic
-New-NetFirewallRule -DisplayName clover-web -Protocol tcp -Name clover-web -Enabled True -Direction Inbound -Action Allow -LocalPort 80
+if ( -not ((Get-NetFirewallRule -Name clover-web -ErrorAction SilentlyContinue).count -eq 1)) {
+    New-NetFirewallRule -DisplayName clover-web -Protocol tcp -Name clover-web -Enabled True -Direction Inbound -Action Allow -LocalPort 80
+}
