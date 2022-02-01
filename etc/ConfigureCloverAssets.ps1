@@ -1,10 +1,41 @@
 $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets-manifest.psd1
 
 # Stop any running Java and Tomcat processes. This must be done, or the jdk directory cannot be replaced on a running Clover instance
-# Attempt to perform this a maximum of 5 times, waiting 1 second after each
 
-(Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
-(Get-Service | Where-Object {$_.Name -like "Tomcat9"}).ForEach({Stop-Service -Name "Tomcat9" -Verbose -Force})
+$stopping = $true
+$retryMax = 10
+
+while ($stopping)
+{
+    $currentRetries = 0
+
+    try
+    {
+        if ($currentRetries -ge $retryMax)
+        {
+            $stopping = $false
+            throw "Failed to stop java and tomcat processes within specified retry count"
+        }
+
+        (Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
+        (Get-Service | Where-Object {($_.Name -eq "Tomcat9") -and ($_.Status -eq "Running")}).ForEach({Stop-Service -Name "Tomcat9" -Force -Verbose -ErrorAction Stop})
+
+        if ((Get-Service -Name "Tomcat9").Status -eq "Stopped") 
+        {
+            $stopping = $false
+        }
+        else
+        {
+            throw "Failed to stop Tomcat service."
+        }
+    }
+    catch
+    {
+        Write-Output "Retrying..."
+        $currentRetries++
+        Start-Sleep 2
+    }
+}
 
 Invoke-Expression 'cmd.exe /c "sc delete Tomcat9"'
 
