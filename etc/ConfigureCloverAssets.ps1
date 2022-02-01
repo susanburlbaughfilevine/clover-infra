@@ -4,11 +4,10 @@ $config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets
 
 $stopping = $true
 $retryMax = 10
+$currentRetries = 0
 
 while ($stopping)
 {
-    $currentRetries = 0
-
     try
     {
         if ($currentRetries -ge $retryMax)
