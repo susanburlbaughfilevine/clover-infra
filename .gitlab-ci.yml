@@ -42,7 +42,7 @@ pack-master:
         Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
         octo pack --id="cloverdx-windows" --version="${gitversion}" --include="terraform/"
-        octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets.zip"'
+        octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets/"'
   artifacts:
     paths:
       - "*nupkg"
@@ -78,7 +78,7 @@ pack-branch:
         Remove-Item -Recurse -Force .git/
         octo version
         octo pack --id="cloverdx-windows" --version="${nupkgversion}" --include="terraform/"
-        octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"'
+        octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets/"'
   artifacts:
     paths:
       - "*nupkg"

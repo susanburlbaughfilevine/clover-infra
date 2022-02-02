@@ -19,7 +19,7 @@ while ($stopping)
         (Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
         (Get-Service | Where-Object {($_.Name -eq "Tomcat9") -and ($_.Status -eq "Running")}).ForEach({Stop-Service -Name "Tomcat9" -Force -Verbose -ErrorAction Stop})
 
-        if ((Get-Service -Name "Tomcat9").Status -eq "Stopped") 
+        if ((Get-Service -Name "Tomcat9").Status -eq "Stopped")
         {
             $stopping = $false
         }
