@@ -28,7 +28,8 @@ build:
         '
   artifacts:
     paths:
-      - "./"
+      - "./clover-assets"
+      - "./terraform"
     expire_in:
       12 hours
 
