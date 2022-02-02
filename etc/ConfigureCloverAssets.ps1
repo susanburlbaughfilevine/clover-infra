@@ -1,4 +1,8 @@
-$config = Import-PowershellDataFile $env:SYSTEMDRIVE\clover-assets\clover-assets-manifest.psd1
+param(
+    $packageDir
+)
+
+$config = Import-PowershellDataFile $packageDir\clover-assets\clover-assets-manifest.psd1
 
 # Stop any running Java and Tomcat processes. This must be done, or the jdk directory cannot be replaced on a running Clover instance
 
@@ -47,8 +51,8 @@ $tomcatDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\tomcat
 $jdkDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\jdk
 $jdkPath = Join-Path -Path $jdkDirectory.FullName -ChildPath ($config["jdk"].PackageName).Replace(".zip","")
 $tomcatPath = Join-Path -Path $tomcatDirectory.FullName -ChildPath $config["tomcat"].PackageName.Replace(".zip","")
-Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["tomcat"].PackageName) -Destination $tomcatDirectory.FullName
-Expand-Archive $env:SYSTEMDRIVE\clover-assets\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
+Expand-Archive $packageDir\clover-assets\$($config["tomcat"].PackageName) -Destination $tomcatDirectory.FullName
+Expand-Archive $packageDir\clover-assets\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
 
 # Configure Tomcat installation
 [Environment]::SetEnvironmentVariable("JAVA_HOME", "$jdkPath", "Machine")
@@ -58,45 +62,45 @@ $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine
 
 # SecureCfgTool install
 New-Item -Type Directory -Path $tomcatPath\webapps\clover\
-Set-Location $env:SYSTEMDRIVE\clover-assets\
-Expand-Archive "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName)" -Force
-Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
+Set-Location $packageDir\clover-assets\
+Expand-Archive "$($packageDir)\clover-assets\$($config["securecfg"].PackageName)" -Force
+Copy-Item -Path "$($packageDir)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\lib\" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\" -Recurse
 
 # Encrypt RDS password
-Set-Location "$($env:SYSTEMDRIVE)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
-$c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName) --batch $($env:RDS_INSTANCE_PASSWORD)"
+Set-Location "$($packageDir)\clover-assets\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+$c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($packageDir)\clover-assets\$($config["bouncycastle"].PackageName) --batch $($env:RDS_INSTANCE_PASSWORD)"
 $encryptedPass = Invoke-Expression $c
 
-$serverProperties = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloverServer.properties)
+$serverProperties = (Get-Content -Path $packageDir\clover-assets\config\cloverServer.properties)
 $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
 $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$env:RDS_INSTANCE_ADDRESS)
 $serverProperties = $serverProperties.Replace("##rdsDbPassword##", $encryptedPass)
 $serverProperties = $serverProperties.Replace("##sandboxbase##", "$($env:SYSTEMDRIVE)/")
 $serverProperties | Out-File -FilePath "$tomcatPath\conf\cloverServer.properties" -Encoding utf8
 
-Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
-$setEnvScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
+Copy-Item -Path $packageDir\clover-assets\config\clover-server.xml -Destination "$tomcatPath\conf\server.xml"
+$setEnvScript = (Get-Content -Path $packageDir\clover-assets\config\setenv.bat).Replace("##tomcatConfDir##","$tomcatPath\conf\cloverServer.properties")
 $setEnvScript | Out-File -FilePath "$tomcatPath\bin\setenv.bat" -Encoding utf8
 
 # CloverDX Server and Profiler Server Installation
 Set-Location $tomcatPath\webapps\clover\
-& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\clover.war
+& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $packageDir\clover-assets\clover.war
 
 New-Item -Type Directory -Path $tomcatPath\webapps\profiler
 Set-Location $tomcatPath\webapps\profiler\
-& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $env:SYSTEMDRIVE\clover-assets\profiler.war
+& "$($env:JAVA_HOME)\bin\jar.exe" -xvf $packageDir\clover-assets\profiler.war
 
 # BouncyCastle Install
-Copy-Item -Path "$($env:SYSTEMDRIVE)\clover-assets\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
+Copy-Item -Path "$($packageDir)\clover-assets\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
 
 # Filevine Branding
-Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\FVBranding5.6.0.zip -Destination $tomcatDirectory
+Copy-Item -Path $packageDir\clover-assets\FVBranding5.6.0.zip -Destination $tomcatDirectory
 
 # PostgreSql JDBC driver installation
-Copy-Item -Path $env:SYSTEMDRIVE\clover-assets\$($config["pg_jdbc"].PackageName) -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
+Copy-Item -Path $packageDir\clover-assets\$($config["pg_jdbc"].PackageName) -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
 
 # Properties files must be writable by CloverDX
-Import-Module "$($env:SYSTEMDRIVE)\clover-assets\Set-UserWritablePermissions.ps1"
+Import-Module "$($packageDir)\clover-assets\Set-UserWritablePermissions.ps1"
 Set-UserWritablePermissions -filepath "$tomcatPath\conf\cloverServer.properties"
 
 # Create HTTP redirect to /clover. Not doing this
@@ -106,7 +110,7 @@ New-Item -Type File -Path "$($tomcatPath)\webapps\ROOT\index.jsp"
 Set-Content -Value '<% response.sendRedirect("/clover"); %>' -Path "$($tomcatPath)\webapps\ROOT\index.jsp"
 
 # Apache Tomcat service install
-$serviceInstallScript = (Get-Content -Path $env:SYSTEMDRIVE\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
+$serviceInstallScript = (Get-Content -Path $packageDir\clover-assets\config\cloversetup.bat).Replace("##tomcatConfDir##","$($tomcatPath)\conf\cloverServer.properties")
 $serviceInstallScript | Out-File -FilePath "$tomcatPath\bin\cloversetup.bat" -Encoding default
 Start-Process -FilePath "$tomcatPath\bin\cloversetup.bat" -WorkingDirectory $tomcatPath\bin\ -Wait
 $tomcatService = Get-Service "tomcat9"
