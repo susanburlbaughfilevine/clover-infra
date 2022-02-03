@@ -9,7 +9,7 @@ Set-Location $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPat
 
 & ./ConfigureCloverAssets.ps1 $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
-Import-Module .\cloverdx-utilities\clover-dx-api.psm1
+Import-Module .\cloverdx-utilities\api-module.psm1
 
 if ($isFirstDeploy)
 {

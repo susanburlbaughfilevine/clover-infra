@@ -20,7 +20,7 @@ while ($stopping)
             throw "Failed to stop java and tomcat processes within specified retry count"
         }
 
-        (Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*")}).ForEach({$_ | Stop-Process -Verbose -Force})
+        (Get-Process | Where-Object {($_.name -like "*java*") -or ($_.name -like "*tomcat*") -or ($_.Name -like "*typeperf")}).ForEach({$_ | Stop-Process -Verbose -Force})
         (Get-Service | Where-Object {($_.Name -eq "Tomcat9") -and ($_.Status -eq "Running")}).ForEach({Stop-Service -Name "Tomcat9" -Force -Verbose -ErrorAction Stop})
 
         if ((Get-Service -Name "Tomcat9").Status -eq "Stopped")
@@ -42,8 +42,8 @@ while ($stopping)
 
 Invoke-Expression 'cmd.exe /c "sc delete Tomcat9"'
 
-Write-Host "Waiting 10 seconds for Tomcat service to actually die..."
-Start-Sleep 10
+Write-Host "Waiting 5 seconds for any open file handles to actually die..."
+Start-Sleep 5
 
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
