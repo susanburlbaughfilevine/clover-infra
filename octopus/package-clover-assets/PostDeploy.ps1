@@ -25,11 +25,11 @@ if (_isFirstDeploy)
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml" -Raw
 
         $params = @{
-            dryRun         = $false;
-            $include       = $configType;
-            $configuration = $config;
-            $credential    = $credential;
-            $BaseUrl       = "http://localhost"
+            "dryRun"         = $false;
+            "include"       = $configType;
+            "configuration" = $config;
+            "credential"   = $credential;
+            "BaseUrl"       = "http://localhost"
         }
 
         Set-ServerConfiguration @params
@@ -56,15 +56,13 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
     }
 
     $params = @{
-        dryRun         = $false;
-        $include       = $configType;
-        $configuration = $config;
-        $credential    = $credential;
-        $BaseUrl       = "http://localhost"
+        "dryRun"         = $false;
+        "include"       = $configType;
+        "configuration" = $config;
+        "credential"    = $credential;
+        "BaseUrl"       = "http://localhost"
     }
 
     Set-ServerConfiguration @params
 }
-
-
 
