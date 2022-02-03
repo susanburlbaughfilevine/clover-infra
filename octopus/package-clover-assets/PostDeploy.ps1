@@ -13,7 +13,7 @@ Import-Module .\cloverdx-utilities\api-module.psm1
 
 if (_isFirstDeploy)
 {
-    Write-Output "We've determined that this is the first deploy for $($OctopusParameters['Octopus.Environment.Tenant.Name'])"
+    Write-Output "We've determined that this is the first deploy for $($OctopusParameters['Octopus.Deployment.Tenant.Name'])"
     Write-Output "Performing initial user configuration"
 
     # Post deploy, this username/password combination will no longer be valid. 
@@ -21,7 +21,7 @@ if (_isFirstDeploy)
 
     foreach ($configType in @("users"))
     {
-        $config = Get-Content "./config/CloverDX/$include/$($OctopusParameters['Octopus.Environment.Tenant.Name']).$($include).xml" -Raw
+        $config = Get-Content "./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml" -Raw
 
         $params = @{
             dryRun         = $false;
@@ -41,16 +41,16 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
 {
     try
     {
-        $config = Get-Content "./config/CloverDX/$include/$($OctopusParameters['Octopus.Environment.Tenant.Name']).$($include.ToLower()).xml" -Raw
+        $config = Get-Content "./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType.ToLower()).xml" -Raw
     }
     catch [System.Management.Automation.ItemNotFoundException]
     {
-        Write-Host "A $($configType) configuration at /config/CloverDX/$include/$($OctopusParameters['Octopus.Environment.Tenant.Name']).$($include).xml was not found."
+        Write-Host "A $($configType) configuration at /config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml was not found."
         Write-Host "Please place a $($configType) configuration in the directory shown above and try again."
     }
     catch
     {
-        Write-Host "Failed to read configuration at ./config/CloverDX/$include/$($OctopusParameters['Octopus.Environment.Tenant.Name']).$($include).xml"
+        Write-Host "Failed to read configuration at ./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml"
         throw $_.Exception
     }
 
