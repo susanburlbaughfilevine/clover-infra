@@ -49,6 +49,7 @@ function New-CloverAssetsPackage
                     }
                 }
             }
+            Copy-Item -Path ./cloverdx-utilities/ -Destination clover-assets/
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
             Copy-Item -Path ./etc/ConfigureCloverAssets.ps1 -Destination clover-assets/
