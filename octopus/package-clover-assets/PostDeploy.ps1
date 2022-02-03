@@ -11,7 +11,7 @@ Set-Location $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPat
 
 Import-Module .\cloverdx-utilities\api-module.psm1
 
-if ($isFirstDeploy)
+if (_isFirstDeploy)
 {
     Write-Output "We've determined that this is the first deploy for $($OctopusParameters['Octopus.Environment.TenantName'])"
     Write-Output "Performing initial user configuration"
