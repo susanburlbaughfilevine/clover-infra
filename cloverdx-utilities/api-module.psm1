@@ -1,6 +1,11 @@
 #order of operations
 # userGroups, users, sandboxes, 
 
+function _isFirstDeploy()
+{
+    # initial_deploy_complete variable should be defined in octopus
+    return (!$initial_deploy_complete)
+}
 function New-BasicCredential
 {
     [cmdletbinding()]

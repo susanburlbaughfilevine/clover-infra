@@ -42,6 +42,9 @@ while ($stopping)
 
 Invoke-Expression 'cmd.exe /c "sc delete Tomcat9"'
 
+Write-Host "Waiting 10 seconds for Tomcat service to actually die..."
+Start-Sleep 10
+
 # Delete old JDK and Tomcat directories. If we need to revert due to an issue, deploy an older release
 if (Test-Path "$($env:SYSTEMDRIVE)\jdk") {Remove-Item $env:SYSTEMDRIVE\jdk -Recurse -Force}
 if (Test-Path "$($env:SYSTEMDRIVE)\tomcat") {Remove-Item $env:SYSTEMDRIVE\tomcat -Recurse -Force}

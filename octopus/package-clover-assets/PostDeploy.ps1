@@ -9,13 +9,12 @@ Set-Location $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPat
 
 & ./ConfigureCloverAssets.ps1 $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
+Import-Module .\cloverdx-utilities\clover-dx-api.psm1
 
 if ($isFirstDeploy)
 {
     Write-Output "We've determined that this is the first deploy for $($OctopusParameters['Octopus.Environment.TenantName'])"
     Write-Output "Performing initial user configuration"
-
-    Import-Module .\cloverdx-utilities\clover-dx-api.psm1
 
     # Post deploy, this username/password combination will no longer be valid. 
     $credential = New-BasicCredential -UserName "clover" -Password "clover"
