@@ -5,11 +5,12 @@ $env:RDS_INSTANCE_ADDRESS=$db_instance_address
 
 $env:RDS_INSTANCE_PASSWORD=$rds_user_password
 
-Set-Location $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
+$packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
+Set-Location $packagePath
 
-& ./ConfigureCloverAssets.ps1 $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
+& ./ConfigureCloverAssets.ps1 $packagePath
 
-Import-Module .\cloverdx-utilities\api-module.psm1
+Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
 
 if (_isFirstDeploy)
 {
@@ -21,7 +22,7 @@ if (_isFirstDeploy)
 
     foreach ($configType in @("users"))
     {
-        $config = Get-Content "./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml" -Raw
+        $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml" -Raw
 
         $params = @{
             dryRun         = $false;
@@ -41,16 +42,16 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
 {
     try
     {
-        $config = Get-Content "./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType.ToLower()).xml" -Raw
+        $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType.ToLower()).xml" -Raw
     }
     catch [System.Management.Automation.ItemNotFoundException]
     {
-        Write-Host "A $($configType) configuration at /config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml was not found."
+        Write-Host "A $($configType) configuration at $($packagePath)/config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml was not found."
         Write-Host "Please place a $($configType) configuration in the directory shown above and try again."
     }
     catch
     {
-        Write-Host "Failed to read configuration at ./config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml"
+        Write-Host "Failed to read configuration at $($packagePath)/config/CloverDX/$configType/$($OctopusParameters['Octopus.Deployment.Tenant.Name']).$($configType).xml"
         throw $_.Exception
     }
 
