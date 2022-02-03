@@ -5,9 +5,9 @@ $env:RDS_INSTANCE_ADDRESS=$db_instance_address
 
 $env:RDS_INSTANCE_PASSWORD=$rds_user_password
 
-cd $OctopusParameters['Octopus.Action.Output.Package.InstallationDirectoryPath']
+Set-Location $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
-& ./ConfigureCloverAssets.ps1 $OctopusParameters['Octopus.Action.Output.Package.InstallationDirectoryPath']
+& ./ConfigureCloverAssets.ps1 $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
 
 if ($isFirstDeploy)

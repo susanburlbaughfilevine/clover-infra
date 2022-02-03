@@ -17,6 +17,7 @@ function New-BasicCredential
         New-Object System.Management.Automation.PSCredential ($UserName, $secStringPassword)
     )
 }
+
 function Get-ServerConfiguration
 {
     [cmdletbinding()]
@@ -41,7 +42,6 @@ function Get-ServerConfiguration
         Invoke-RestMethod @params
     )
 }
-
 
 # $config = get-content .\config\CloverDX\sandboxes\dm-dev.sandboxes.xml -Raw
 function Set-ServerConfiguration
