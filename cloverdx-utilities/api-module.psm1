@@ -1,6 +1,25 @@
 #order of operations
 # userGroups, users, sandboxes, 
 
+function Encrypt-CloverDxValue
+{
+    [cmdletbinding()]
+    Param
+    (
+        [string]$PlainText,
+        [string]$SecureCfgDirectory
+    )
+
+    Write-Output "Encrypting value using org.bouncycastle.jce.provider.BouncyCastleProvider"
+
+    Set-Location $SecureCfgDirectory
+    $c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($SecureCfgDirectory)\$($config["bouncycastle"].PackageName) --batch $($clover_admin_password)"
+    $encryptedPass = Invoke-Expression $c
+    return $encryptedPass
+}
+
+
+
 function _isFirstDeploy()
 {
     # initial_deploy_complete variable should be defined in octopus

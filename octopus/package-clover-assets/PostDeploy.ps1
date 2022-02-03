@@ -21,15 +21,27 @@ if (_isFirstDeploy)
 
     # Post deploy, this username/password combination will no longer be valid. 
     $credential = New-BasicCredential -UserName "clover" -Password "clover"
+    $config = Import-PowershellDataFile "$($packagePath)\clover-assets-manifest.psd1"
 
     foreach ($configType in @("users"))
     {
-        $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml" -Raw
+        $encryptedPassword = Encrypt-CloverDxValue -PlainText $clover_admin_password -SecureCfgDirectory "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+
+        $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
+        [xml]$baseXml = Get-Content $configFullPath -Raw
+        $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
+        $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
+        $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
+        $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
+        $cloverUserNode.'#text' = $encryptedPassword
+        $baseXml.Save($configFullPath)
+
+        $resultantXml = Get-Content $configFullPath -Raw
 
         $params = @{
             "dryRun"         = $false;
             "include"       = $configType;
-            "configuration" = $config;
+            "configuration" = $resultantXml;
             "credential"   = $credential;
             "BaseUrl"       = "http://localhost"
         }
