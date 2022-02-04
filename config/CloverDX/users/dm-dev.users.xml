@@ -19,7 +19,7 @@
       <cs:lastName>Administrator</cs:lastName>
       <cs:email></cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="false">#025LoJfNHj4qo9rv//gYyHOw9lvE3z8+JeuU7QLBmz/YHydFZQXQAUd/zKB4DvhtXRZXG45lIZobVF2hqie7lQqzLRgC2zMUVlNssr/cwGitghDrvQSwe7aTNxow==</cs:password>
+      <cs:password plainText="true">#025LoJfNHj4qo9rv//gYyHOw9lvE3z8+JeuU7QLBmz/YHydFZQXQAUd/zKB4DvhtXRZXG45lIZobVF2hqie7lQqzLRgC2zMUVlNssr/cwGitghDrvQSwe7aTNxow==</cs:password>
       <cs:userGroups>
         <cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>all_users</cs:groupCode>

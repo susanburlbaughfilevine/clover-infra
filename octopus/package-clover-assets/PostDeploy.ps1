@@ -36,7 +36,7 @@ if (_isFirstDeploy)
                 "SecureCfgDirectory"          = "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
             }
 
-            $encryptedPassword = Encrypt-CloverDxValue @encryptParams
+            #$encryptedPassword = Encrypt-CloverDxValue @encryptParams
 
             $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
             [xml]$baseXml = Get-Content $configFullPath -Raw
@@ -44,7 +44,7 @@ if (_isFirstDeploy)
             $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
             $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
             $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
-            $cloverUserNode.'#text' = $encryptedPassword.ToString()
+            $cloverUserNode.'#text' = $clover_admin_password
             $baseXml.Save($configFullPath)
 
             $resultantXml = Get-Content $configFullPath -Raw

@@ -1,6 +1,3 @@
-#order of operations
-# userGroups, users, sandboxes, 
-
 function Encrypt-CloverDxValue
 {
     [cmdletbinding()]
