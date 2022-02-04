@@ -19,7 +19,7 @@
       <cs:code>ArchiveImportServerDB</cs:code>
       <cs:name>ArchiveImportServerDB</cs:name>
       <cs:rootPath>${sandboxes.home}/ArchiveImportServerDB</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -74,7 +74,7 @@
       <cs:code>DEV_DocScan</cs:code>
       <cs:name>DEV_DocScan</cs:name>
       <cs:rootPath>${sandboxes.home}/DEV_DocScan</cs:rootPath>
-      <cs:ownerUsername>susan</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -84,7 +84,7 @@
       <cs:code>DataExport_US</cs:code>
       <cs:name>DataExport_US</cs:name>
       <cs:rootPath>${sandboxes.home}/DataExport_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -94,7 +94,7 @@
       <cs:code>Dataloader_US</cs:code>
       <cs:name>Dataloader_US</cs:name>
       <cs:rootPath>${sandboxes.home}/Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -177,7 +177,7 @@
       <cs:code>DevSB_Fv2FVExport</cs:code>
       <cs:name>DevSB_Fv2FVExport</cs:name>
       <cs:rootPath>${sandboxes.home}/DevSB_Fv2FVExport</cs:rootPath>
-      <cs:ownerUsername>susan</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -187,7 +187,7 @@
       <cs:code>Dev_Bill_Dataloader_US</cs:code>
       <cs:name>Dev_Bill_Dataloader_US</cs:name>
       <cs:rootPath>${sandboxes.home}/Dev_Bill_Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -197,7 +197,7 @@
       <cs:code>Dev_Dataloader_US</cs:code>
       <cs:name>Dev_Dataloader_US</cs:name>
       <cs:rootPath>${sandboxes.home}/Dev_Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -284,7 +284,7 @@
       <cs:code>Dev_StagingEmailConfirmationRequest</cs:code>
       <cs:name>Dev_StagingEmailConfirmationRequest</cs:name>
       <cs:rootPath>${sandboxes.home}/Dev_StagingEmailConfirmationRequest</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -315,7 +315,7 @@
       <cs:code>Development_S3_DocScan_App_CJIS</cs:code>
       <cs:name>Development_S3_DocScan_App_CJIS</cs:name>
       <cs:rootPath>${sandboxes.home}/Development_S3_DocScan_App_CJIS</cs:rootPath>
-      <cs:ownerUsername>susan</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -325,7 +325,7 @@
       <cs:code>Development_S3_DocScan_App_US</cs:code>
       <cs:name>Development_S3_DocScan_App_US</cs:name>
       <cs:rootPath>${sandboxes.home}/Development_S3_DocScan_App_US</cs:rootPath>
-      <cs:ownerUsername>susan</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -356,7 +356,7 @@
       <cs:code>S3_DocScan_App_US</cs:code>
       <cs:name>S3_DocScan_App_US</cs:name>
       <cs:rootPath>${sandboxes.home}/S3_DocScan_App_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
         <cs:permission>
@@ -439,7 +439,7 @@
       <cs:code>Sandbox_SB</cs:code>
       <cs:name>Sandbox_SB</cs:name>
       <cs:rootPath>${sandboxes.home}/Sandbox_SB</cs:rootPath>
-      <cs:ownerUsername>susan</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -449,7 +449,7 @@
       <cs:code>SeededDataLookup</cs:code>
       <cs:name>SeededDataLookup</cs:name>
       <cs:rootPath>${sandboxes.home}/SeededDataLookup</cs:rootPath>
-      <cs:ownerUsername>davidcruz</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -459,7 +459,7 @@
       <cs:code>StandardDataExports_US</cs:code>
       <cs:name>StandardDataExports_US</cs:name>
       <cs:rootPath>${sandboxes.home}/StandardDataExports_US</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -469,7 +469,7 @@
       <cs:code>TestExportLegacyDBAsCSVs</cs:code>
       <cs:name>TestExportLegacyDBAsCSVs</cs:name>
       <cs:rootPath>${sandboxes.home}/TestExportLegacyDBAsCSVs</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -502,7 +502,7 @@
       <cs:code>scratch</cs:code>
       <cs:name>scratch</cs:name>
       <cs:rootPath>${sandboxes.home}/scratch</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -512,7 +512,7 @@
       <cs:code>scratch2</cs:code>
       <cs:name>scratch2</cs:name>
       <cs:rootPath>${sandboxes.home}/scratch2</cs:rootPath>
-      <cs:ownerUsername>billporter</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
@@ -522,7 +522,7 @@
       <cs:code>susan_scratch</cs:code>
       <cs:name>susan_scratch</cs:name>
       <cs:rootPath>${sandboxes.home}/susan_scratch</cs:rootPath>
-      <cs:ownerUsername>clover_etl_login</cs:ownerUsername>
+      <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
