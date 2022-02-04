@@ -40,7 +40,7 @@ if (_isFirstDeploy)
         $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
         $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
         $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
-        $cloverUserNode.'#text' = $encryptedPassword
+        $cloverUserNode.'#text' = $encryptedPassword.ToString()
         $baseXml.Save($configFullPath)
 
         $resultantXml = Get-Content $configFullPath -Raw
@@ -86,4 +86,3 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
 
     Set-ServerConfiguration @params
 }
-
