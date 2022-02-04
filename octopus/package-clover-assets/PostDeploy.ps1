@@ -18,6 +18,7 @@ if (_isFirstDeploy)
 {
     Write-Output "We've determined that this is the first deploy for $($tenantName)"
     Write-Output "Performing initial user configuration"
+    Write-Output "Here is the clover_admin_password $($clover_admin_password)"
 
     # Post deploy, this username/password combination will no longer be valid. 
     $credential = New-BasicCredential -UserName "clover" -Password "clover"
@@ -44,6 +45,9 @@ if (_isFirstDeploy)
         $baseXml.Save($configFullPath)
 
         $resultantXml = Get-Content $configFullPath -Raw
+
+        Write-Output "Here is the XML"
+        $resultantXml
 
         $params = @{
             "dryRun"         = $false;
