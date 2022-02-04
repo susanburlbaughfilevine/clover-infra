@@ -17,7 +17,6 @@ if (_isFirstDeploy)
 {
     Write-Output "We've determined that this is the first deploy for $($tenantName)"
     Write-Output "Performing initial user configuration"
-    Write-Output "Here is the clover_admin_password $($clover_admin_password)"
 
     # Post deploy, this username/password combination will no longer be valid. 
     $credential = New-BasicCredential -UserName "clover" -Password "clover"
@@ -29,14 +28,6 @@ if (_isFirstDeploy)
 
         if ($configType -eq "users")
         {
-            $encryptParams = @{
-                "EncryptionProviderDirectory" = $packagePath;
-                "PlainText"                   = $clover_admin_password;
-                "SecureCfgDirectory"          = "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
-            }
-
-            #$encryptedPassword = Encrypt-CloverDxValue @encryptParams
-
             $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
             [xml]$baseXml = Get-Content $configFullPath -Raw
             $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
@@ -47,9 +38,6 @@ if (_isFirstDeploy)
             $baseXml.Save($configFullPath)
 
             $resultantXml = Get-Content $configFullPath -Raw
-
-            Write-Output "Here is the XML"
-            $resultantXml
         }
 
         if ($configType -eq "userGroups")
@@ -72,7 +60,7 @@ if (_isFirstDeploy)
 
 $credential = New-BasicCredential -UserName "clover" -Password $clover_admin_password
 
-foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eventListeners","dataServices","tempSpaces","operationsDashboards"))
+foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {
     try
     {

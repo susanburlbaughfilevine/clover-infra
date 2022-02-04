@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="billporter" timeZone="UTC" timestamp="2022-02-04T19:46:16.542Z">
+  <cs:exportOptions>
+    <cs:exportUsers>false</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>true</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList/>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>

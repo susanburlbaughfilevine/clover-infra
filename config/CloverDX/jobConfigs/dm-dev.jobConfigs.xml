@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="billporter" timeZone="UTC" timestamp="2022-02-04T19:45:39.936Z">
+  <cs:exportOptions>
+    <cs:exportUsers>false</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>true</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>false</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList/>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList>
+    <cs:jobConfig>
+      <cs:id>4</cs:id>
+      <cs:sandboxCode>S3_DocScan_App_US</cs:sandboxCode>
+      <cs:propertyKey>verbose_mode</cs:propertyKey>
+      <cs:value>true</cs:value>
+      <cs:additional>false</cs:additional>
+    </cs:jobConfig>
+    <cs:jobConfig>
+      <cs:id>3</cs:id>
+      <cs:sandboxCode>Dataloader_US</cs:sandboxCode>
+      <cs:propertyKey>verbose_mode</cs:propertyKey>
+      <cs:value>true</cs:value>
+      <cs:additional>false</cs:additional>
+    </cs:jobConfig>
+    <cs:jobConfig>
+      <cs:id>2</cs:id>
+      <cs:sandboxCode>Dev_Dataloader_US</cs:sandboxCode>
+      <cs:propertyKey>verbose_mode</cs:propertyKey>
+      <cs:value>true</cs:value>
+      <cs:additional>false</cs:additional>
+    </cs:jobConfig>
+  </cs:jobConfigsList>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>
