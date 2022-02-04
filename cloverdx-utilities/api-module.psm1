@@ -7,13 +7,14 @@ function Encrypt-CloverDxValue
     Param
     (
         [string]$PlainText,
-        [string]$SecureCfgDirectory
+        [string]$SecureCfgDirectory,
+        [string]$EncryptionProviderDirectory
     )
 
     Write-Output "Encrypting value using org.bouncycastle.jce.provider.BouncyCastleProvider"
 
     Set-Location $SecureCfgDirectory
-    $c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($SecureCfgDirectory)\$($config["bouncycastle"].PackageName) --batch $($clover_admin_password)"
+    $c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($EncryptionProviderDirectory)\$($config["bouncycastle"].PackageName) --batch $($clover_admin_password)"
     $encryptedPass = Invoke-Expression $c
     return $encryptedPass
 }

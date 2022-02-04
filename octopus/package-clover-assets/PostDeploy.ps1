@@ -25,7 +25,14 @@ if (_isFirstDeploy)
 
     foreach ($configType in @("users"))
     {
-        $encryptedPassword = Encrypt-CloverDxValue -PlainText $clover_admin_password -SecureCfgDirectory "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+
+        $encryptParams = @{
+            "EncryptionProviderDirectory" = $packagePath;
+            "PlainText"                   = $clover_admin_password;
+            "SecureCfgDirectory"          = "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+        }
+
+        $encryptedPassword = Encrypt-CloverDxValue @encryptParams
 
         $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
         [xml]$baseXml = Get-Content $configFullPath -Raw
@@ -40,10 +47,10 @@ if (_isFirstDeploy)
 
         $params = @{
             "dryRun"         = $false;
-            "include"       = $configType;
-            "configuration" = $resultantXml;
-            "credential"   = $credential;
-            "BaseUrl"       = "http://localhost"
+            "include"        = $configType;
+            "configuration"  = $resultantXml;
+            "credential"     = $credential;
+            "BaseUrl"        = "http://localhost"
         }
 
         Set-ServerConfiguration @params
