@@ -1,14 +1,13 @@
 # This script is run automatcially by Octopus Deploy
 # https://octopus.com/docs/deployments/custom-scripts/scripts-in-packages
 
-$env:RDS_INSTANCE_ADDRESS=$db_instance_address
-
-$env:RDS_INSTANCE_PASSWORD=$rds_user_password
-
 $packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
+
 Set-Location $packagePath
 
-& ./ConfigureCloverAssets.ps1 $packagePath
+Import-Module ./Install-CloverDxServer.psm1
+
+Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_password -DbInstanceAddress $db_instance_address
 
 Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
 
@@ -78,6 +77,16 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
     try
     {
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
+
+        $params = @{
+            "dryRun"         = $false;
+            "include"       = $configType;
+            "configuration" = $config;
+            "credential"    = $credential;
+            "BaseUrl"       = "http://localhost"
+        }
+
+        Set-ServerConfiguration @params
     }
     catch [System.Management.Automation.ItemNotFoundException]
     {
@@ -89,14 +98,4 @@ foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eve
         Write-Host "Failed to read configuration at $($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
         throw $_.Exception
     }
-
-    $params = @{
-        "dryRun"         = $false;
-        "include"       = $configType;
-        "configuration" = $config;
-        "credential"    = $credential;
-        "BaseUrl"       = "http://localhost"
-    }
-
-    Set-ServerConfiguration @params
 }

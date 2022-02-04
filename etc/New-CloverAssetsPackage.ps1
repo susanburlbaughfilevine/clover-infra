@@ -52,7 +52,7 @@ function New-CloverAssetsPackage
             Copy-Item -Path ./cloverdx-utilities/ -Destination clover-assets/ -Recurse
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
-            Copy-Item -Path ./etc/ConfigureCloverAssets.ps1 -Destination clover-assets/
+            Copy-Item -Path ./etc/Install-CloverDxServer.psm1 -Destination clover-assets/
             Copy-Item -Path ./etc/Set-UserWritablePermissions.ps1 -Destination clover-assets/
             Copy-Item -Path ./clover-assets-manifest.psd1 -Destination clover-assets/
             Copy-Item -Path ./FVBranding5.6.0.zip -Destination clover-assets/
