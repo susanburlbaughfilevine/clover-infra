@@ -24,30 +24,40 @@ if (_isFirstDeploy)
     $credential = New-BasicCredential -UserName "clover" -Password "clover"
     $config = Import-PowershellDataFile "$($packagePath)\clover-assets-manifest.psd1"
 
-    foreach ($configType in @("users"))
+    foreach ($configType in @("userGroups","users"))
     {
+        $resultantXml = ""
 
-        $encryptParams = @{
-            "EncryptionProviderDirectory" = $packagePath;
-            "PlainText"                   = $clover_admin_password;
-            "SecureCfgDirectory"          = "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+        if ($configType -eq "users")
+        {
+            $encryptParams = @{
+                "EncryptionProviderDirectory" = $packagePath;
+                "PlainText"                   = $clover_admin_password;
+                "SecureCfgDirectory"          = "$($packagePath)\$($config["securecfg"].PackageName.Replace('.zip',''))\secure-cfg-tool\"
+            }
+
+            $encryptedPassword = Encrypt-CloverDxValue @encryptParams
+
+            $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
+            [xml]$baseXml = Get-Content $configFullPath -Raw
+            $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
+            $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
+            $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
+            $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
+            $cloverUserNode.'#text' = $encryptedPassword.ToString()
+            $baseXml.Save($configFullPath)
+
+            $resultantXml = Get-Content $configFullPath -Raw
+
+            Write-Output "Here is the XML"
+            $resultantXml
         }
 
-        $encryptedPassword = Encrypt-CloverDxValue @encryptParams
-
-        $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
-        [xml]$baseXml = Get-Content $configFullPath -Raw
-        $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
-        $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
-        $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
-        $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
-        $cloverUserNode.'#text' = $encryptedPassword.ToString()
-        $baseXml.Save($configFullPath)
-
-        $resultantXml = Get-Content $configFullPath -Raw
-
-        Write-Output "Here is the XML"
-        $resultantXml
+        if ($configType -eq "userGroups")
+        {
+            $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
+            $resultantXml = Get-Content $configFullPath -Raw
+        }
 
         $params = @{
             "dryRun"         = $false;

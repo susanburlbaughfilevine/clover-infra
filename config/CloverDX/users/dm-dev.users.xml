@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="billporter" timeZone="UTC" timestamp="2022-01-28T20:32:08.939Z">
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="clover" timeZone="UTC" timestamp="2022-01-28T20:32:08.939Z">
   <cs:exportOptions>
     <cs:exportUsers>true</cs:exportUsers>
     <cs:exportUserGroups>false</cs:exportUserGroups>
@@ -23,7 +23,6 @@
       <cs:userGroups>
         <cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>all_users</cs:groupCode>
-        <cs:groupCode>execute_data_service</cs:groupCode>
       </cs:userGroups>
     </cs:user>
   </cs:usersList>
