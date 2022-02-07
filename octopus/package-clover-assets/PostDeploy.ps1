@@ -1,15 +1,15 @@
 # This script is run automatcially by Octopus Deploy
 # https://octopus.com/docs/deployments/custom-scripts/scripts-in-packages
 
+
+Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
+Import-Module ./Install-CloverDxServer.psm1
+
 $packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
 Set-Location $packagePath
 
-Import-Module ./Install-CloverDxServer.psm1
-
 Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_password -DbInstanceAddress $db_instance_address
-
-Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
 
 $tenantName = $OctopusParameters['Octopus.Deployment.Tenant.Name']
 

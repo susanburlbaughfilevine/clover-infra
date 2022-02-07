@@ -62,7 +62,6 @@ function Get-ServerConfiguration
     )
 }
 
-# $config = get-content .\config\CloverDX\sandboxes\dm-dev.sandboxes.xml -Raw
 function Set-ServerConfiguration
 {
     [cmdletbinding()]

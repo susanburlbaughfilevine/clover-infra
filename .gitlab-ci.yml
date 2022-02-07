@@ -42,6 +42,9 @@ deploy-master:
   script:
     - |
       pwsh -c '
+        Import-Module ./etc/New-CloverAssetsPackage.ps1
+        $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
+        New-CloverAssetsPackage -DependancyManifest $manifest
         gitversion
         $gitversion = (gitversion | convertfrom-json).SemVer
         Remove-Item -Recurse -Force .git/
