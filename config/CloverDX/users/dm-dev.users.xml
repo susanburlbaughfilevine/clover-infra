@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="clover" timeZone="UTC" timestamp="2022-01-28T20:32:08.939Z">
+  <cs:exportOptions>
+    <cs:exportUsers>true</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>false</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList>
+    <cs:user disabled="false">
+      <cs:id>1</cs:id>
+      <cs:username>clover</cs:username>
+      <cs:firstName></cs:firstName>
+      <cs:lastName>Administrator</cs:lastName>
+      <cs:email></cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">#025LoJfNHj4qo9rv//gYyHOw9lvE3z8+JeuU7QLBmz/YHydFZQXQAUd/zKB4DvhtXRZXG45lIZobVF2hqie7lQqzLRgC2zMUVlNssr/cwGitghDrvQSwe7aTNxow==</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>admin</cs:groupCode>
+        <cs:groupCode>all_users</cs:groupCode>
+      </cs:userGroups>
+    </cs:user>
+  </cs:usersList>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>

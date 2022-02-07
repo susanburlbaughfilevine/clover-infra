@@ -3,9 +3,7 @@ variables:
   fileincludeglob: "**/**"
 
 stages:
-  - build
-  - octopus-pack
-  - octopus-push
+  - main
 
 image: 
   name: registry.gitlab.com/filevine/technology/project/filevine-platform/docker-gitlab-runner-linux/master:latest
@@ -15,87 +13,21 @@ default:
     - internal
     - linux
 
-build:
-  stage: build
+deploy-branch:
+  stage: main
   script:
     - |
       pwsh -c '
-        Write-Output "Remove the Git Directory (causes issues)"
-        Remove-Item -Recurse -Force .git/
         Import-Module ./etc/New-CloverAssetsPackage.ps1
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
-        '
-  artifacts:
-    paths:
-      - "./"
-    expire_in:
-      12 hours
-
-pack-master:
-  stage: octopus-pack
-  script:
-    - |
-      pwsh -c '
-        gitversion
-        $gitversion = (gitversion | convertfrom-json).SemVer
-        Write-Output "Remove the Git Directory (causes issues)"
-        Remove-Item -Recurse -Force .git/
-        octo pack --id="cloverdx-windows" --version="${gitversion}" --include="terraform/"
-        octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets.zip"'
-  artifacts:
-    paths:
-      - "*nupkg"
-    expire_in:
-      60 minutes
-  only:
-    - master
-
-push-master:
-  stage: octopus-push
-  script:
-    - |
-      pwsh -c '
-        $gitversion = (gitversion | convertfrom-json).SemVer
-        octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
-        octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
-        # Also create release for Clover Assets project
-        octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
-        octo create-release --project="Deploy CloverDX Server - Windows" --space="MigrateTech-CloverDX" --packageVersion="${gitversion}" --package="Deploy a Release:${gitversion}" --version="${gitversion}" --ignoreExisting'
-  only:
-    - master
-
-pack-branch:
-  stage: octopus-pack
-  script:
-    - |
-      pwsh -c '
-        gitversion
         $gitversion = gitversion | convertfrom-json
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
-        Write-Output "Remove the Git Directory (causes issues)"
         Remove-Item -Recurse -Force .git/
         octo version
         octo pack --id="cloverdx-windows" --version="${nupkgversion}" --include="terraform/"
-        octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets.zip"'
-  artifacts:
-    paths:
-      - "*nupkg"
-    expire_in:
-      60 minutes
-  except:
-    - master
-    - tags
-
-push-branch:
-  stage: octopus-push
-  script:
-    - |
-      pwsh -c '
-        $gitversion = gitversion | convertfrom-json
-        $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
-        $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
+        octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets/"
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         # Also create release for Clover Assets project
@@ -104,3 +36,20 @@ push-branch:
   except:
     - master
     - tags
+
+deploy-master:
+  stage: main
+  script:
+    - |
+      pwsh -c '
+        gitversion
+        $gitversion = (gitversion | convertfrom-json).SemVer
+        Remove-Item -Recurse -Force .git/
+        octo pack --id="cloverdx-windows" --version="${gitversion}" --include="terraform/"
+        octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets/"
+        octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
+        octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
+        octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+        octo create-release --project="Deploy CloverDX Server - Windows" --space="MigrateTech-CloverDX" --packageVersion="${gitversion}" --package="Deploy a Release:${gitversion}" --version="${gitversion}" --ignoreExisting'
+  only:
+    - master
