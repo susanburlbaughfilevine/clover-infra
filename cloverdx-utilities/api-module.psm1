@@ -92,3 +92,38 @@ function Set-ServerConfiguration
         Invoke-RestMethod @params
     )
 }
+
+function New-CloverDxSandbox
+{
+    [cmdletbinding()]
+    Param
+    (
+        [Parameter(Mandatory=$true)]
+        [string]$SandboxCode,
+
+        [Parameter(Mandatory=$true)]
+        [string]$BaseUrl,
+
+        [Parameter(Mandatory=$true)]
+        [pscredential]$Credentials,
+
+        [Parameter(Mandatory=$false)]
+        [switch]$CreateSandboxDirectory
+    )
+
+    $headers = @{"X-Requested-By"="Filevine CloverDX Powershell Module"}
+
+    $params = @{
+        "Method"       = "POST";
+        "Uri"          = "$($BaseUrl)/clover/api/rest/v1/sandboxes?createDir=$($CreateSandboxDirectory)";
+        "Headers"      = $headers;
+        "Credential"   = $Credentials;
+        "Body"         = @{"code"="$SandboxCode"} | ConvertTo-Json;
+        "ContentType" = "application/json"
+    }
+    
+    return (
+        Invoke-RestMethod @params
+    )
+}
+

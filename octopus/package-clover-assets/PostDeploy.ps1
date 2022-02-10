@@ -2,7 +2,7 @@
 # https://octopus.com/docs/deployments/custom-scripts/scripts-in-packages
 
 
-Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
+Import-Module clover-powershell
 Import-Module ./Install-CloverDxServer.psm1
 
 $packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
@@ -13,7 +13,7 @@ Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_pa
 
 $tenantName = $OctopusParameters['Octopus.Deployment.Tenant.Name']
 
-if (_isFirstDeploy)
+if (!$initial_deploy_complete)
 {
     Write-Output "We've determined that this is the first deploy for $($tenantName)"
     Write-Output "Performing initial user configuration"
