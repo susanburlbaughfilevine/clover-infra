@@ -43,7 +43,7 @@ deploy-branch:
                             --package clover-powershell:0.1.0-gitlab-ci `
                             --package="Plan:${releaseversion}" `
                             --package="Apply:${releaseversion}" `
-                            --package="Deploy a Release:${releaseversion}.${releaseversion}" --ignoreExisting'
+                            --package="Deploy a Release:${releaseversion}" --ignoreExisting'
   except:
     - master
     - tags
