@@ -33,7 +33,7 @@ deploy-branch:
 
         octo create-release --project="Deploy CloverDX Assets - Windows" `
                             --space="MigrateTech-CloverDX" `
-                            --package clover-assets:${nupkgversion} ` 
+                            --package clover-assets:${nupkgversion} `
                             --packageVersion="${nupkgversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting
