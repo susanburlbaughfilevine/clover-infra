@@ -44,8 +44,8 @@ deploy-branch:
         octo create-release --project="Deploy CloverDX Server - Windows" `
                             --space="MigrateTech-CloverDX" `
                             --package clover-powershell:0.1.0-gitlab-ci `
-                            --package="Plan:${$nupkgversion}" `
-                            --package="Apply:${$nupkgversion}" `
+                            --package="Plan:${nupkgversion}" `
+                            --package="Apply:${nupkgversion}" `
                             --package="Deploy a Release:${releaseversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting'
