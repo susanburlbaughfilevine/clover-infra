@@ -3,14 +3,6 @@ locals {
   iam_instance_profile = "${var.envName}-CloverApp-InstanceProfile"
   key_name             = aws_key_pair.clover.key_name
 }
-resource "aws_security_group" "internal_alb_sg" {
-  name        = "${var.envName}-clover-alb-internal"
-  description = "Allow web traffic from ZPA"
-  vpc_id      = data.aws_vpc.clover.id
-  tags = {
-    Name = "${var.envName}-clover-alb-interal-sg"
-  }
-}
 
 resource "aws_lb" "clover_alb_internal" {
   name               = "${var.envName}-clover-alb-internal"

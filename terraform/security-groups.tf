@@ -1,7 +1,26 @@
 # Once ready for apply, be sure to check for conflicts between security groups in security-groups.tf and security_groups.tf
-resource "aws_security_group" "cloverdx" {
-  name        = "${var.envName}-cloverdx"
+
+resource "aws_security_group" "internal_alb_sg" {
+  name        = "${var.envName}-clover-alb-internal"
+  description = "Allow web traffic from ZPA"
   vpc_id      = data.aws_vpc.clover.id
+  tags = {
+    Name = "${var.envName}-clover-alb-interal-sg"
+  }
+}
+
+resource "aws_security_group" "cloverdx_to_worker_ssh" {
+  name        = "${var.envName}-clover-worker-ssh"
+  description = "Allow SSH traffic from CloverDX Server to worker"
+  vpc_id      = data.aws_vpc.clover.id
+  tags = {
+    Name = "${var.envName}-clover-worker-ssh"
+  }
+}
+
+resource "aws_security_group" "cloverdx" {
+  name   = "${var.envName}-cloverdx"
+  vpc_id = data.aws_vpc.clover.id
 
   tags = {
     Name       = "${var.envName}-cloverdx"
@@ -68,6 +87,15 @@ resource "aws_security_group" "cloverdx" {
     cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
   }
 
+  ingress {
+    description     = "SSH"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    self            = true
+    security_groups = [aws_security_group.cloverdx_to_worker_ssh.id]
+  }
+
   egress {
     description = "Outbound"
     from_port   = 0
@@ -83,11 +111,11 @@ resource "aws_security_group" "dataaccess" {
   vpc_id      = data.aws_vpc.clover.id
 
   ingress {
-    description     = "Database Server"
-    from_port       = local.db_options[var.rds_engine].port
-    to_port         = local.db_options[var.rds_engine].port
-    protocol        = "tcp"
-    self            = true
+    description = "Database Server"
+    from_port   = local.db_options[var.rds_engine].port
+    to_port     = local.db_options[var.rds_engine].port
+    protocol    = "tcp"
+    self        = true
   }
   tags = {
     Name       = "${var.envName}-DatabaseAccess"
