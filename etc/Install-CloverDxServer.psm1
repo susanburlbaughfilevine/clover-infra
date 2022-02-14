@@ -132,7 +132,7 @@ function Install-CloverDxServer
     }
 
     # Cloudwatch Agent Configuration
-    $cloudwatchConfig = (Get-Content -Path $packageDir\cloudwatch.json).Replace("##tomcatDir##","$($tomcatPath.Replace("\","\\"))")
+    $cloudwatchConfig = (Get-Content -Path $packageDir\config\cloudwatch.json).Replace("##tomcatDir##","$($tomcatPath.Replace("\","\\"))")
     $cloudwatchConfig | Out-File -FilePath "$($env:SYSTEMDRIVE)\ProgramData\Amazon\AmazonCloudWatchAgent\Configs\ApplicationDefault.json" -Encoding default -Force
 
 }
