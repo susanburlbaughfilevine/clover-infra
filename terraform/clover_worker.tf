@@ -73,7 +73,7 @@ data "aws_iam_policy" "amazon_ssm_managed_instance_core" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_core" {
+resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_core_worker" {
   role       = aws_iam_role.clover_woker.name
   policy_arn = data.aws_iam_policy.amazon_ssm_managed_instance_core.arn
 }
