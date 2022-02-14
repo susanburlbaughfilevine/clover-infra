@@ -65,7 +65,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "clover_worker" {
-  name = local.iam_instance_profile
+  name = "${local.iam_instance_profile}-worker"
   role = aws_iam_role.clover_worker.name
 }
 
