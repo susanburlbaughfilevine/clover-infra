@@ -1,3 +1,12 @@
+resource "aws_route53_record" "clover_worker_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "clover-worker-${var.envName}.${var.dns_domain}"
+  type     = "CNAME"
+  ttl      = 300
+  records  = [aws_lb.clover_alb_internal.dns_name]
+}
+
 resource "aws_instance" "clover_worker" {
   ami           = data.aws_ami.windows.id
   instance_type = var.instance_type

@@ -4,6 +4,10 @@ data "aws_iam_policy" "amazon_s3_readonly_access" {
   arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
 
+data "aws_iam_policy" "cloudwatch_access" {
+  arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
 resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_core" {
   role       = aws_iam_role.clover.name
   policy_arn = data.aws_iam_policy.amazon_ssm_managed_instance_core.arn
@@ -36,6 +40,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "s3_readonly_access_policy" {
   role       = aws_iam_role.clover.name
   policy_arn = data.aws_iam_policy.amazon_s3_readonly_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudwatch_policy_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = data.aws_iam_policy.cloudwatch_access.arn
 }
 
 resource "aws_iam_instance_profile" "clover" {
