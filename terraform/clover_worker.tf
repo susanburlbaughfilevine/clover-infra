@@ -87,15 +87,74 @@ resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_co
   policy_arn = data.aws_iam_policy.amazon_ssm_managed_instance_core.arn
 }
 
-resource "aws_iam_role_policy" "clover_worker_policy" {
-  name = "${var.envName}-clover-worker-policy"
-  role = aws_iam_role.clover_worker.id
+resource "aws_iam_role_policy" "clover_worker_policy_rds" {
+    name = "${var.envName}-clover-worker-policy-rds"
+    role = aws_iam_role.clover.id
+
+    policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "RdsReadAccess",
+        "Effect" : "Allow",
+        "Action" : [
+                "rds:DescribeDBProxyTargetGroups",
+                "rds:DescribeDBInstanceAutomatedBackups",
+                "rds:DescribeDBEngineVersions",
+                "rds:DescribeDBSubnetGroups",
+                "rds:DescribeGlobalClusters",
+                "rds:DescribeExportTasks",
+                "rds:DescribePendingMaintenanceActions",
+                "rds:DescribeEngineDefaultParameters",
+                "rds:DescribeDBParameterGroups",
+                "rds:DescribeDBClusterBacktracks",
+                "rds:DescribeCustomAvailabilityZones",
+                "rds:DescribeReservedDBInstancesOfferings",
+                "rds:DescribeDBProxyTargets",
+                "rds:DescribeDBInstances",
+                "rds:DescribeSourceRegions",
+                "rds:DescribeEngineDefaultClusterParameters",
+                "rds:DescribeInstallationMedia",
+                "rds:DescribeDBProxies",
+                "rds:DescribeDBParameters",
+                "rds:DescribeEventCategories",
+                "rds:DescribeDBProxyEndpoints",
+                "rds:DescribeEvents",
+                "rds:DescribeDBClusterSnapshotAttributes",
+                "rds:DescribeDBClusterParameters",
+                "rds:DescribeEventSubscriptions",
+                "rds:DescribeDBSnapshots",
+                "rds:DescribeDBLogFiles",
+                "rds:DescribeDBSecurityGroups",
+                "rds:DescribeDBSnapshotAttributes",
+                "rds:DescribeReservedDBInstances",
+                "rds:ListTagsForResource",
+                "rds:DescribeValidDBInstanceModifications",
+                "rds:DescribeDBClusterSnapshots",
+                "rds:DescribeOrderableDBInstanceOptions",
+                "rds:DescribeOptionGroupOptions",
+                "rds:DescribeDBClusterEndpoints",
+                "rds:DescribeCertificates",
+                "rds:DescribeDBClusters",
+                "rds:DescribeAccountAttributes",
+                "rds:DescribeOptionGroups",
+                "rds:DescribeDBClusterParameterGroups"
+        ],
+        "Resource" : "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "clover_worker_policy_s3" {
+  name = "${var.envName}-clover-worker-policy-s3"
+  role = aws_iam_role.clover.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Sid" : "VisualEditor0",
+        "Sid" : "S3DmAccess",
         "Effect" : "Allow",
         "Action" : [
           "s3:PutAnalyticsConfiguration",
