@@ -60,7 +60,7 @@ if (_isFirstDeploy)
 
 $credential = New-BasicCredential -UserName "clover" -Password $clover_admin_password
 
-foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
+foreach ($configType in @("userGroups"<#,"sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"#>))
 {
     try
     {
