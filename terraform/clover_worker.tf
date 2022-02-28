@@ -92,57 +92,57 @@ resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_co
 }
 
 resource "aws_iam_role_policy" "clover_worker_policy_rds" {
-    name = "${var.envName}-clover-worker-policy-rds"
-    role = aws_iam_role.clover_worker.id
+  name = "${var.envName}-clover-worker-policy-rds"
+  role = aws_iam_role.clover_worker.id
 
-    policy = jsonencode({
+  policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
         "Sid" : "RdsReadAccess",
         "Effect" : "Allow",
         "Action" : [
-                "rds:DescribeDBProxyTargetGroups",
-                "rds:DescribeDBInstanceAutomatedBackups",
-                "rds:DescribeDBEngineVersions",
-                "rds:DescribeDBSubnetGroups",
-                "rds:DescribeGlobalClusters",
-                "rds:DescribeExportTasks",
-                "rds:DescribePendingMaintenanceActions",
-                "rds:DescribeEngineDefaultParameters",
-                "rds:DescribeDBParameterGroups",
-                "rds:DescribeDBClusterBacktracks",
-                "rds:DescribeCustomAvailabilityZones",
-                "rds:DescribeReservedDBInstancesOfferings",
-                "rds:DescribeDBProxyTargets",
-                "rds:DescribeDBInstances",
-                "rds:DescribeSourceRegions",
-                "rds:DescribeEngineDefaultClusterParameters",
-                "rds:DescribeInstallationMedia",
-                "rds:DescribeDBProxies",
-                "rds:DescribeDBParameters",
-                "rds:DescribeEventCategories",
-                "rds:DescribeDBProxyEndpoints",
-                "rds:DescribeEvents",
-                "rds:DescribeDBClusterSnapshotAttributes",
-                "rds:DescribeDBClusterParameters",
-                "rds:DescribeEventSubscriptions",
-                "rds:DescribeDBSnapshots",
-                "rds:DescribeDBLogFiles",
-                "rds:DescribeDBSecurityGroups",
-                "rds:DescribeDBSnapshotAttributes",
-                "rds:DescribeReservedDBInstances",
-                "rds:ListTagsForResource",
-                "rds:DescribeValidDBInstanceModifications",
-                "rds:DescribeDBClusterSnapshots",
-                "rds:DescribeOrderableDBInstanceOptions",
-                "rds:DescribeOptionGroupOptions",
-                "rds:DescribeDBClusterEndpoints",
-                "rds:DescribeCertificates",
-                "rds:DescribeDBClusters",
-                "rds:DescribeAccountAttributes",
-                "rds:DescribeOptionGroups",
-                "rds:DescribeDBClusterParameterGroups"
+          "rds:DescribeDBProxyTargetGroups",
+          "rds:DescribeDBInstanceAutomatedBackups",
+          "rds:DescribeDBEngineVersions",
+          "rds:DescribeDBSubnetGroups",
+          "rds:DescribeGlobalClusters",
+          "rds:DescribeExportTasks",
+          "rds:DescribePendingMaintenanceActions",
+          "rds:DescribeEngineDefaultParameters",
+          "rds:DescribeDBParameterGroups",
+          "rds:DescribeDBClusterBacktracks",
+          "rds:DescribeCustomAvailabilityZones",
+          "rds:DescribeReservedDBInstancesOfferings",
+          "rds:DescribeDBProxyTargets",
+          "rds:DescribeDBInstances",
+          "rds:DescribeSourceRegions",
+          "rds:DescribeEngineDefaultClusterParameters",
+          "rds:DescribeInstallationMedia",
+          "rds:DescribeDBProxies",
+          "rds:DescribeDBParameters",
+          "rds:DescribeEventCategories",
+          "rds:DescribeDBProxyEndpoints",
+          "rds:DescribeEvents",
+          "rds:DescribeDBClusterSnapshotAttributes",
+          "rds:DescribeDBClusterParameters",
+          "rds:DescribeEventSubscriptions",
+          "rds:DescribeDBSnapshots",
+          "rds:DescribeDBLogFiles",
+          "rds:DescribeDBSecurityGroups",
+          "rds:DescribeDBSnapshotAttributes",
+          "rds:DescribeReservedDBInstances",
+          "rds:ListTagsForResource",
+          "rds:DescribeValidDBInstanceModifications",
+          "rds:DescribeDBClusterSnapshots",
+          "rds:DescribeOrderableDBInstanceOptions",
+          "rds:DescribeOptionGroupOptions",
+          "rds:DescribeDBClusterEndpoints",
+          "rds:DescribeCertificates",
+          "rds:DescribeDBClusters",
+          "rds:DescribeAccountAttributes",
+          "rds:DescribeOptionGroups",
+          "rds:DescribeDBClusterParameterGroups"
         ],
         "Resource" : "*"
       }
@@ -150,27 +150,10 @@ resource "aws_iam_role_policy" "clover_worker_policy_rds" {
   })
 }
 
-resource "aws_iam_role_policy" "secrets_manager_access" {
-  name   = "${var.envName}-sm-access"
-  role   = aws_iam_role.clover_worker.id
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-              "secretsmanager:GetSecretValue",
-              "secretsmanager:DescribeSecret",
-              "secretsmanager:ListSecrets
-            ],
-            "Effect": "Allow",
-            "Resource": "arn:aws:secretsmanager:*:*:${var.octopus_tenant}*"
-        }
-    ]
+resource "aws_iam_role_policy_attachment" "sm_access_attach_worker" {
+  role       = aws_iam_role.clover_worker.name
+  policy_arn = aws_iam_policy.secrets_manager_access.arn
 }
-EOF
-}
-
 
 resource "aws_iam_role_policy" "clover_worker_policy_s3" {
   name = "${var.envName}-clover-worker-policy-s3"

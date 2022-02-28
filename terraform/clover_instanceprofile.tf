@@ -71,28 +71,30 @@ resource "aws_iam_role_policy" "textractassume" {
 EOF
 }
 
-resource "aws_iam_role_policy" "secrets_manager_access" {
-  name   = "${var.envName}-sm-access"
-  role   = aws_iam_role.clover.id
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-              "secretsmanager:GetSecretValue",
-              "secretsmanager:DescribeSecret",
-              "secretsmanager:RotateSecret",
-              "secretsmanager:ListSecrets
-            ],
-            "Effect": "Allow",
-            "Resource": "arn:aws:secretsmanager:*:*:${var.envName}*"
-        }
+resource "aws_iam_policy" "secrets_manager_access" {
+  name = "${var.envName}-sm-access"
+  path = "/"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:DescribeSecret",
+          "secretsmanager:ListSecrets",
+        ]
+        Effect   = "Allow"
+        Resource = "arn:aws:secretsmanager:*:*:${var.envName}*"
+      }
     ]
-}
-EOF
+  })
 }
 
+resource "aws_iam_role_policy_attachment" "sm_access_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = aws_iam_policy.secrets_manager_access.arn
+}
 
 resource "aws_iam_role" "textract" {
   name               = "AmazonTextractRole-${var.envName}"
