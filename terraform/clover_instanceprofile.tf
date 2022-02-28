@@ -83,6 +83,10 @@ resource "aws_iam_policy" "secrets_manager_access" {
           "secretsmanager:GetSecretValue",
           "secretsmanager:DescribeSecret",
           "secretsmanager:ListSecrets",
+          "secretsmanager:PutSecretValue",
+          "secretsmanager:CreateSecret",
+          "secretsmanager:DeleteSecret",
+          "secretsmanager:UpdateSecret",
         ]
         Effect   = "Allow"
         Resource = "arn:aws:secretsmanager:*:*:${var.envName}*"
