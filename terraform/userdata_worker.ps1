@@ -248,8 +248,6 @@ Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
 $password = [System.Web.Security.Membership]::GeneratePassword(14,2)
 net user clover_etl_login $password /add /active:yes
 
-Get-SECSecretList -Region 
-
 $filter = [Amazon.SecretsManager.Model.Filter]@{
     "Key"    = "Name"
     "Values" = "${octopus_tenant}-cloveretl-ssh-credentials"
