@@ -82,7 +82,6 @@ resource "aws_iam_policy" "secrets_manager_access" {
         Action = [
           "secretsmanager:GetSecretValue",
           "secretsmanager:DescribeSecret",
-          "secretsmanager:ListSecrets",
           "secretsmanager:PutSecretValue",
           "secretsmanager:CreateSecret",
           "secretsmanager:DeleteSecret",
@@ -90,6 +89,12 @@ resource "aws_iam_policy" "secrets_manager_access" {
         ]
         Effect   = "Allow"
         Resource = "arn:aws:secretsmanager:*:*:secret:${var.envName}*"
+      },
+      {
+        Sid      = "ListAllSecrets",
+        Effect   = "Allow",
+        Action   = "secretsmanager:ListSecrets",
+        Resource = "*"
       }
     ]
   })
