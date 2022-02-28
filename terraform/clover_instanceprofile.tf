@@ -89,7 +89,7 @@ resource "aws_iam_policy" "secrets_manager_access" {
           "secretsmanager:UpdateSecret",
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:secretsmanager:*:*:${var.envName}*"
+        Resource = "arn:aws:secretsmanager:*:*:secret:${var.envName}*"
       }
     ]
   })

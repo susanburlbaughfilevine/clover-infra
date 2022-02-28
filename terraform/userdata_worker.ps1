@@ -239,11 +239,6 @@ if ("${newrelic_enabled}" -eq 'true')
     $nrNetEnabled = $true
 }
 
-# Compile and apply the AllinOne configuration
-AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
-Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
-
-# Configure SSH user
 [Reflection.Assembly]::LoadWithPartialName("System.Web")
 $password = [System.Web.Security.Membership]::GeneratePassword(14,2)
 net user clover_etl_login $password /add /active:yes
@@ -258,9 +253,13 @@ $secSecret = Get-SECSecretList -Filter $filter
 $updateParams = @{
     "SecretString" = $password
     "Description"  = "Password for the clover_etl_login user"
-    "SecretId"     = $result.ARN
+    "SecretId"     = $secSecret.ARN
 }
 
 Update-SECSecret @updateParams
 
+
+# Compile and apply the AllinOne configuration
+AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
+Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
 </powershell>
