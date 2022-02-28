@@ -71,8 +71,8 @@ resource "aws_iam_role_policy" "textractassume" {
 EOF
 }
 
-resource "aws_iam_role_policy" "clover_sqs" {
-  name   = "${var.envName}-Clover-SQS"
+resource "aws_iam_role_policy" "secrets_manager_access" {
+  name   = "${var.envName}-sm-access"
   role   = aws_iam_role.clover.id
   policy = <<EOF
 {
@@ -80,15 +80,19 @@ resource "aws_iam_role_policy" "clover_sqs" {
     "Statement": [
         {
             "Action": [
-                "sqs:*"
+              "secretsmanager:GetSecretValue",
+              "secretsmanager:DescribeSecret",
+              "secretsmanager:RotateSecret",
+              "secretsmanager:ListSecrets
             ],
             "Effect": "Allow",
-            "Resource": "arn:aws:sqs:*:*:${var.envName}*"
+            "Resource": "arn:aws:secretsmanager:*:*:${var.envName}*"
         }
     ]
 }
 EOF
 }
+
 
 resource "aws_iam_role" "textract" {
   name               = "AmazonTextractRole-${var.envName}"

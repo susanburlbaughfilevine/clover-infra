@@ -1,3 +1,7 @@
+resource "aws_secretsmanager_secret" "ssh_credentials" {
+  name = "${var.octopus_tenant}-cloveretl-ssh-credentials"
+}
+
 resource "aws_route53_record" "clover_worker_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
@@ -25,7 +29,7 @@ resource "aws_instance" "clover_worker" {
   iam_instance_profile = local.iam_instance_profile
   subnet_id            = element(tolist(data.aws_subnet_ids.private.ids), 0)
   key_name             = local.key_name
-  user_data = templatefile("${path.module}/userdata.ps1", {
+  user_data = templatefile("${path.module}/userdata_worker.ps1", {
     octopus_api_key            = var.octopus_api_key
     octopus_server_address     = var.octopus_server_address
     octopus_server_environment = var.octopus_server_environment
@@ -89,7 +93,7 @@ resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_co
 
 resource "aws_iam_role_policy" "clover_worker_policy_rds" {
     name = "${var.envName}-clover-worker-policy-rds"
-    role = aws_iam_role.clover.id
+    role = aws_iam_role.clover_worker.id
 
     policy = jsonencode({
     "Version" : "2012-10-17",
@@ -146,9 +150,31 @@ resource "aws_iam_role_policy" "clover_worker_policy_rds" {
   })
 }
 
+resource "aws_iam_role_policy" "secrets_manager_access" {
+  name   = "${var.envName}-sm-access"
+  role   = aws_iam_role.clover_worker.id
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+              "secretsmanager:GetSecretValue",
+              "secretsmanager:DescribeSecret",
+              "secretsmanager:ListSecrets
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:secretsmanager:*:*:${var.octopus_tenant}*"
+        }
+    ]
+}
+EOF
+}
+
+
 resource "aws_iam_role_policy" "clover_worker_policy_s3" {
   name = "${var.envName}-clover-worker-policy-s3"
-  role = aws_iam_role.clover.id
+  role = aws_iam_role.clover_worker.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
