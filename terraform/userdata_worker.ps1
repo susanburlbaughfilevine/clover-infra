@@ -242,6 +242,12 @@ if ("${newrelic_enabled}" -eq 'true')
 [Reflection.Assembly]::LoadWithPartialName("System.Web")
 $password = [System.Web.Security.Membership]::GeneratePassword(14,2)
 net user clover_etl_login $password /add /active:yes
+net localgroup administrators /add clover_etl_login
+
+$configPath = "$env:ProgramData\ssh\sshd_config"
+$sshdConfig = Get-Content $configPath
+$sshdConfig = $sshdConfig.Replace("AllowUsers Administrator","AllowGroups Administrators") 
+$sshdConfig | Out-File -FilePath "$env:ProgramData\ssh\sshd_config" -Encoding utf8 -Force
 
 $filter = [Amazon.SecretsManager.Model.Filter]@{
     "Key"    = "Name"
@@ -257,7 +263,6 @@ $updateParams = @{
 }
 
 Update-SECSecret @updateParams
-
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
