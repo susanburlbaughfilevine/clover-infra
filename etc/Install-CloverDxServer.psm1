@@ -130,4 +130,9 @@ function Install-CloverDxServer
     if ( -not (@(Get-NetFirewallRule -Name clover-web -ErrorAction SilentlyContinue).count -eq 1)) {
         New-NetFirewallRule -DisplayName clover-web -Protocol tcp -Name clover-web -Enabled True -Direction Inbound -Action Allow -LocalPort 80
     }
+
+    # Cloudwatch Agent Configuration
+    $cloudwatchConfig = (Get-Content -Path $packageDir\config\cloudwatch.json).Replace("##tomcatDir##","$($tomcatPath.Replace("\","\\"))")
+    $cloudwatchConfig | Out-File -FilePath "$($env:SYSTEMDRIVE)\ProgramData\Amazon\AmazonCloudWatchAgent\Configs\ApplicationDefault.json" -Encoding default -Force
+
 }

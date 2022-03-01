@@ -1,19 +1,19 @@
 # This script is run automatcially by Octopus Deploy
 # https://octopus.com/docs/deployments/custom-scripts/scripts-in-packages
 
+
+Import-Module clover-powershell
+Import-Module ./Install-CloverDxServer.psm1
+
 $packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryPath']
 
 Set-Location $packagePath
 
-Import-Module ./Install-CloverDxServer.psm1
-
 Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_password -DbInstanceAddress $db_instance_address
-
-Import-Module "$($packagePath)\cloverdx-utilities\api-module.psm1"
 
 $tenantName = $OctopusParameters['Octopus.Deployment.Tenant.Name']
 
-if (_isFirstDeploy)
+if (!$initial_deploy_complete)
 {
     Write-Output "We've determined that this is the first deploy for $($tenantName)"
     Write-Output "Performing initial user configuration"
@@ -58,7 +58,7 @@ if (_isFirstDeploy)
     }
 }
 
-$credential = New-BasicCredential -UserName "clover" -Password $clover_admin_password
+$credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_password
 
 foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {

@@ -43,29 +43,6 @@ resource "aws_acm_certificate" "frontend_certificate" {
   }
 }
 
-resource "aws_route53_record" "frontend_validate" {
-  provider = aws.filevine
-  for_each = {
-    for dvo in aws_acm_certificate.frontend_certificate.domain_validation_options : dvo.domain_name => {
-      name    = dvo.resource_record_name
-      record  = dvo.resource_record_value
-      type    = dvo.resource_record_type
-      zone_id = local.zone_id[dvo.domain_name]
-    }
-  }
-  name            = each.value.name
-  records         = [each.value.record]
-  type            = each.value.type
-  zone_id         = each.value.zone_id
-  allow_overwrite = true
-  ttl             = 60
-}
-
-resource "aws_acm_certificate_validation" "frontend_validate" {
-  certificate_arn         = aws_acm_certificate.frontend_certificate.arn
-  validation_record_fqdns = [for record in aws_route53_record.frontend_validate : record.fqdn]
-}
-
 data "aws_route53_zone" "master" {
   provider = aws.filevine
   name     = var.dns_domain

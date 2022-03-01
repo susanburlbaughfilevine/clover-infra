@@ -3,9 +3,11 @@
 data "aws_iam_policy" "amazon_s3_readonly_access" {
   arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
-data "aws_iam_policy" "amazon_ssm_managed_instance_core" {
-  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+
+data "aws_iam_policy" "cloudwatch_access" {
+  arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
+
 resource "aws_iam_role_policy_attachment" "attach_amazon_ssm_managed_instance_core" {
   role       = aws_iam_role.clover.name
   policy_arn = data.aws_iam_policy.amazon_ssm_managed_instance_core.arn
@@ -40,6 +42,11 @@ resource "aws_iam_role_policy_attachment" "s3_readonly_access_policy" {
   policy_arn = data.aws_iam_policy.amazon_s3_readonly_access.arn
 }
 
+resource "aws_iam_role_policy_attachment" "cloudwatch_policy_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = data.aws_iam_policy.cloudwatch_access.arn
+}
+
 resource "aws_iam_instance_profile" "clover" {
   name = aws_iam_role.clover.name
   role = aws_iam_role.clover.name
@@ -64,23 +71,38 @@ resource "aws_iam_role_policy" "textractassume" {
 EOF
 }
 
-resource "aws_iam_role_policy" "clover_sqs" {
-  name   = "${var.envName}-Clover-SQS"
-  role   = aws_iam_role.clover.id
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "sqs:*"
-            ],
-            "Effect": "Allow",
-            "Resource": "arn:aws:sqs:*:*:${var.envName}*"
-        }
+resource "aws_iam_policy" "secrets_manager_access" {
+  name = "${var.envName}-sm-access"
+  path = "/"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:DescribeSecret",
+          "secretsmanager:PutSecretValue",
+          "secretsmanager:CreateSecret",
+          "secretsmanager:DeleteSecret",
+          "secretsmanager:UpdateSecret",
+        ]
+        Effect   = "Allow"
+        Resource = "arn:aws:secretsmanager:*:*:secret:${var.envName}*"
+      },
+      {
+        Sid      = "ListAllSecrets",
+        Effect   = "Allow",
+        Action   = "secretsmanager:ListSecrets",
+        Resource = "*"
+      }
     ]
+  })
 }
-EOF
+
+resource "aws_iam_role_policy_attachment" "sm_access_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = aws_iam_policy.secrets_manager_access.arn
 }
 
 resource "aws_iam_role" "textract" {
