@@ -134,10 +134,10 @@ resource "aws_security_group" "worker_dbaccess" {
     to_port     = 1433
     protocol    = "tcp"
     self        = true
+  }
 
-    tags = {
-      Name       = "${var.envName}-CloverWorker-DatabaseAccess"
-      managed_by = "Octopus via Terraform"
-    }
+  tags = {
+    Name       = "${var.envName}-CloverWorker-DatabaseAccess"
+    managed_by = "Octopus via Terraform"
   }
 }
