@@ -264,7 +264,7 @@ $updateParams = @{
 
 Update-SECSecret @updateParams
 
-choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:clover_etl_login'"
+choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:clover_etl_login /IgnorePendingReboot'" 
 
 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
 
