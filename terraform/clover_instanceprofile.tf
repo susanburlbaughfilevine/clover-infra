@@ -100,6 +100,37 @@ resource "aws_iam_policy" "secrets_manager_access" {
   })
 }
 
+resource "aws_iam_policy" "iam_management_policy" {
+  name = "${var.envName}-iam-management"
+  path = "/"
+
+  policy = jsonencode({
+    Version : "2012-10-17",
+    Statement : [
+      {
+        Effect : "Allow",
+        Action : [
+          "iam:CreatePolicy",
+          "iam:AddUserToGroup",
+          "iam:GetUserPolicy",
+          "iam:AttachUserPolicy",
+          "iam:AttachRolePolicy",
+          "iam:GetUser",
+          "iam:CreateUser",
+          "iam:CreateAccessKey"
+        ],
+        Resource : "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "iam_management_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = aws_iam_policy.iam_management_policy.arn
+}
+
+
 resource "aws_iam_role_policy_attachment" "sm_access_attach" {
   role       = aws_iam_role.clover.name
   policy_arn = aws_iam_policy.secrets_manager_access.arn
