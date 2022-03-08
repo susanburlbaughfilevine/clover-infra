@@ -264,6 +264,18 @@ $updateParams = @{
 
 Update-SECSecret @updateParams
 
+choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:clover_etl_login'"
+
+[System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
+
+$wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
+
+$tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
+$tcp.IsEnabled = $true  
+$tcp.Alter()
+
+Restart-Service -Name MSSQLSERVER -Force
+
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
