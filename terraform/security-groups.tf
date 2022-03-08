@@ -129,14 +129,6 @@ resource "aws_security_group" "worker_dbaccess" {
   description = "CloverDX to worker node database access"
   vpc_id      = data.aws_vpc.clover.id
 
-  ingress {
-    description = "Clover worker node local MSSQL instance"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
-    self        = true
-  }
-
   tags = {
     Name       = "${var.envName}-CloverWorker-DatabaseAccess"
     managed_by = "Octopus via Terraform"
