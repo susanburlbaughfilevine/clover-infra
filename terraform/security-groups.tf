@@ -125,7 +125,7 @@ resource "aws_security_group" "dataaccess" {
 
 resource "aws_security_group" "worker_dbaccess" {
   name        = "${var.envName}-CloverWorker-DatabaseAccess"
-  description = "CloverDX -> Worker Database Access"
+  description = "CloverDX to worker node database access"
   vpc_id      = data.aws_vpc.clover.id
 
   ingress {
