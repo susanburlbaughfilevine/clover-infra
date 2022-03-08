@@ -23,8 +23,7 @@ resource "aws_instance" "clover_worker" {
 
   vpc_security_group_ids = [
     aws_security_group.cloverdx.id,
-    aws_security_group.dataaccess.id,
-    aws_security_group.worker_dbaccess.id
+    aws_security_group.dataaccess.id
   ]
 
   iam_instance_profile = local.iam_instance_profile

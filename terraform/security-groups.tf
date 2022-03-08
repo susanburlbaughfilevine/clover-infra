@@ -58,6 +58,7 @@ resource "aws_security_group" "cloverdx" {
     protocol    = "tcp"
     self        = true
     cidr_blocks = ["172.31.23.143/32"]
+    security_groups = [aws_security_group.worker_dbaccess.id]
   }
 
   ingress {
