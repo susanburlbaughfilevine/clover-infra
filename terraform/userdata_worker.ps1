@@ -276,6 +276,17 @@ $tcp.Alter()
 
 Restart-Service -Name MSSQLSERVER -Force
 
+$sqlFirewallRuleCreate = @{
+    "Name"        = "sql-server-in"
+    "DisplayName" = "sql-server-in"
+    "LocalPort"   = 1433
+    "Protocol"    = "tcp"
+    "Direction"   = "Inbound"
+    "Action"      = "Allow"
+}
+
+New-NetFirewallRule @sqlFirewallRuleCreate
+
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
