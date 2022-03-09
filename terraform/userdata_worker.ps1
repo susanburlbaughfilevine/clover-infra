@@ -332,27 +332,18 @@ $nativeSqlCommands = @'
     )
 
     #Temporary debug logging
-    write-host "password is : $password"
 
     $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-    write-host "Created secure string"
     $username = "clover_etl_login"
     $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
-    write-host "created credential"
     Import-Module SQLServer
 
-    write-host "imported sql server module"
     Invoke-SqlCmd -Query $env:CreateMetalRole -ServerInstance localhost
-    write-host "created metal role"
 
     Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
-    write-host "added login"
     $addRole = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
-    write-host "altered role"
     Invoke-SqlCmd -Query $env:ChangeLoginMode -ServerInstance localhost
-    write-host "changed login mode"
     Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
-    write-host "added role"
 '@
 
 $nativeSqlCommands > createLoginSql.ps1
@@ -361,6 +352,7 @@ $processParams = @{
     "FilePath"               = "powershell"
     "Credential"             = $credential
     "RedirectStandardOutput" = "output.txt"
+    "RedirectStandardError"  = "error.txt"
     "ArgumentList" = @(
         "-File",
         "./createLoginSql.ps1",
@@ -370,12 +362,11 @@ $processParams = @{
 }
 
 Install-Module SqlServer -Force -AllowClobber -Verbose
-write-host "installed module"
 
 [Environment]::SetEnvironmentVariable("CreateMetalRole", $createMetalRole, 'Machine')
 [Environment]::SetEnvironmentVariable("ChangeLoginMode", $changeLoginMode, 'Machine')
 
-Start-Process @processParams -Wait
+Start-Process @processParams -Wait -NoNewWindow
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
