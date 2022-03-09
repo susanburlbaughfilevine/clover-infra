@@ -293,6 +293,39 @@ $securePass = ConvertTo-SecureString $password -AsPlainText -Force
 $username = "clover_etl_login"
 $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
 
+$createMetalRole = @'
+    USE [master]
+    GO
+
+    /****** Object:  StoredProcedure [dbo].[usp_CreateServerRoles]    Script Date: 11/1/2020 12:48:39 PM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+    /*METAL_User Role*/
+    IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = 'METAL_User')
+        BEGIN
+            CREATE SERVER ROLE [METAL_User];
+            ALTER SERVER ROLE [securityadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [serveradmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [setupadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [processadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [diskadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [dbcreator] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [bulkadmin] ADD MEMBER [METAL_User]
+        END
+'@
+
+$changeLoginMode = @'
+    USE [master]
+    GO
+    EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', 
+        N'Software\Microsoft\MSSQLServer\MSSQLServer',
+        N'LoginMode', REG_DWORD, 2
+    GO
+'@
+
 $nativeSqlCommands = @'
     param (
         [string]$password
@@ -301,8 +334,17 @@ $nativeSqlCommands = @'
     $securePass = ConvertTo-SecureString $password -AsPlainText -Force
     $username = "clover_etl_login"
     $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
-    Import-Module SQLServer -Verbose 
-    Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost
+    Import-Module SQLServer
+
+    Invoke-SqlCmd -Query $env:CreateMetalRole -ServerInstance localhost
+
+    Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
+
+    $addRole = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
+
+    Invoke-SqlCmd -Query $env:ChangeLoginMode -ServerInstance localhost
+
+    Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
 '@
 
 $nativeSqlCommands > createLoginSql.ps1
@@ -320,6 +362,9 @@ $processParams = @{
 }
 
 Install-Module SqlServer -Force -AllowClobber -Verbose
+
+[Environment]::SetEnvironmentVariable("CreateMetalRole", $createMetalRole, 'Machine')
+[Environment]::SetEnvironmentVariable("ChangeLoginMode", $changeLoginMode, 'Machine')
 
 Start-Process @processParams
 
