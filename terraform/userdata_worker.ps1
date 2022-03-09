@@ -1,5 +1,7 @@
 <powershell>
 
+# It can take 20+ minutes for this userdata execution + other instance bootstrapping processes to finish
+
 Remove-WindowsFeature Web-Server
 
 $userdata_start_time = Get-Date
@@ -286,6 +288,40 @@ $sqlFirewallRuleCreate = @{
 }
 
 New-NetFirewallRule @sqlFirewallRuleCreate
+
+$securePass = ConvertTo-SecureString $password -AsPlainText -Force
+$username = "clover_etl_login"
+$credential = New-Object System.Management.Automation.PSCredential $username, $securePass
+
+$nativeSqlCommands = @'
+    param (
+        [string]$password
+    )
+
+    $securePass = ConvertTo-SecureString $password -AsPlainText -Force
+    $username = "clover_etl_login"
+    $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
+    Import-Module SQLServer -Verbose 
+    Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost
+'@
+
+$nativeSqlCommands > createLoginSql.ps1
+
+$processParams = @{
+    "FilePath"               = "powershell"
+    "Credential"             = $credential
+    "RedirectStandardOutput" = "output.txt"
+    "ArgumentList" = @(
+        "-File",
+        "./createLoginSql.ps1",
+        "-Password",
+        $password
+    )
+}
+
+Install-Module SqlServer -Force -AllowClobber -Verbose
+
+Start-Process @processParams
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
