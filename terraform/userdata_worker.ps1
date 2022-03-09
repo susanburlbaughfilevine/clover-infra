@@ -346,16 +346,16 @@ $nativeSqlCommands = @'
     Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
 '@
 
-$nativeSqlCommands > createLoginSql.ps1
+$nativeSqlCommands > "$($env:SYSTEMDRIVE)\windows\temp\createLoginSql.ps1"
 
 $processParams = @{
     "FilePath"               = "powershell"
     "Credential"             = $credential
-    "RedirectStandardOutput" = "output.txt"
-    "RedirectStandardError"  = "error.txt"
+    "RedirectStandardOutput" = "$($env:SYSTEMDRIVE)\windows\temp\output.txt"
+    "RedirectStandardError"  = "$($env:SYSTEMDRIVE)\windows\temp\error.txt"
     "ArgumentList" = @(
         "-File",
-        "./createLoginSql.ps1",
+        "$($env:SYSTEMDRIVE)\windows\temp\createLoginSql.ps1",
         "-Password",
         $password
     )
@@ -366,7 +366,9 @@ Install-Module SqlServer -Force -AllowClobber -Verbose
 [Environment]::SetEnvironmentVariable("CreateMetalRole", $createMetalRole, 'Machine')
 [Environment]::SetEnvironmentVariable("ChangeLoginMode", $changeLoginMode, 'Machine')
 
-Start-Process @processParams -Wait -NoNewWindow
+$process = Start-Process @processParams -PassThru -NoNewWindow
+$process
+$process.WaitForExit()
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
