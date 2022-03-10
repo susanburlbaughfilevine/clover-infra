@@ -266,7 +266,8 @@ $updateParams = @{
 
 Update-SECSecret @updateParams
 
-choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:clover_etl_login /IgnorePendingReboot'" 
+# User the administrator account due to issues with RunAs and the ssm-user when using Start-Process
+choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:$($env:USERNAME) /IgnorePendingReboot'" 
 
 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
 
@@ -326,47 +327,14 @@ $changeLoginMode = @'
     GO
 '@
 
-$nativeSqlCommands = @'
-    param (
-        [string]$password
-    )
+Install-Module SQLServer -Verbose -Force -AllowClobber
 
-    $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-    $username = "clover_etl_login"
-    $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
-    Import-Module SQLServer
+Invoke-SqlCmd -Query $createMetalRole -ServerInstance localhost
 
-    Invoke-SqlCmd -Query $env:CreateMetalRole -ServerInstance localhost
-
-    Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
-    $addRole = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
-    Invoke-SqlCmd -Query $env:ChangeLoginMode -ServerInstance localhost
-    Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
-'@
-
-$nativeSqlCommands > "$($env:SYSTEMDRIVE)\windows\temp\createLoginSql.ps1"
-
-$processParams = @{
-    "FilePath"               = "pwsh"
-    "Credential"             = $credential
-    "RedirectStandardOutput" = "$($env:SYSTEMDRIVE)\windows\temp\output.txt"
-    "RedirectStandardError"  = "$($env:SYSTEMDRIVE)\windows\temp\error.txt"
-    "ArgumentList" = @(
-        "-File",
-        "$($env:SYSTEMDRIVE)\windows\temp\createLoginSql.ps1",
-        "-Password",
-        $password
-    )
-}
-
-Install-Module SqlServer -Force -AllowClobber -Verbose
-
-[Environment]::SetEnvironmentVariable("CreateMetalRole", $createMetalRole, 'Machine')
-[Environment]::SetEnvironmentVariable("ChangeLoginMode", $changeLoginMode, 'Machine')
-
-$process = Start-Process @processParams -PassThru -NoNewWindow
-$process
-$process.WaitForExit()
+Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
+$addRole = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
+Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost
+Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
