@@ -339,4 +339,6 @@ Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
+
+Restart-Computer -Force
 </powershell>
