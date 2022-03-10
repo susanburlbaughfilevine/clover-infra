@@ -331,8 +331,6 @@ $nativeSqlCommands = @'
         [string]$password
     )
 
-    #Temporary debug logging
-
     $securePass = ConvertTo-SecureString $password -AsPlainText -Force
     $username = "clover_etl_login"
     $credential = New-Object System.Management.Automation.PSCredential $username, $securePass
@@ -349,7 +347,7 @@ $nativeSqlCommands = @'
 $nativeSqlCommands > "$($env:SYSTEMDRIVE)\windows\temp\createLoginSql.ps1"
 
 $processParams = @{
-    "FilePath"               = "powershell"
+    "FilePath"               = "pwsh"
     "Credential"             = $credential
     "RedirectStandardOutput" = "$($env:SYSTEMDRIVE)\windows\temp\output.txt"
     "RedirectStandardError"  = "$($env:SYSTEMDRIVE)\windows\temp\error.txt"
