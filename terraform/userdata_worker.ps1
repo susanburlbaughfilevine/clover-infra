@@ -327,7 +327,7 @@ Install-Module SQLServer -Verbose -Force -AllowClobber
 Invoke-SqlCmd -Query $createMetalRole -ServerInstance localhost
 Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
 Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost -Verbose
-Invoke-SqlCmd -Credential $credential -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
+Invoke-SqlCmd -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
 
 # Compile and apply the AllinOne configuration
 Write-Host "Here before dsc: $((get-item .).fullname)"
