@@ -330,8 +330,6 @@ Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost -Verbose
 Invoke-SqlCmd -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
 
 # Compile and apply the AllinOne configuration
-Write-Host "Here before dsc: $((get-item .).fullname)"
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
-Write-Host "Here after dsc: $((get-item .).fullname)"
 </powershell>
