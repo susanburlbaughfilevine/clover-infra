@@ -1,7 +1,5 @@
 <powershell>
-
 # It can take 20+ minutes for this userdata execution + other instance bootstrapping processes to finish
-
 Remove-WindowsFeature Web-Server
 
 $userdata_start_time = Get-Date
@@ -32,7 +30,6 @@ configuration LCMConfig
         }
     }
 }
-
 
 # Define a configuration to install Octopus tentacle
 # Can be compiled and applied as follows:
@@ -291,8 +288,7 @@ $sqlFirewallRuleCreate = @{
 New-NetFirewallRule @sqlFirewallRuleCreate
 
 $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-$username = "clover_etl_login"
-$credential = New-Object System.Management.Automation.PSCredential $username, $securePass
+$credential = New-Object System.Management.Automation.PSCredential "clover_etl_login", $securePass
 
 $createMetalRole = @'
     USE [master]
@@ -328,17 +324,14 @@ $changeLoginMode = @'
 '@
 
 Install-Module SQLServer -Verbose -Force -AllowClobber
-
 Invoke-SqlCmd -Query $createMetalRole -ServerInstance localhost
-
 Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
-$addRole = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
-Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost
-Invoke-SqlCmd -Credential $credential -Query $addRole -ServerInstance localhost
+Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost -Verbose
+Invoke-SqlCmd -Credential $credential -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
 
 # Compile and apply the AllinOne configuration
+Write-Host "Here before dsc: ${pwd}"
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
-
-Restart-Computer -Force
+Write-Host "Here after dsc: ${pwd}"
 </powershell>
