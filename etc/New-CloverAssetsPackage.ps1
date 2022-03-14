@@ -34,7 +34,7 @@ function New-CloverAssetsPackage
 
                 Write-Output "Downloading $($dependancy.Value.PackageName)..."
 
-                $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
+                $outputPath = Join-Path -Path $using:packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
 
                 Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
 
