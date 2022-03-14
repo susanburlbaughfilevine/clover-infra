@@ -1,3 +1,4 @@
+
 function New-CloverAssetsPackage
 {
     [cmdletbinding()]
@@ -18,8 +19,8 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            foreach ($dependancy in $DependancyManifest.GetEnumerator())
-            {
+            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 5 -Parallel {
+                $dependancy = $_
                 if (($null -eq $dependancy.Value.FileLink) -or ([string]::IsNullOrEmpty($dependancy.Value.FileLink)))
                 {
                     throw "Dependancy $($dependancy.Value.PackageName) was specified but no download link was provided."
@@ -54,11 +55,9 @@ function New-CloverAssetsPackage
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
             Copy-Item -Path ./etc/Install-CloverDxServer.psm1 -Destination clover-assets/
             Copy-Item -Path ./etc/Set-UserWritablePermissions.ps1 -Destination clover-assets/
+            Copy-Item -Path ./etc/Wait-WorkerSqlOnline.ps1 -Destination clover-assets/
             Copy-Item -Path ./clover-assets-manifest.psd1 -Destination clover-assets/
             Copy-Item -Path ./FVBranding5.6.0.zip -Destination clover-assets/
-            #Compress-Archive -Path $packageDirectory.FullName -DestinationPath clover-assets.zip -Verbose
-            #Compress-Archive -Path ./config -DestinationPath clover-config.zip -Verbose
-            #Remove-Item -Path $packageDirectory.FullName -Recurse -Force
         }
         catch
         {
