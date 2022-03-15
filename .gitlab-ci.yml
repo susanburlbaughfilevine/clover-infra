@@ -44,6 +44,7 @@ deploy-branch:
                             --package="Apply:${nupkgversion}" `
                             --package="Deploy a Release:${releaseversion}" `
                             --package="Wait for worker SQL Server to come online:${nupkgversion}" `
+                            --package="Execute CloverDX Meta DbUp:0.1.0" `
                             --version="${releaseversion}" `
                             --ignoreExisting'
   except:
