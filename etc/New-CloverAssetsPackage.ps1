@@ -19,7 +19,7 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 5 -Parallel {
+            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel {
                 $dependancy = $_
                 if (($null -eq $dependancy.Value.FileLink) -or ([string]::IsNullOrEmpty($dependancy.Value.FileLink)))
                 {
