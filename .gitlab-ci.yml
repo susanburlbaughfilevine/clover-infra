@@ -43,6 +43,7 @@ deploy-branch:
                             --package="Plan:${nupkgversion}" `
                             --package="Apply:${nupkgversion}" `
                             --package="Deploy a Release:${releaseversion}" `
+                            --package=" Wait for worker SQL Server to come online:${nupkgversion}"
                             --version="${releaseversion}" `
                             --ignoreExisting'
   except:
