@@ -20,7 +20,7 @@ while ($sqlNotOnline) {
     $result = Test-NetConnection @checkParams
 
     if ($result) {
-        Test-NetConnection @checkParams -InformationLevel Detailed
+        Test-NetConnection @checkParams
         $sqlNotOnline = $false
         break
     }
