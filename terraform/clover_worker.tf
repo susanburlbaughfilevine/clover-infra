@@ -8,7 +8,7 @@ resource "aws_route53_record" "clover_worker_record" {
   name     = "clover-worker-${var.envName}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
-  records  = [aws_lb.clover_alb_internal.dns_name]
+  records  = [aws_instance.clover_worker.private_dns]
 }
 
 resource "aws_instance" "clover_worker" {
