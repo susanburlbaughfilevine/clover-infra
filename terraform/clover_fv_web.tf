@@ -54,6 +54,15 @@ resource "aws_route53_record" "clover_worker_db_record" {
   name     = "${var.envName}-clover-worker-db.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
+  records  = [aws_instance.clover_worker.private_dns]
+}
+
+resource "aws_route53_record" "clover_db_record" {
+  provider = aws.filevine
+  zone_id  = data.aws_route53_zone.master.id
+  name     = "${var.envName}-clover-db.${var.dns_domain}"
+  type     = "CNAME"
+  ttl      = 300
   records  = [aws_rds_cluster.sqlserver.endpoint]
 }
 
