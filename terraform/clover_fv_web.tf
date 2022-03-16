@@ -48,13 +48,13 @@ data "aws_route53_zone" "master" {
   name     = var.dns_domain
 }
 
-resource "aws_route53_record" "import_internal_record" {
+resource "aws_route53_record" "clover_worker_db_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "internal-${var.envName}-import.${var.dns_domain}"
+  name     = "${var.envName}-clover-worker-db.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
-  records  = [aws_instance.clover.private_dns]
+  records  = [aws_rds_cluster.sqlserver.endpoint]
 }
 
 resource "aws_route53_record" "clover_internal_record" {
