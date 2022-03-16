@@ -119,18 +119,9 @@ resource "aws_security_group" "dataaccess" {
     to_port     = local.db_options[var.rds_engine].port
     protocol    = "tcp"
     self        = true
-  }
-
-  ingress {
-    description     = "pgsql"
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    self            = true
-    security_groups = [aws_security_group.internal_alb_sg.id]
     cidr_blocks     = [var.zpa_subnet_cidr]
   }
-
+  
   tags = {
     Name       = "${var.envName}-DatabaseAccess"
     managed_by = "Octopus via Terraform"
