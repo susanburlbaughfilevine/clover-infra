@@ -59,7 +59,7 @@ resource "aws_security_group" "cloverdx" {
     to_port         = 1433
     protocol        = "tcp"
     self            = true
-    cidr_blocks     = ["172.31.23.143/32"]
+    cidr_blocks     = ["172.31.23.143/32", var.zpa_subnet_cidr]
     security_groups = [aws_security_group.worker_dbaccess.id]
   }
 
