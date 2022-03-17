@@ -22,13 +22,9 @@ deploy-branch:
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
         $gitversion = gitversion | convertfrom-json
-        $gitversion
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
-        $nupkgversion 
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
-        $releaseversion
         Remove-Item -Recurse -Force .git/
-        octo version
         octo pack --id="cloverdx-windows" --version="${nupkgversion}" --include="terraform/"
         octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets/"
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
@@ -40,15 +36,7 @@ deploy-branch:
                             --packageVersion="${nupkgversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting
-
-        octo create-release --project="Deploy CloverDX Server - Windows" `
-                            --space="MigrateTech-CloverDX" `
-                            --package clover-powershell:0.1.0-gitlab-ci `
-                            --package="Plan:${nupkgversion}" `
-                            --package="Apply:${nupkgversion}" `
-                            --package="Deploy a Release:${releaseversion}" `
-                            --version="${releaseversion}" `
-                            --ignoreExisting'
+      '
   except:
     - master
     - tags
@@ -69,6 +57,7 @@ deploy-master:
         octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
-        octo create-release --project="Deploy CloverDX Server - Windows" --space="MigrateTech-CloverDX" --packageVersion="${gitversion}" --package="Deploy a Release:${gitversion}" --version="${gitversion}" --ignoreExisting'
+        octo create-release --project="Deploy CloverDX Single Step" --space="MigrateTech-CloverDX"
+      '
   only:
     - master

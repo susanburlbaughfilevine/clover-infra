@@ -1,5 +1,5 @@
 <powershell>
-
+# It can take 20+ minutes for this userdata execution + other instance bootstrapping processes to finish
 Remove-WindowsFeature Web-Server
 
 $userdata_start_time = Get-Date
@@ -30,7 +30,6 @@ configuration LCMConfig
         }
     }
 }
-
 
 # Define a configuration to install Octopus tentacle
 # Can be compiled and applied as follows:
@@ -263,6 +262,72 @@ $updateParams = @{
 }
 
 Update-SECSecret @updateParams
+
+# User the administrator account due to issues with RunAs and the ssm-user when using Start-Process
+choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:$($env:USERNAME) /IgnorePendingReboot'" 
+
+[System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
+
+$wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
+
+$tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
+$tcp.IsEnabled = $true  
+$tcp.Alter()
+
+Restart-Service -Name MSSQLSERVER -Force
+
+$sqlFirewallRuleCreate = @{
+    "Name"        = "sql-server-in"
+    "DisplayName" = "sql-server-in"
+    "LocalPort"   = 1433
+    "Protocol"    = "tcp"
+    "Direction"   = "Inbound"
+    "Action"      = "Allow"
+}
+
+New-NetFirewallRule @sqlFirewallRuleCreate
+
+$securePass = ConvertTo-SecureString $password -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential "clover_etl_login", $securePass
+
+$createMetalRole = @'
+    USE [master]
+    GO
+
+    /****** Object:  StoredProcedure [dbo].[usp_CreateServerRoles]    Script Date: 11/1/2020 12:48:39 PM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+    /*METAL_User Role*/
+    IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = 'METAL_User')
+        BEGIN
+            CREATE SERVER ROLE [METAL_User];
+            ALTER SERVER ROLE [securityadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [serveradmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [setupadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [processadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [diskadmin] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [dbcreator] ADD MEMBER [METAL_User]
+            ALTER SERVER ROLE [bulkadmin] ADD MEMBER [METAL_User]
+        END
+'@
+
+$changeLoginMode = @'
+    USE [master]
+    GO
+    EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', 
+        N'Software\Microsoft\MSSQLServer\MSSQLServer',
+        N'LoginMode', REG_DWORD, 2
+    GO
+'@
+
+Install-Module SQLServer -Verbose -Force -AllowClobber
+Invoke-SqlCmd -Query $createMetalRole -ServerInstance localhost
+Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
+Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost -Verbose
+Invoke-SqlCmd -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
 
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled

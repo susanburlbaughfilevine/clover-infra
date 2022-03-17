@@ -44,6 +44,8 @@ resource "aws_security_group" "cloverdx" {
     security_groups = [aws_security_group.internal_alb_sg.id]
     cidr_blocks     = [var.zpa_subnet_cidr]
   }
+
+
   ingress {
     description = "Okta Advanced Server Access"
     from_port   = 4421
@@ -52,12 +54,13 @@ resource "aws_security_group" "cloverdx" {
     cidr_blocks = ["172.17.64.0/21"]
   }
   ingress {
-    description = "Filevine Prod Import DB Server"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks = ["172.31.23.143/32"]
+    description     = "Filevine Prod Import DB Server"
+    from_port       = 1433
+    to_port         = 1433
+    protocol        = "tcp"
+    self            = true
+    cidr_blocks     = ["172.31.23.143/32", var.zpa_subnet_cidr]
+    security_groups = [aws_security_group.worker_dbaccess.id]
   }
 
   ingress {
@@ -116,9 +119,22 @@ resource "aws_security_group" "dataaccess" {
     to_port     = local.db_options[var.rds_engine].port
     protocol    = "tcp"
     self        = true
+    cidr_blocks     = [var.zpa_subnet_cidr]
   }
+  
   tags = {
     Name       = "${var.envName}-DatabaseAccess"
+    managed_by = "Octopus via Terraform"
+  }
+}
+
+resource "aws_security_group" "worker_dbaccess" {
+  name        = "${var.envName}-CloverWorker-DatabaseAccess"
+  description = "CloverDX to worker node database access"
+  vpc_id      = data.aws_vpc.clover.id
+
+  tags = {
+    Name       = "${var.envName}-CloverWorker-DatabaseAccess"
     managed_by = "Octopus via Terraform"
   }
 }
