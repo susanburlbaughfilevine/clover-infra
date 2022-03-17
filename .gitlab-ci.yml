@@ -57,7 +57,7 @@ deploy-master:
         octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
-        octo create-release --project="Deploy Clover DX Single Step" --space="MigrateTech-CloverDX"
+        octo create-release --project="Deploy CloverDX Single Step" --space="MigrateTech-CloverDX"
       '
   only:
     - master
