@@ -1,0 +1,10 @@
+mode: Mainline
+ignore:
+  sha: []
+merge-message-formats: {}
+branches:
+  main:
+    regex: ^master$
+    is-mainline: true
+  release:
+    increment: Patch
