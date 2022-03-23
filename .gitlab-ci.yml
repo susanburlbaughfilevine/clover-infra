@@ -18,6 +18,7 @@ deploy-branch:
   script:
     - |
       pwsh -c '
+        gitversion /diag
         Import-Module ./etc/New-CloverAssetsPackage.ps1
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
@@ -46,6 +47,7 @@ deploy-master:
   script:
     - |
       pwsh -c '
+        gitversion /diag
         Import-Module ./etc/New-CloverAssetsPackage.ps1
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
