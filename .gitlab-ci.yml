@@ -18,6 +18,7 @@ deploy-branch:
   script:
     - |
       pwsh -c '
+        gitversion /diag
         Import-Module ./etc/New-CloverAssetsPackage.ps1
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
@@ -30,7 +31,7 @@ deploy-branch:
         octo push --package="cloverdx-windows.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${nupkgversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
 
-        octo create-release --project="Deploy CloverDX Assets - Windows" `
+        octo create-release --project="Deploy CloverDX Assets" `
                             --space="MigrateTech-CloverDX" `
                             --package clover-assets:${nupkgversion} `
                             --packageVersion="${nupkgversion}" `
@@ -46,6 +47,7 @@ deploy-master:
   script:
     - |
       pwsh -c '
+        gitversion /diag
         Import-Module ./etc/New-CloverAssetsPackage.ps1
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
@@ -56,7 +58,7 @@ deploy-master:
         octo pack --id="clover-assets" --version="${gitversion}" --include="clover-assets/"
         octo push --package="cloverdx-windows.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo push --package="clover-assets.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
-        octo create-release --project="Deploy CloverDX Assets - Windows" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+        octo create-release --project="Deploy CloverDX Assets" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
         octo create-release --project="Deploy CloverDX Single Step" --space="MigrateTech-CloverDX"
       '
   only:
