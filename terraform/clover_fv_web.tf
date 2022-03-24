@@ -74,3 +74,13 @@ resource "aws_route53_record" "clover_internal_record" {
   ttl      = 300
   records  = [aws_lb.clover_alb_internal.dns_name]
 }
+
+resource "aws_acm_certificate_validation" "frontend_validate" {
+  certificate_arn = aws_acm_certificate.frontend_certificate.arn
+  validation_record_fqdns = [
+    aws_route53_record.clover_internal_record.fqdn,
+    aws_route53_record.clover_db_record.fqdn,
+    aws_route53_record.clover_worker_db_record.fqdn
+  ]
+}
+
