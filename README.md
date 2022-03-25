@@ -3,14 +3,17 @@ This repository is home to the infrastructure used to support the CloverDX serve
 
 Below you'll find answers to what are assumed to be common questions regarding deploying this project and maintaining it.
 
+### Where can I find a CloverDX Octopus Deploy Flow Diagram?
+[Diagram](https://lucid.app/lucidchart/78662cca-5751-4deb-8979-a73e3303664c/edit?invitationId=inv_c8292159-99cb-4f87-a4b5-d63542d91be1)
+
 ### I need to deploy a release of CloverDX server and its supporting infrastructure to an existing environment.
 - Navigate to the Octopus Deploy project [Deploy CloverDX Server - Windows](https://octopus.filevinedev.com/app#/Spaces-243/projects/deploy-cloverdx-server-windows/deployments). Select a release and deploy to the environment of your choice.
 
 ### I need to deploy CloverDX server and its supporting infrastructure to a new environment.
 - Create a new Octopus tenant in the [MigrateTech-CloverDX](https://octopus.filevinedev.com/app#/Spaces-243/tenants) space.
-- Connect the `Deploy CloverDX Assets - Windows` and `Deploy CloverDX Server - Windows` projects to your new tenant.
+- Connect ALL projects in the space to your new tenant.
 - Update the variables for your new Octopus Tenant in the Teants menu.
-- Deploy a release of `Deploy CloverDX Server - Windows` to your tenant
+- Deploy a release of `Deploy CloverDX Single Step` to your tenant
 
 
 ### A new version of CloverDX Server (or any of its dependancies) is available. How can I get things updated?
