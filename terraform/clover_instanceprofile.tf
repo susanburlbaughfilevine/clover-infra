@@ -1,7 +1,7 @@
 
 
-data "aws_iam_policy" "amazon_s3_readonly_access" {
-  arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+data "aws_iam_policy" "amazon_s3_full_access" {
+  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
 data "aws_iam_policy" "cloudwatch_access" {
@@ -37,9 +37,9 @@ EOF
     managed_by = "terraform"
   }
 }
-resource "aws_iam_role_policy_attachment" "s3_readonly_access_policy" {
+resource "aws_iam_role_policy_attachment" "s3_full_access_policy" {
   role       = aws_iam_role.clover.name
-  policy_arn = data.aws_iam_policy.amazon_s3_readonly_access.arn
+  policy_arn = data.aws_iam_policy.amazon_s3_full_access.arn
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_policy_attach" {
@@ -117,7 +117,8 @@ resource "aws_iam_policy" "iam_management_policy" {
           "iam:AttachRolePolicy",
           "iam:GetUser",
           "iam:CreateUser",
-          "iam:CreateAccessKey"
+          "iam:CreateAccessKey",
+          "iam:ListUsers"
         ],
         Resource : "*"
       }
