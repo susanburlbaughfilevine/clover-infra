@@ -256,7 +256,7 @@ $filter = [Amazon.SecretsManager.Model.Filter]@{
 $secSecret = Get-SECSecretList -Filter $filter
 
 $updateParams = @{
-    "SecretString" = $password
+    "SecretString" = (@{"password"=$password} | ConvertTo-Json)
     "Description"  = "Password for the clover_etl_login user"
     "SecretId"     = $secSecret.ARN
 }
