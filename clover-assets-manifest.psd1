@@ -35,17 +35,17 @@
 
     clover = @{
         PackageName      = "clover.war"
-        FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/deploy/tomcat7-9/Application%20Files/clover.war"
-        Version          = "5.13.1"
-        Checksum         = "e628419229b491cb1599e64524f5d444a82e79a7f0b9bbdf08f07658793c30f4"
+        FileLink         = "https://support.cloverdx.com/download?file=5.14.0/server/deploy/tomcat7-9/Application%20Files/clover.war"
+        Version          = "5.14.0"
+        Checksum         = "3a29dd539eaed93ff77b27917388b9b348dc1ee29fe449bdd34148367fbce265"
         ChecksumType     = "sha256"
     }
 
     profiler = @{
         PackageName      = "profiler.war"
-        FileLink         = "https://support.cloverdx.com/download?file=5.13.1/server/deploy/tomcat7-9/Application%20Files/profiler.war"
-        Version          = "5.13.1"
-        Checksum         = "e0edfe23a2fbab178211633042c65b83e9b7d7d9ee806a25dd676fe4152ea465"
+        FileLink         = "https://support.cloverdx.com/download?file=5.14.0/server/deploy/tomcat7-9/Application%20Files/profiler.war"
+        Version          = "5.14.0"
+        Checksum         = "2d0a7e69929e03b2561db409450e5e8f4039c7a11fd6d625e983b71fed3f7f40"
         ChecksumType     = "sha256"
     }
 
