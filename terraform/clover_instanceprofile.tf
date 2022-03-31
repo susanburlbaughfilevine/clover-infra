@@ -100,6 +100,71 @@ resource "aws_iam_policy" "secrets_manager_access" {
   })
 }
 
+resource "aws_iam_policy" "rds_full_read" {
+  name = "${var.envName}-rds-read"
+  path = "/"
+
+  policy = jsonencode(
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid    = "RdsFullRead"
+          Effect = "Allow"
+          Action = [
+            "rds:DescribeDBProxyTargetGroups",
+            "rds:DescribeDBInstanceAutomatedBackups",
+            "rds:DescribeDBEngineVersions",
+            "rds:DescribeDBSubnetGroups",
+            "rds:DescribeGlobalClusters",
+            "rds:DescribeExportTasks",
+            "rds:DescribePendingMaintenanceActions",
+            "rds:DescribeEngineDefaultParameters",
+            "rds:DescribeDBParameterGroups",
+            "rds:DescribeDBClusterBacktracks",
+            "rds:DescribeRecommendations",
+            "rds:DescribeCustomAvailabilityZones",
+            "rds:DescribeReservedDBInstancesOfferings",
+            "rds:DescribeDBProxyTargets",
+            "rds:DescribeRecommendationGroups",
+            "rds:DownloadDBLogFilePortion",
+            "rds:DescribeDBInstances",
+            "rds:DescribeSourceRegions",
+            "rds:DescribeEngineDefaultClusterParameters",
+            "rds:DescribeInstallationMedia",
+            "rds:DescribeDBProxies",
+            "rds:DescribeDBParameters",
+            "rds:DescribeEventCategories",
+            "rds:DescribeDBProxyEndpoints",
+            "rds:DescribeEvents",
+            "rds:DescribeDBClusterSnapshotAttributes",
+            "rds:DescribeDBClusterParameters",
+            "rds:DescribeEventSubscriptions",
+            "rds:DescribeDBSnapshots",
+            "rds:DescribeDBLogFiles",
+            "rds:DescribeDBSecurityGroups",
+            "rds:DescribeDBSnapshotAttributes",
+            "rds:DescribeReservedDBInstances",
+            "rds:ListTagsForResource",
+            "rds:DescribeValidDBInstanceModifications",
+            "rds:DescribeDBClusterSnapshots",
+            "rds:DescribeOrderableDBInstanceOptions",
+            "rds:DescribeOptionGroupOptions",
+            "rds:DownloadCompleteDBLogFile",
+            "rds:DescribeDBClusterEndpoints",
+            "rds:DescribeCertificates",
+            "rds:DescribeDBClusters",
+            "rds:DescribeAccountAttributes",
+            "rds:DescribeOptionGroups",
+            "rds:DescribeDBClusterParameterGroups"
+          ]
+          "Resource" : "*"
+        }
+      ]
+    }
+  )
+}
+
 resource "aws_iam_policy" "iam_management_policy" {
   name = "${var.envName}-iam-management"
   path = "/"
@@ -135,6 +200,11 @@ resource "aws_iam_role_policy_attachment" "iam_management_attach" {
 resource "aws_iam_role_policy_attachment" "sm_access_attach" {
   role       = aws_iam_role.clover.name
   policy_arn = aws_iam_policy.secrets_manager_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "rds_read_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = aws_iam_policy.rds_full_read.arn
 }
 
 resource "aws_iam_role" "textract" {
