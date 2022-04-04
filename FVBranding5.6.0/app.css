@@ -1,0 +1,215 @@
+
+html.ds-html {
+  background: #eaeaea;
+  color: #333;
+}
+
+@media(max-width:740px) {
+  html.ds-html {
+    background: none;
+  }
+}
+
+body clover-data-app.clover-data-app .header .header__logo {
+  position: relative;
+  margin: 0 0 0 20px;
+  width: 200px;
+  height: 43px;
+  background: url("images/logo.png") no-repeat center;
+  background-size: 100% auto;
+  align-self: center;
+}
+
+body clover-data-app.clover-data-app .page-wrapper--login .header .header__logo {
+  margin: 0;
+}
+
+body clover-data-app.clover-data-app .page-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media(max-width:740px) {
+  body clover-data-app.clover-data-app .page-wrapper {
+    border-radius: 0;
+  }
+}
+
+/* Disabled original CloverDX logo */
+body clover-data-app.clover-data-app .cloverdx-brand {
+  display: none;
+}
+
+body clover-data-app.clover-data-app .page-wrapper--login {
+  margin: 50px auto 0;
+}
+
+@media(max-width:740px) {
+  body clover-data-app.clover-data-app .page-wrapper--login {
+    margin: 0;
+  }
+}
+
+body clover-data-app.clover-data-app .header--login {
+  position: relative;
+  top: 0;
+  height: 240px;
+}
+
+@media(max-width:740px) {
+  body clover-data-app.clover-data-app .header--login {
+    height: 160px;
+  }
+}
+
+/* Normalize main login header */
+body clover-data-app.clover-data-app .header--login h1 {
+  margin: 0;
+  font-size: 26px;
+  text-transform: uppercase;
+}
+
+body clover-data-app.clover-data-app .header--login h1 span {
+  font-weight: bold;
+}
+
+body clover-data-app.clover-data-app .header--login h1 strong {
+  font-weight: bold;
+  background: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  letter-spacing: initial;
+}
+
+body clover-data-app.clover-data-app .header--login h1 strong::after {
+  display: none;
+}
+
+/* Login form */
+body clover-data-app.clover-data-app .login {
+  display: block;
+  max-width: 360px;
+  text-align: center;
+  margin:0 auto 100px auto;
+}
+
+@media(max-width:740px) {
+  body clover-data-app.clover-data-app .login {
+    max-width: initial;
+    margin-bottom: 100px;
+  }
+}
+
+/* Hide default decorative illustration */
+body clover-data-app.clover-data-app .login__deco {
+  display: none;
+}
+
+/* Hide vertical separator */
+/* between login form and illustration */
+body clover-data-app.clover-data-app .login:after {
+  display: none;
+}
+
+body clover-data-app.clover-data-app .content {
+  padding-top: 20px;
+}
+
+/* Anonymous login disabled */
+#anonymous_login {
+  display: none;
+}
+
+ /* Buttons */
+body clover-data-app.clover-data-app .ds-btn,
+body clover-data-app.clover-data-app .login__form button.ds-btn {
+  width: initial;
+  align-self: center;
+  background: #4be0b2;
+  border: none;
+}
+
+body clover-data-app.clover-data-app .login__form button.ds-btn {
+  padding: 14px 50px;
+}
+
+/* Buttons on hover */
+body clover-data-app.clover-data-app .ds-btn:hover,
+body clover-data-app.clover-data-app .login__form button.ds-btn:hover {
+  background: #4be0b2;
+}
+
+body clover-data-app.clover-data-app .nav a {
+  color: #4be0b2;
+}
+
+/* Menu */
+body clover-data-app.clover-data-app .nav ul ul {
+  background: #4be0b2;
+}
+
+body clover-data-app.clover-data-app .nav ul li.nav__user:hover ul li.nav__username span {
+  background: #4be0b2;
+}
+
+body clover-data-app.clover-data-app .nav ul li.nav__user:hover .nav__user-icon {
+  background: #4be0b2;
+}
+
+/* Custom classes */
+#footer {
+  padding: 10px 0;
+  text-align: center;
+  border-top: 1px solid #eee;
+  opacity: 0.6;
+  font-size: 12px;
+  background: #f9f9f9;
+}
+
+/* An attempt to add a snackbar */
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
