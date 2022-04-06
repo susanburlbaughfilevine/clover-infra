@@ -3,7 +3,6 @@ param(
     [int]$timeout = 35
 )
 
-
 Write-Host "Waiting for SQL Server on the worker to come online. If this is the first deploy, this can take up to 30 minutes"
 
 $sqlNotOnline = $true
