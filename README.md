@@ -47,4 +47,23 @@ Below you'll find answers to what are assumed to be common questions regarding d
         }
     ```
 
-    During the next run of the CI pipeline build step, the new version will be pulled and packaged with the clover-assets bundle that will be pushed to Octopus Deploy. 
+    During the next run of the CI pipeline build step, the new version will be pulled and packaged with the clover-assets bundle that will be pushed to Octopus Deploy.
+
+### Current manual configuration tasks post deploy (to be automated after initial MVP)
+
+- Activate the CloverDX server with a license key from CloverCare @ https://support.cloverdx.com/myaccount
+
+- Configure AWS Secrets Manager integration
+    - Log into the CloverDX web console as a user with admin privileges
+    - Select **Secret Managers** from the left hand navigation under **Configuration -> Secret Managers**
+    - Create a new Secret Manager with the following configuration
+      - Name: AWSSecrets
+      - Provider: AWS Secrets Manager
+      - Groups: admin
+      - Region: us-west-2
+      - Authentication type: Implicit
+
+- Configure a CloverDX Master Password and save it in LastPass
+    - Under **Configuration -> Security**, click **Set Master Password**
+    - Enter a strong, randomly generated password
+    - Save this password in LastPass and clearly label what CloverDX environment its used for.
