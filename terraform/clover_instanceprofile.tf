@@ -183,7 +183,8 @@ resource "aws_iam_policy" "iam_management_policy" {
           "iam:GetUser",
           "iam:CreateUser",
           "iam:CreateAccessKey",
-          "iam:ListUsers"
+          "iam:ListUsers",
+          "iam:CreateLoginProfile"
         ],
         Resource : "*"
       }
