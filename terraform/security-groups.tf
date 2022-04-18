@@ -68,7 +68,7 @@ resource "aws_security_group" "cloverdx" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    self        = true
+    self        = false
     cidr_blocks = ["172.17.64.0/21", "172.31.10.85/32"]
   }
 
@@ -77,7 +77,7 @@ resource "aws_security_group" "cloverdx" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    self        = true
+    self        = false
     cidr_blocks = ["172.17.64.0/21", "172.31.10.85/32"]
   }
 
