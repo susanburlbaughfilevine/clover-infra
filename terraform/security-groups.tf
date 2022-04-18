@@ -69,7 +69,7 @@ resource "aws_security_group" "cloverdx" {
     to_port     = 80
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
+    cidr_blocks = ["172.17.64.0/21", "172.31.10.85/32"]
   }
 
   ingress {
@@ -78,7 +78,7 @@ resource "aws_security_group" "cloverdx" {
     to_port     = 443
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["172.31.10.85/32", "172.17.64.0/21"]
+    cidr_blocks = ["172.17.64.0/21", "172.31.10.85/32"]
   }
 
   ingress {
