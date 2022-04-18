@@ -60,8 +60,24 @@ if (!$initial_deploy_complete)
 
 $credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_password
 
-foreach ($configType in @("userGroups"<#,"sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"#>))
+foreach ($configType in @("userGroups","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {
+    if (Test-Path "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml") {
+        Write-Host "Applying base configuration"
+
+        $config = Get-Content "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml" -Raw
+
+        $params = @{
+            "dryRun"         = $false;
+            "include"       = $configType;
+            "configuration" = $config;
+            "credential"    = $credential;
+            "BaseUrl"       = "http://localhost"
+        }
+
+        Set-ServerConfiguration @params
+    }
+
     try
     {
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
