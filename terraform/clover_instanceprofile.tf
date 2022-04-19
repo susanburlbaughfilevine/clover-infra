@@ -192,6 +192,30 @@ resource "aws_iam_policy" "iam_management_policy" {
   })
 }
 
+resource "aws_iam_policy" "kms_management_policy" {
+  name = "${var.envName}-kms-management"
+  path = "/"
+
+  policy = jsonencode({
+    Version : "2012-10-17",
+    Statement : [
+      {
+        Effect : "Allow",
+        Action : [
+          "kms:List*"
+        ],
+        Resource : "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "kms_management_attach" {
+  role       = aws_iam_role.clover.name
+  policy_arn = aws_iam_policy.kms_management_policy.arn
+}
+
+
 resource "aws_iam_role_policy_attachment" "iam_management_attach" {
   role       = aws_iam_role.clover.name
   policy_arn = aws_iam_policy.iam_management_policy.arn
@@ -273,4 +297,3 @@ resource "aws_iam_role_policy" "ec2tagging" {
   policy = data.aws_iam_policy_document.ec2taggingPol.json
   role   = aws_iam_role.clover.id
 }
-
