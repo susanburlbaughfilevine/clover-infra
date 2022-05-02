@@ -53,6 +53,22 @@ resource "aws_instance" "clover_worker" {
   }
 }
 
+resource "aws_ebs_volume" "clover_instance_volume_1" {
+  availability_zone = aws_instance.clover_worker.availability_zone
+  size              = 3200
+  kms_key_id        = data.aws_kms_alias.backend.target_key_arn
+  encrypted         = true
+
+  tags = {
+    Name = "${var.envName}-clover-worker--volume-1"
+  }
+}
+
+resource "aws_volume_attachment" "clover_volume_attach_1" {
+  device_name = "xvdg"
+  instance_id = aws_instance.clover_worker.id
+  volume_id   = aws_ebs_volume.clover_instance_volume_1.id
+}
 resource "aws_iam_role" "clover_worker" {
   name               = "${var.envName}-clover-worker-iam-role"
   description        = "This role is for CloverDX Application to have access to appropriate resources"
