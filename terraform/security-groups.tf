@@ -45,6 +45,17 @@ resource "aws_security_group" "cloverdx" {
     cidr_blocks     = [var.zpa_subnet_cidr]
   }
 
+  ingress {
+    description     = "common-api"
+    from_port       = 5000
+    to_port         = 5000
+    protocol        = "tcp"
+    self            = true
+    security_groups = [aws_security_group.internal_alb_sg.id]
+    cidr_blocks     = [var.zpa_subnet_cidr]
+  }
+
+
 
   ingress {
     description = "Okta Advanced Server Access"
