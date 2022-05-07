@@ -44,6 +44,22 @@ resource "aws_lb_listener" "http_internal" {
   }
 }
 
+resource "aws_lb_listener_rule" "common_api_listener" {
+  listener_arn = aws_lb_listener.https_internal
+  priority = 100
+
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.clover_tg_commonapi
+  }
+
+  condition {
+    path_pattern {
+      values = ["/local/*","/cell/*","/commonapi/*"]
+    }
+  }
+}
+
 resource "aws_lb_target_group" "clover_tg_internal" {
   name     = "${var.envName}-front-web-internal"
   port     = 80
@@ -69,10 +85,41 @@ resource "aws_lb_target_group" "clover_tg_internal" {
   }
 }
 
+resource "aws_lb_target_group" "clover_tg_commonapi" {
+  name     = "${var.envName}-common-api-internal"
+  port     = 5000
+  protocol = "HTTP"
+  vpc_id   = data.aws_vpc.clover.id
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = 7200
+  }
+
+  health_check {
+    path                = "/commonapi/healthcheck"
+    healthy_threshold   = "5"
+    unhealthy_threshold = "2"
+    matcher             = "200"
+    port                = 5000
+  }
+
+  tags = {
+    Name       = "${var.envName}-common-api-internal-tg"
+    managed_by = "Octopus via Terraform"
+    env        = var.envName
+  }
+}
+
 resource "aws_lb_target_group_attachment" "tg_attach_internal" {
   target_group_arn = aws_lb_target_group.clover_tg_internal.arn
   target_id        = aws_instance.clover.id
   port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "tg_attach_commonapi_internal" {
+  target_group_arn = aws_lb_target_group.clover_tg_commonapi
+  target_id = aws_instance.clover
+  port = 5000
 }
 
 resource "aws_instance" "clover" {
