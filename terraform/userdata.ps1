@@ -239,6 +239,18 @@ if ("${newrelic_enabled}" -eq 'true')
     $nrNetEnabled = $true
 }
 
+$FirewallRuleCreate = @{
+    "Name"        = "common-api-in"
+    "DisplayName" = "common-api-in"
+    "LocalPort"   = 5000
+    "Protocol"    = "tcp"
+    "Direction"   = "Inbound"
+    "Action"      = "Allow"
+}
+
+New-NetFirewallRule @FirewallRuleCreate
+
+
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
