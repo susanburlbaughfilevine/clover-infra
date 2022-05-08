@@ -55,7 +55,7 @@ resource "aws_lb_listener_rule" "common_api_listener" {
 
   condition {
     path_pattern {
-      values = ["/clover/commonapi/local/*","/clover/commonapi/cell/*","/clover/commonapi/healthcheck","/clover/commonapi/debug"]
+      values = ["/clover/commonapi/local/*","/clover/commonapi/cell/*","/clover/commonapi/healthcheck","/clover/commonapi/debug/*"]
     }
   }
 }
