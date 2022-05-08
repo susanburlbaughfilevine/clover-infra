@@ -96,7 +96,7 @@ resource "aws_lb_target_group" "clover_tg_commonapi" {
   }
 
   health_check {
-    path                = "/commonapi/healthcheck"
+    path                = "/clover/commonapi/healthcheck"
     healthy_threshold   = "5"
     unhealthy_threshold = "2"
     matcher             = "200"
