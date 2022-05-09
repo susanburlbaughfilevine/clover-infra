@@ -55,7 +55,7 @@ resource "aws_lb_listener_rule" "common_api_listener" {
 
   condition {
     path_pattern {
-      values = ["/local/*","/cell/*","/commonapi/*"]
+      values = ["/clover/commonapi/local/*","/clover/commonapi/cell/*","/clover/commonapi/healthcheck","/clover/commonapi/debug/*","/clover/commonapi/frontend/*"]
     }
   }
 }
@@ -96,7 +96,7 @@ resource "aws_lb_target_group" "clover_tg_commonapi" {
   }
 
   health_check {
-    path                = "/commonapi/healthcheck"
+    path                = "/clover/commonapi/healthcheck"
     healthy_threshold   = "5"
     unhealthy_threshold = "2"
     matcher             = "200"
