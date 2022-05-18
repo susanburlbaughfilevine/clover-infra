@@ -1,5 +1,3 @@
-
-
 /// This references the primary Domain Name of the website.  This does NOT imply filevine.com.  It could be filevinedev.com etc.  
 //  (Poor choice in resource names)
 data "aws_route53_zone" "filevine" {
@@ -51,7 +49,7 @@ data "aws_route53_zone" "master" {
 resource "aws_route53_record" "clover_worker_db_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "${var.envName}-clover-worker-db.${var.dns_domain}"
+  name     = "workerdb.${var.subdomain}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
   records  = [aws_instance.clover_worker.private_dns]
@@ -60,7 +58,7 @@ resource "aws_route53_record" "clover_worker_db_record" {
 resource "aws_route53_record" "clover_db_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "${var.envName}-clover-db.${var.dns_domain}"
+  name     = "cloverdb.${var.subdomain}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
   records  = [aws_rds_cluster.sqlserver.endpoint]
@@ -69,7 +67,7 @@ resource "aws_route53_record" "clover_db_record" {
 resource "aws_route53_record" "clover_internal_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
-  name     = "clover-${var.envName}.${var.dns_domain}"
+  name     = "cloverdx.${var.subdomain}.${var.dns_domain}"
   type     = "CNAME"
   ttl      = 300
   records  = [aws_lb.clover_alb_internal.dns_name]
