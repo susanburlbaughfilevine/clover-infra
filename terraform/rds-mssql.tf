@@ -21,7 +21,7 @@ locals {
     ca-central-1 = [
       "ca-central-1a",
       "ca-central-1b",
-      "ca-central-1c"
+      "ca-central-1d"
     ]
 
     us-west-2 = [
