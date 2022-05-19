@@ -35,7 +35,7 @@ locals {
 
 resource "aws_rds_cluster" "sqlserver" {
   cluster_identifier           = lower("${var.envName}-cloverdx")
-  availability_zones           = locals.availability_zones[var.region]
+  availability_zones           = local.availability_zones[var.region]
   engine                       = "aurora-postgresql"
   engine_mode                  = "serverless"
   master_username              = var.rds_user_name
