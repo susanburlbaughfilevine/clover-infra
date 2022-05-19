@@ -16,11 +16,26 @@ locals {
       port          = 1433
     }
   }
+
+  availability_zones = {
+    ca-central-1 = [
+      "ca-central-1a",
+      "ca-central-1b",
+      "ca-central-1c"
+    ]
+
+    us-west-2 = [
+      "us-west-1a",
+      "us-west-1b",
+      "us-west-1c"
+    ]
+  }
+
 }
 
 resource "aws_rds_cluster" "sqlserver" {
   cluster_identifier           = lower("${var.envName}-cloverdx")
-  availability_zones           = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  availability_zones           = locals.availability_zones[var.region]
   engine                       = "aurora-postgresql"
   engine_mode                  = "serverless"
   master_username              = var.rds_user_name
