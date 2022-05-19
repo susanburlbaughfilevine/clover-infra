@@ -25,12 +25,11 @@ locals {
     ]
 
     us-west-2 = [
-      "us-west-1a",
-      "us-west-1b",
-      "us-west-1c"
+      "us-west-2a",
+      "us-west-2b",
+      "us-west-2c"
     ]
   }
-
 }
 
 resource "aws_rds_cluster" "sqlserver" {
