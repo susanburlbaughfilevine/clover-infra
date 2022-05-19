@@ -46,16 +46,16 @@ resource "aws_lb_listener" "http_internal" {
 
 resource "aws_lb_listener_rule" "common_api_listener" {
   listener_arn = aws_lb_listener.https_internal.arn
-  priority = 100
+  priority     = 100
 
   action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.clover_tg_commonapi.arn
   }
 
   condition {
     path_pattern {
-      values = ["/clover/commonapi/local/*","/clover/commonapi/cell/*","/clover/commonapi/healthcheck","/clover/commonapi/debug/*","/clover/commonapi/frontend/*"]
+      values = ["/clover/commonapi/local/*", "/clover/commonapi/cell/*", "/clover/commonapi/healthcheck", "/clover/commonapi/debug/*", "/clover/commonapi/frontend/*"]
     }
   }
 }
@@ -118,8 +118,8 @@ resource "aws_lb_target_group_attachment" "tg_attach_internal" {
 
 resource "aws_lb_target_group_attachment" "tg_attach_commonapi_internal" {
   target_group_arn = aws_lb_target_group.clover_tg_commonapi.arn
-  target_id = aws_instance.clover.id
-  port = 5000
+  target_id        = aws_instance.clover.id
+  port             = 5000
 }
 
 resource "aws_instance" "clover" {
