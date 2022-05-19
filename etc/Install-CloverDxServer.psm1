@@ -80,6 +80,7 @@ function Install-CloverDxServer
     $c = "cmd.exe /c encrypt.bat -a PBEWITHSHA256AND256BITAES-CBC-BC -c org.bouncycastle.jce.provider.BouncyCastleProvider -l $($packageDir)\$($config["bouncycastle"].PackageName) --batch $($DbInstancePassword)"
     Write-Host "Executing: $c"
     $encryptedPass = Invoke-Expression $c
+    Write-Host "Result $encryptedPass"
 
     $serverProperties = (Get-Content -Path $packageDir\config\cloverServer.properties)
     $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
