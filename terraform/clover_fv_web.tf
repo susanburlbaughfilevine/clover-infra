@@ -14,7 +14,7 @@ data "aws_route53_zone" "flvn" {
 }
 
 locals {
-  frontend_domain = lower("${var.subdomain}.${var.dns_domain}")
+  frontend_domain = lower("cloverdx.${var.subdomain}.${var.dns_domain}")
   alt_domain_names = [
     "*.${var.dns_domain}",
     "*.${var.shorturl_dns_domain}"
