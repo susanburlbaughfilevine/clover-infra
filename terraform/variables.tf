@@ -135,3 +135,6 @@ variable "zpa_subnet_cidr" {
   description = "Subnet (in CIDR notation) from which incoming ZPA requests will originate"
   default     = "172.17.64.0/21"
 }
+
+variable "filevine_shard_cidr" {
+}
