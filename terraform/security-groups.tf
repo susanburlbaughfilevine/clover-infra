@@ -89,7 +89,7 @@ resource "aws_security_group" "cloverdx" {
     to_port     = 443
     protocol    = "tcp"
     self        = false
-    cidr_blocks = [var.filevine_shard_cidr]
+    cidr_blocks = [var.filevine_shard_cidr, data.aws_vpc.clover.cidr_block]
   }
 
   ingress {
