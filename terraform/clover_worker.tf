@@ -2,9 +2,17 @@ resource "aws_secretsmanager_secret" "ssh_credentials" {
   name = "${var.octopus_tenant}-cloveretl-ssh-credentials"
 }
 
+variable "workernode_address" {
+  default = {
+    address = aws_route53_record.clover_worker_db_record.fqdn
+  }
+
+  type = map(string)
+}
+
 resource "aws_secretsmanager_secret_version" "workernode_data" {
-  secret_id = aws_secretsmanager_secret.workernode.id
-  secret_string = aws_route53_record.clover_worker_db_record.fqdn
+  secret_id     = aws_secretsmanager_secret.workernode.id
+  secret_string = jsonencode(var.workernode_address)
 }
 
 resource "aws_secretsmanager_secret" "workernode" {
