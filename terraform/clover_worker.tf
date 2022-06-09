@@ -1,3 +1,9 @@
+locals {
+  worker = {
+    address = aws_route53_record.clover_worker_db_record.fqdn 
+  }
+}
+
 resource "aws_secretsmanager_secret" "ssh_credentials" {
   name = "${var.octopus_tenant}-cloveretl-ssh-credentials"
 }
@@ -5,7 +11,7 @@ resource "aws_secretsmanager_secret" "ssh_credentials" {
 
 resource "aws_secretsmanager_secret_version" "workernode_data" {
   secret_id     = aws_secretsmanager_secret.workernode.id
-  secret_string = jsonencode(var.workernode_address)
+  secret_string = jsonencode(local.worker)
 }
 
 resource "aws_secretsmanager_secret" "workernode" {
