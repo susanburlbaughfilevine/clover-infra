@@ -2,6 +2,15 @@ resource "aws_secretsmanager_secret" "ssh_credentials" {
   name = "${var.octopus_tenant}-cloveretl-ssh-credentials"
 }
 
+resource "aws_secretsmanager_secret_version" "workernode_data" {
+  secret_id = aws_secretsmanager_secret.workernode.id
+  secret_string = aws_route53_record.clover_worker_db_record.fqdn
+}
+
+resource "aws_secretsmanager_secret" "workernode" {
+  name = "workernode"
+}
+
 resource "aws_route53_record" "clover_worker_record" {
   provider = aws.filevine
   zone_id  = data.aws_route53_zone.master.id
