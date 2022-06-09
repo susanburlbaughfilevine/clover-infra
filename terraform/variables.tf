@@ -138,3 +138,11 @@ variable "zpa_subnet_cidr" {
 
 variable "filevine_shard_cidr" {
 }
+
+variable "workernode_address" {
+  default = {
+    address = aws_route53_record.clover_worker_db_record.fqdn
+  }
+
+  type = map(string)
+}
