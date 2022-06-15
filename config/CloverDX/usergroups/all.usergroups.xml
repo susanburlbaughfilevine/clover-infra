@@ -106,117 +106,30 @@
       </cs:groupPermissions>
     </cs:userGroup>
     <cs:userGroup>
-      <cs:id>6</cs:id>
-      <cs:code>automation</cs:code>
-      <cs:name>automated user</cs:name>
+      <cs:id>27703</cs:id>
+      <cs:code>dm_user</cs:code>
+      <cs:name>DM user</cs:name>
       <cs:description></cs:description>
-      <cs:assignedUsers>
-      </cs:assignedUsers>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_unlimited_access</cs:permission>
-        <cs:permission>scheduling_all</cs:permission>
-        <cs:permission>event_listener_all</cs:permission>
-        <cs:permission>run_record_all</cs:permission>
-        <cs:permission>launch_config_all</cs:permission>
-        <cs:permission>data_service_all</cs:permission>
-      </cs:groupPermissions>
-    </cs:userGroup>
-    <cs:userGroup>
-      <cs:id>8</cs:id>
-      <cs:code>data_export_user</cs:code>
-      <cs:name>data export user</cs:name>
-      <cs:description></cs:description>
-      <cs:assignedUsers>
-      </cs:assignedUsers>
+      <cs:assignedUsers/>
       <cs:groupPermissions>
         <cs:permission>sandbox_all</cs:permission>
         <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>sandbox_create</cs:permission>
-        <cs:permission>sandbox_delete</cs:permission>
-        <cs:permission>sandbox_edit</cs:permission>
-        <cs:permission>sandbox_zip_upload_delete_missing_files</cs:permission>
         <cs:permission>scheduling_list_unlimited</cs:permission>
         <cs:permission>scheduling_list_limited</cs:permission>
-        <cs:permission>scheduling_create</cs:permission>
         <cs:permission>manual_task_execution</cs:permission>
         <cs:permission>run_record_all</cs:permission>
         <cs:permission>run_record_list_unlimited</cs:permission>
         <cs:permission>run_record_list_limited</cs:permission>
-        <cs:permission>launch_config_all</cs:permission>
-        <cs:permission>launch_config_list_unlimited</cs:permission>
-        <cs:permission>launch_config_list_limited</cs:permission>
-        <cs:permission>launch_config_create</cs:permission>
-        <cs:permission>launch_config_delete</cs:permission>
-        <cs:permission>launch_config_edit</cs:permission>
-        <cs:permission>data_service_all</cs:permission>
+        <cs:permission>view_debug_data</cs:permission>
         <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_change_status</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>data_service_https_connectors</cs:permission>
-        <cs:permission>task_log_all</cs:permission>
-        <cs:permission>monitoring_all</cs:permission>
-        <cs:permission>monitoring_section</cs:permission>
-        <cs:permission>suspend</cs:permission>
-        <cs:permission>suspend_server</cs:permission>
-        <cs:permission>suspend_cluster_node</cs:permission>
-        <cs:permission>suspend_sandbox</cs:permission>
-        <cs:permission>reset_caches</cs:permission>
-        <cs:permission>running_jobs_list_unlimited</cs:permission>
-        <cs:permission>running_jobs_list_limited</cs:permission>
-      </cs:groupPermissions>
-    </cs:userGroup>
-    <cs:userGroup>
-      <cs:id>5</cs:id>
-      <cs:code>execute_data_service</cs:code>
-      <cs:name>execute data service</cs:name>
-      <cs:description></cs:description>
-      <cs:assignedUsers>
-      </cs:assignedUsers>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_all</cs:permission>
-        <cs:permission>scheduling_list_unlimited</cs:permission>
-        <cs:permission>scheduling_list_limited</cs:permission>
-        <cs:permission>scheduling_create</cs:permission>
-        <cs:permission>manual_task_execution</cs:permission>
-        <cs:permission>run_record_all</cs:permission>
-        <cs:permission>run_record_list_unlimited</cs:permission>
-        <cs:permission>run_record_list_limited</cs:permission>
-        <cs:permission>launch_config_all</cs:permission>
-        <cs:permission>launch_config_list_unlimited</cs:permission>
-        <cs:permission>launch_config_list_limited</cs:permission>
-        <cs:permission>launch_config_create</cs:permission>
-        <cs:permission>launch_config_delete</cs:permission>
-        <cs:permission>launch_config_edit</cs:permission>
-        <cs:permission>data_service_all</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_change_status</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>task_log_all</cs:permission>
-        <cs:permission>monitoring_all</cs:permission>
         <cs:permission>monitoring_section</cs:permission>
-        <cs:permission>suspend</cs:permission>
-        <cs:permission>suspend_server</cs:permission>
-        <cs:permission>suspend_cluster_node</cs:permission>
-        <cs:permission>suspend_sandbox</cs:permission>
-        <cs:permission>reset_caches</cs:permission>
         <cs:permission>running_jobs_list_unlimited</cs:permission>
         <cs:permission>running_jobs_list_limited</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_reporting_console</cs:permission>
         <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
-    </cs:userGroup>
-    <cs:userGroup>
-      <cs:id>7</cs:id>
-      <cs:code>ExecutionLogView</cs:code>
-      <cs:name>Execution Log View</cs:name>
-      <cs:description></cs:description>
-      <cs:assignedUsers>
-      </cs:assignedUsers>
-      <cs:groupPermissions>
-        <cs:permission>run_record_all</cs:permission>
-        <cs:permission>task_log_all</cs:permission>
-        <cs:permission>monitoring_all</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
   </cs:userGroupsList>
