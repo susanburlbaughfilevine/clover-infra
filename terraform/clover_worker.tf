@@ -5,7 +5,7 @@ locals {
 }
 
 resource "aws_secretsmanager_secret" "ssh_credentials" {
-  name = "${var.octopus_tenant}-cloveretl-ssh-credentials"
+  name = "cloveretl-ssh-credentials"
 }
 
 
