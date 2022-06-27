@@ -1,6 +1,6 @@
 locals {
   worker = {
-    address = aws_route53_record.clover_worker_db_record.fqdn 
+    address = aws_route53_record.clover_worker_db_record.fqdn
   }
 }
 
