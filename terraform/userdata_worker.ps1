@@ -250,7 +250,7 @@ $sshdConfig | Out-File -FilePath "$env:ProgramData\ssh\sshd_config" -Encoding ut
 
 $filter = [Amazon.SecretsManager.Model.Filter]@{
     "Key"    = "Name"
-    "Values" = "${octopus_tenant}-cloveretl-ssh-credentials"
+    "Values" = "cloveretl-ssh-credentials"
 }
 
 $secSecret = Get-SECSecretList -Filter $filter
@@ -271,7 +271,7 @@ choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:$($env:USERNAME
 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
 
 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
-$tcp.IsEnabled = $true  
+$tcp.IsEnabled = $true
 $tcp.Alter()
 
 Restart-Service -Name MSSQLSERVER -Force
