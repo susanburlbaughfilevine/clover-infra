@@ -128,7 +128,7 @@ variable "rds_user_password" {
 }
 
 variable "newrelic_enabled" {
-  default = "false"
+  default = "true"
 }
 
 variable "zpa_subnet_cidr" {
