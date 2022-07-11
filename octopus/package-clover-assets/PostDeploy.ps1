@@ -62,9 +62,36 @@ $credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_p
 
 foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {
+    Write-Host "Applying configuration for $configType"
+
+    if ($configType -eq "users")
+    {
+        $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
+        [xml]$baseXml = Get-Content $configFullPath -Raw
+        $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
+        $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
+        $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
+        $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
+        $cloverUserNode.'#text' = $clover_admin_password
+        $baseXml.Save($configFullPath)
+
+        $config = Get-Content $configFullPath -Raw
+
+        $params = @{
+            "dryRun"         = $false;
+            "include"       = $configType; 
+            "configuration" = $config;
+            "credential"    = $credential;
+            "BaseUrl"       = "http://localhost"
+        }
+
+        Set-ServerConfiguration @params
+        continue
+    }
+
     # Apply the *all* configuration if it exists
     if (Test-Path "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml") {
-        Write-Host "Applying base configuration"
+        Write-Host "Applying base configuration for $configType"
 
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml" -Raw
 
@@ -81,6 +108,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
 
     try
     {
+        Write-Host "Applying $tenantName configuration for $configType"
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
 
         $params = @{
