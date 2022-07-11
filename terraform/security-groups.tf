@@ -125,12 +125,20 @@ resource "aws_security_group" "dataaccess" {
   vpc_id      = data.aws_vpc.clover.id
 
   ingress {
+    description = "MSSQL"
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    self        = true
+    cidr_blocks = [var.zpa_subnet_cidr, data.aws_vpc.clover.cidr_block]
+  }
+  ingress {
     description = "Database Server"
     from_port   = local.db_options[var.rds_engine].port
     to_port     = local.db_options[var.rds_engine].port
     protocol    = "tcp"
     self        = true
-    cidr_blocks = [var.zpa_subnet_cidr]
+    cidr_blocks = [var.zpa_subnet_cidr, data.aws_vpc.clover.cidr_block]
   }
 
   tags = {
