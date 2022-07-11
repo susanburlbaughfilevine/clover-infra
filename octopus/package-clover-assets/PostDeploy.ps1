@@ -9,11 +9,17 @@ $packagePath = $OctopusParameters['Octopus.Action.Package.InstallationDirectoryP
 
 Set-Location $packagePath
 
+Write-Host "Admin password is $cloverdx_admin_password"
+Write-Host "RDS Password is $rds_user_password"
+Write-Host "Db Instance address is $db_instance_address"
+
 Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_password -DbInstanceAddress $db_instance_address
 
 $tenantName = $OctopusParameters['Octopus.Deployment.Tenant.Name']
 
 $credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_password
+
+
 
 foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {
@@ -29,7 +35,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
             $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
             $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
             $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
-            $cloverUserNode.'#text' = $clover_admin_password
+            $cloverUserNode.'#text' = $cloverdx_admin_password
             $baseXml.Save($configFullPath)
 
             $config = Get-Content $configFullPath -Raw
