@@ -25,9 +25,9 @@ rds_instance_class  = "#{rds_instance_class}"
 rds_user_name       = "#{rds_user_name}"
 rds_user_password   = "#{rds_user_password}"
 filevine_shard_cidr = "#{filevine_shard_cidr}"
-
+/* 
 nr_slack_webhook = "#{nr_slack_webhook}"
 nr_slack_channel = "#{nr_slack_channel}"
 
 nr_account_id = "#{nr_account_id}"
-nr_api_key    = "#{nr_api_key}"
+nr_api_key    = "#{nr_api_key}" */
