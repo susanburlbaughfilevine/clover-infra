@@ -13,22 +13,17 @@ Install-CloverDxServer -packageDir $packagePath -DbInstancePassword $rds_user_pa
 
 $tenantName = $OctopusParameters['Octopus.Deployment.Tenant.Name']
 
-if (!$initial_deploy_complete)
+$credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_password
+
+foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
 {
-    Write-Output "We've determined that this is the first deploy for $($tenantName)"
-    Write-Output "Performing initial user configuration"
-
-    # Post deploy, this username/password combination will no longer be valid. 
-    $credential = New-BasicCredential -UserName "clover" -Password "clover"
-    $config = Import-PowershellDataFile "$($packagePath)\clover-assets-manifest.psd1"
-
-    foreach ($configType in @("userGroups","users"))
+    try
     {
-        $resultantXml = ""
+        Write-Host "Applying configuration for $configType"
 
         if ($configType -eq "users")
         {
-            $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
+            $configFullPath = "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml"
             [xml]$baseXml = Get-Content $configFullPath -Raw
             $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
             $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
@@ -37,77 +32,50 @@ if (!$initial_deploy_complete)
             $cloverUserNode.'#text' = $clover_admin_password
             $baseXml.Save($configFullPath)
 
-            $resultantXml = Get-Content $configFullPath -Raw
+            $config = Get-Content $configFullPath -Raw
+
+            $params = @{
+                "dryRun"         = $false;
+                "include"       = $configType; 
+                "configuration" = $config;
+                "credential"    = $credential;
+                "BaseUrl"       = "http://localhost"
+            }
+
+            Set-ServerConfiguration @params
+
+            Write-Host "Applying $tenantName configuration for $configType"
+            $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
+    
+            $params = @{
+                "dryRun"         = $false;
+                "include"       = $configType;
+                "configuration" = $config;
+                "credential"    = $credential;
+                "BaseUrl"       = "http://localhost"
+            }
+    
+            Set-ServerConfiguration @params
         }
 
-        if ($configType -eq "userGroups")
-        {
-            $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
-            $resultantXml = Get-Content $configFullPath -Raw
+        # Apply the *all* configuration if it exists
+        if (Test-Path "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml") {
+            Write-Host "Applying base configuration for $configType"
+
+            $config = Get-Content "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml" -Raw
+
+            $params = @{
+                "dryRun"         = $false;
+                "include"       = $configType; 
+                "configuration" = $config;
+                "credential"    = $credential;
+                "BaseUrl"       = "http://localhost"
+            }
+
+            Set-ServerConfiguration @params
         }
 
-        $params = @{
-            "dryRun"         = $false;
-            "include"        = $configType;
-            "configuration"  = $resultantXml;
-            "credential"     = $credential;
-            "BaseUrl"        = "http://localhost"
-        }
 
-        Set-ServerConfiguration @params
-    }
-}
-
-$credential = New-BasicCredential -UserName "clover" -Password $cloverdx_admin_password
-
-foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedules","eventListeners","operationsDashboards","dataServices","tempSpaces"))
-{
-    Write-Host "Applying configuration for $configType"
-
-    if ($configType -eq "users")
-    {
-        $configFullPath = "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType).xml"
-        [xml]$baseXml = Get-Content $configFullPath -Raw
-        $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
-        $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
-        $xmlNsMgr.AddNamespace("cs", "http://cloveretl.com/server/data")
-        $cloverUserNode = $baseXml.SelectSingleNode('//cs:password[preceding-sibling::cs:username[text()="clover"]]', $xmlNsMgr)
-        $cloverUserNode.'#text' = $clover_admin_password
-        $baseXml.Save($configFullPath)
-
-        $config = Get-Content $configFullPath -Raw
-
-        $params = @{
-            "dryRun"         = $false;
-            "include"       = $configType; 
-            "configuration" = $config;
-            "credential"    = $credential;
-            "BaseUrl"       = "http://localhost"
-        }
-
-        Set-ServerConfiguration @params
-        continue
-    }
-
-    # Apply the *all* configuration if it exists
-    if (Test-Path "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml") {
-        Write-Host "Applying base configuration for $configType"
-
-        $config = Get-Content "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml" -Raw
-
-        $params = @{
-            "dryRun"         = $false;
-            "include"       = $configType; 
-            "configuration" = $config;
-            "credential"    = $credential;
-            "BaseUrl"       = "http://localhost"
-        }
-
-        Set-ServerConfiguration @params
-    }
-
-    try
-    {
         Write-Host "Applying $tenantName configuration for $configType"
         $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
 
