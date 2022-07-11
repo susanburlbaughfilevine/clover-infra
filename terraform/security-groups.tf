@@ -130,7 +130,7 @@ resource "aws_security_group" "dataaccess" {
     to_port     = local.db_options[var.rds_engine].port
     protocol    = "tcp"
     self        = true
-    cidr_blocks = [var.zpa_subnet_cidr]
+    cidr_blocks = [var.zpa_subnet_cidr, data.aws_vpc.clover.cidr_block]
   }
 
   tags = {
