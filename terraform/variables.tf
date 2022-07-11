@@ -138,3 +138,19 @@ variable "zpa_subnet_cidr" {
 
 variable "filevine_shard_cidr" {
 }
+
+variable "nr_slack_webhook" {
+
+}
+
+variable "nr_slack_channel" {
+
+}
+
+variable "nr_account_id" {
+
+}
+
+variable "nr_api_key" {
+
+}
