@@ -45,7 +45,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
                 "include"       = $configType; 
                 "configuration" = $config;
                 "credential"    = $credential;
-                "newOnly"       =  $true;
+                "newOnly"       =  $false;
                 "BaseUrl"       = "http://localhost"
             }
 
@@ -59,11 +59,18 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
                 "include"       = $configType;
                 "configuration" = $config;
                 "credential"    = $credential;
-                "newOnly"       =  $true
+                "newOnly"       =  $false
                 "BaseUrl"       = "http://localhost"
             }
     
             Set-ServerConfiguration @params
+        }
+
+        $newOnly = $false
+            
+        if ($configType -eq "userGroups")
+        {
+            $newOnly = $false
         }
 
         # Apply the *all* configuration if it exists
@@ -77,6 +84,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
                 "include"       = $configType; 
                 "configuration" = $config;
                 "credential"    = $credential;
+                "newOnly"       = $newOnly;
                 "BaseUrl"       = "http://localhost"
             }
 
@@ -92,6 +100,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
             "include"       = $configType;
             "configuration" = $config;
             "credential"    = $credential;
+            "newOnly"       = $newOnly;
             "BaseUrl"       = "http://localhost"
         }
 
