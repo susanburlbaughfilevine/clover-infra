@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.7.0.21" exporter="billporter" timeZone="UTC" timestamp="2022-01-28T20:46:05.990Z">
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.14.1.2" exporter="bporter" timeZone="UTC" timestamp="2022-07-12T22:58:15.534Z">
   <cs:exportOptions>
     <cs:exportUsers>false</cs:exportUsers>
     <cs:exportUserGroups>false</cs:exportUserGroups>
@@ -7,15 +7,16 @@
     <cs:exportJobConfigs>false</cs:exportJobConfigs>
     <cs:exportSchedules>false</cs:exportSchedules>
     <cs:exportEventListeners>false</cs:exportEventListeners>
-    <cs:exportLaunchServices>false</cs:exportLaunchServices>
     <cs:exportDataServices>false</cs:exportDataServices>
     <cs:exportTempSpaces>false</cs:exportTempSpaces>
+    <cs:exportSecretManagers>false</cs:exportSecretManagers>
+    <cs:exportOperationsDashboards>false</cs:exportOperationsDashboards>
   </cs:exportOptions>
   <cs:usersList/>
   <cs:userGroupsList/>
   <cs:sandboxesList>
     <cs:sandbox>
-      <cs:id>24</cs:id>
+      <cs:id>59662</cs:id>
       <cs:code>ArchiveImportServerDB</cs:code>
       <cs:name>ArchiveImportServerDB</cs:name>
       <cs:rootPath>${sandboxes.home}/ArchiveImportServerDB</cs:rootPath>
@@ -70,220 +71,10 @@
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
     <cs:sandbox>
-      <cs:id>73</cs:id>
-      <cs:code>DEV_DocScan</cs:code>
-      <cs:name>DEV_DocScan</cs:name>
-      <cs:rootPath>${sandboxes.home}/DEV_DocScan</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>62</cs:id>
-      <cs:code>DataExport_US</cs:code>
-      <cs:name>DataExport_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/DataExport_US</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>53</cs:id>
-      <cs:code>Dataloader_US</cs:code>
-      <cs:name>Dataloader_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>write</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>cleanResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>write</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-      </cs:sandboxPermissions>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>49</cs:id>
-      <cs:code>DevSB_Fv2FVExport</cs:code>
-      <cs:name>DevSB_Fv2FVExport</cs:name>
-      <cs:rootPath>${sandboxes.home}/DevSB_Fv2FVExport</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>63</cs:id>
-      <cs:code>Dev_Bill_Dataloader_US</cs:code>
-      <cs:name>Dev_Bill_Dataloader_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/Dev_Bill_Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>60</cs:id>
-      <cs:code>Dev_Dataloader_US</cs:code>
-      <cs:name>Dev_Dataloader_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/Dev_Dataloader_US</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>write</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>cleanResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>write</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>cleanResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-      </cs:sandboxPermissions>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>61</cs:id>
-      <cs:code>Dev_StagingEmailConfirmationRequest</cs:code>
-      <cs:name>Dev_StagingEmailConfirmationRequest</cs:name>
-      <cs:rootPath>${sandboxes.home}/Dev_StagingEmailConfirmationRequest</cs:rootPath>
+      <cs:id>59688</cs:id>
+      <cs:code>Dataloader</cs:code>
+      <cs:name>Dataloader</cs:name>
+      <cs:rootPath>${sandboxes.home}/Dataloader</cs:rootPath>
       <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
@@ -307,24 +98,30 @@
           <cs:userGroupCode>admin</cs:userGroupCode>
           <cs:operation>cleanResults</cs:operation>
         </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>read</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>write</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>execute</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>viewResults</cs:operation>
+        </cs:permission>
       </cs:sandboxPermissions>
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
     <cs:sandbox>
-      <cs:id>58</cs:id>
-      <cs:code>Development_S3_DocScan_App_CJIS</cs:code>
-      <cs:name>Development_S3_DocScan_App_CJIS</cs:name>
-      <cs:rootPath>${sandboxes.home}/Development_S3_DocScan_App_CJIS</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>34</cs:id>
-      <cs:code>Development_S3_DocScan_App_US</cs:code>
-      <cs:name>Development_S3_DocScan_App_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/Development_S3_DocScan_App_US</cs:rootPath>
+      <cs:id>59680</cs:id>
+      <cs:code>DocScan</cs:code>
+      <cs:name>DocScan</cs:name>
+      <cs:rootPath>${sandboxes.home}/DocScan</cs:rootPath>
       <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
@@ -348,29 +145,33 @@
           <cs:userGroupCode>admin</cs:userGroupCode>
           <cs:operation>cleanResults</cs:operation>
         </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>read</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>write</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>execute</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
+          <cs:operation>viewResults</cs:operation>
+        </cs:permission>
       </cs:sandboxPermissions>
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
     <cs:sandbox>
-      <cs:id>52</cs:id>
-      <cs:code>S3_DocScan_App_US</cs:code>
-      <cs:name>S3_DocScan_App_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/S3_DocScan_App_US</cs:rootPath>
+      <cs:id>59682</cs:id>
+      <cs:code>S3Intake</cs:code>
+      <cs:name>S3Intake</cs:name>
+      <cs:rootPath>${sandboxes.home}/S3Intake</cs:rootPath>
       <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>ExecutionLogView</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
         <cs:permission>
           <cs:userGroupCode>admin</cs:userGroupCode>
           <cs:operation>read</cs:operation>
@@ -392,90 +193,36 @@
           <cs:operation>cleanResults</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
           <cs:operation>read</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>all_users</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
           <cs:operation>write</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
           <cs:operation>execute</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>automation</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>read</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
-          <cs:operation>execute</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>execute_data_service</cs:userGroupCode>
+          <cs:userGroupCode>dm_user</cs:userGroupCode>
           <cs:operation>viewResults</cs:operation>
         </cs:permission>
       </cs:sandboxPermissions>
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
     <cs:sandbox>
-      <cs:id>67</cs:id>
-      <cs:code>Sandbox_SB</cs:code>
-      <cs:name>Sandbox_SB</cs:name>
-      <cs:rootPath>${sandboxes.home}/Sandbox_SB</cs:rootPath>
+      <cs:id>59679</cs:id>
+      <cs:code>StagingUrlRequest</cs:code>
+      <cs:name>StagingUrlRequest</cs:name>
+      <cs:rootPath>${sandboxes.home}/StagingUrlRequest</cs:rootPath>
       <cs:ownerUsername>clover</cs:ownerUsername>
       <cs:distributionType>shared</cs:distributionType>
       <cs:sandboxPermissions/>
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
     <cs:sandbox>
-      <cs:id>72</cs:id>
-      <cs:code>SeededDataLookup</cs:code>
-      <cs:name>SeededDataLookup</cs:name>
-      <cs:rootPath>${sandboxes.home}/SeededDataLookup</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>70</cs:id>
-      <cs:code>StandardDataExports_US</cs:code>
-      <cs:name>StandardDataExports_US</cs:name>
-      <cs:rootPath>${sandboxes.home}/StandardDataExports_US</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>65</cs:id>
-      <cs:code>TestExportLegacyDBAsCSVs</cs:code>
-      <cs:name>TestExportLegacyDBAsCSVs</cs:name>
-      <cs:rootPath>${sandboxes.home}/TestExportLegacyDBAsCSVs</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>2</cs:id>
+      <cs:id>26</cs:id>
       <cs:code>default</cs:code>
       <cs:name>default</cs:name>
       <cs:rootPath>${sandboxes.home}/default</cs:rootPath>
@@ -497,41 +244,12 @@
       </cs:sandboxPermissions>
       <cs:suspended>false</cs:suspended>
     </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>59</cs:id>
-      <cs:code>scratch</cs:code>
-      <cs:name>scratch</cs:name>
-      <cs:rootPath>${sandboxes.home}/scratch</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>64</cs:id>
-      <cs:code>scratch2</cs:code>
-      <cs:name>scratch2</cs:name>
-      <cs:rootPath>${sandboxes.home}/scratch2</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
-    <cs:sandbox>
-      <cs:id>71</cs:id>
-      <cs:code>susan_scratch</cs:code>
-      <cs:name>susan_scratch</cs:name>
-      <cs:rootPath>${sandboxes.home}/susan_scratch</cs:rootPath>
-      <cs:ownerUsername>clover</cs:ownerUsername>
-      <cs:distributionType>shared</cs:distributionType>
-      <cs:sandboxPermissions/>
-      <cs:suspended>false</cs:suspended>
-    </cs:sandbox>
   </cs:sandboxesList>
   <cs:jobConfigsList/>
   <cs:schedulesList/>
   <cs:eventListenersList/>
-  <cs:launchServicesList/>
   <cs:dataServicesList/>
   <cs:tempSpacesList/>
+  <cs:secretManagersList/>
+  <cs:operationsDashboardsList/>
 </cs:cloverServerConfiguration>
