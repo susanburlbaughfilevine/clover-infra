@@ -41,10 +41,11 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
             $config = Get-Content $configFullPath -Raw
 
             $params = @{
-                "dryRun"         = $false;
+                "dryRun"        = $false;
                 "include"       = $configType; 
                 "configuration" = $config;
                 "credential"    = $credential;
+                "newOnly"       =  $true;
                 "BaseUrl"       = "http://localhost"
             }
 
@@ -58,6 +59,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
                 "include"       = $configType;
                 "configuration" = $config;
                 "credential"    = $credential;
+                "newOnly"       =  $true
                 "BaseUrl"       = "http://localhost"
             }
     
