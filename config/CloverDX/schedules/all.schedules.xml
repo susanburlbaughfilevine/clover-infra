@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.14.1.2" exporter="bporter" timeZone="UTC" timestamp="2022-07-12T22:46:12.724Z">
+  <cs:exportOptions>
+    <cs:exportUsers>false</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>true</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+    <cs:exportSecretManagers>false</cs:exportSecretManagers>
+    <cs:exportOperationsDashboards>false</cs:exportOperationsDashboards>
+  </cs:exportOptions>
+  <cs:usersList/>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList>
+    <cs:schedule enabled="true">
+      <cs:id>60220</cs:id>
+      <cs:description>Dataloader</cs:description>
+      <cs:ownerUsername>clover</cs:ownerUsername>
+      <cs:startTime>2022-07-12T22:45:19.882Z</cs:startTime>
+      <cs:intervalPeriodicity>true</cs:intervalPeriodicity>
+      <cs:interval>5</cs:interval>
+      <cs:intervalUnit>MINUTES</cs:intervalUnit>
+      <cs:onetime>false</cs:onetime>
+      <cs:cronExpression>0 0 1 * * ?</cs:cronExpression>
+      <cs:fireMisfired>true</cs:fireMisfired>
+      <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskExecuteJobflow" taskType="execute_jobflow">
+        <cs:jobFile>jobflow/loader/LoaderMaster.jbf</cs:jobFile>
+        <cs:sandboxCode>Dataloader</cs:sandboxCode>
+        <cs:saveRunRecord>true</cs:saveRunRecord>
+      </cs:task>
+      <cs:healthConfiguration>
+        <cs:id>60221</cs:id>
+        <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskSendEmail" taskType="email">
+          <cs:addJobLog>false</cs:addJobLog>
+          <cs:emailTemplate>
+            <cs:id>60223</cs:id>
+            <cs:pattern>false</cs:pattern>
+          </cs:emailTemplate>
+        </cs:task>
+        <cs:failureDetectionStrategy>EVERY_ERROR</cs:failureDetectionStrategy>
+        <cs:useFailureRatio>false</cs:useFailureRatio>
+        <cs:useConsecutiveFailures>false</cs:useConsecutiveFailures>
+        <cs:taskEnabled>false</cs:taskEnabled>
+      </cs:healthConfiguration>
+      <cs:alertLevel>MEDIUM</cs:alertLevel>
+    </cs:schedule>
+    <cs:schedule enabled="true">
+      <cs:id>60</cs:id>
+      <cs:description>Delete old debug files</cs:description>
+      <cs:ownerUsername>clover</cs:ownerUsername>
+      <cs:startTime>2022-02-11T19:36:33.280Z</cs:startTime>
+      <cs:intervalPeriodicity>false</cs:intervalPeriodicity>
+      <cs:interval>60</cs:interval>
+      <cs:intervalUnit>MINUTES</cs:intervalUnit>
+      <cs:onetime>false</cs:onetime>
+      <cs:cronExpression>0 */10 * * * ?</cs:cronExpression>
+      <cs:fireMisfired>false</cs:fireMisfired>
+      <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskArchivator" taskType="archivator">
+        <cs:archiveOlderThen>60</cs:archiveOlderThen>
+        <cs:archiveType>delete</cs:archiveType>
+        <cs:includeProfilerRuns>false</cs:includeProfilerRuns>
+        <cs:includeRunRecords>false</cs:includeRunRecords>
+        <cs:includeServerRunHistory>false</cs:includeServerRunHistory>
+        <cs:includeTaskLogs>false</cs:includeTaskLogs>
+        <cs:includeTempFiles>true</cs:includeTempFiles>
+      </cs:task>
+      <cs:healthConfiguration>
+        <cs:id>61</cs:id>
+        <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskSendEmail" taskType="email">
+          <cs:addJobLog>false</cs:addJobLog>
+          <cs:emailTemplate>
+            <cs:id>63</cs:id>
+            <cs:pattern>false</cs:pattern>
+          </cs:emailTemplate>
+        </cs:task>
+        <cs:failureDetectionStrategy>EVERY_ERROR</cs:failureDetectionStrategy>
+        <cs:useFailureRatio>false</cs:useFailureRatio>
+        <cs:useConsecutiveFailures>false</cs:useConsecutiveFailures>
+        <cs:taskEnabled>false</cs:taskEnabled>
+      </cs:healthConfiguration>
+      <cs:alertLevel>MEDIUM</cs:alertLevel>
+    </cs:schedule>
+    <cs:schedule enabled="true">
+      <cs:id>55</cs:id>
+      <cs:description>Delete old execution artifacts</cs:description>
+      <cs:ownerUsername>clover</cs:ownerUsername>
+      <cs:startTime>2022-02-11T19:36:33.228Z</cs:startTime>
+      <cs:intervalPeriodicity>false</cs:intervalPeriodicity>
+      <cs:interval>60</cs:interval>
+      <cs:intervalUnit>MINUTES</cs:intervalUnit>
+      <cs:onetime>false</cs:onetime>
+      <cs:cronExpression>0 5 * * * ?</cs:cronExpression>
+      <cs:fireMisfired>false</cs:fireMisfired>
+      <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskArchivator" taskType="archivator">
+        <cs:archiveOlderThen>43200</cs:archiveOlderThen>
+        <cs:archiveType>delete</cs:archiveType>
+        <cs:includeProfilerRuns>false</cs:includeProfilerRuns>
+        <cs:includeRunRecords>true</cs:includeRunRecords>
+        <cs:includeServerRunHistory>false</cs:includeServerRunHistory>
+        <cs:includeTaskLogs>true</cs:includeTaskLogs>
+        <cs:includeTempFiles>false</cs:includeTempFiles>
+        <cs:outputPath></cs:outputPath>
+      </cs:task>
+      <cs:healthConfiguration>
+        <cs:id>56</cs:id>
+        <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskSendEmail" taskType="email">
+          <cs:addJobLog>false</cs:addJobLog>
+          <cs:emailTemplate>
+            <cs:id>58</cs:id>
+            <cs:pattern>false</cs:pattern>
+          </cs:emailTemplate>
+        </cs:task>
+        <cs:failureDetectionStrategy>EVERY_ERROR</cs:failureDetectionStrategy>
+        <cs:useFailureRatio>false</cs:useFailureRatio>
+        <cs:useConsecutiveFailures>false</cs:useConsecutiveFailures>
+        <cs:taskEnabled>false</cs:taskEnabled>
+      </cs:healthConfiguration>
+      <cs:alertLevel>MEDIUM</cs:alertLevel>
+    </cs:schedule>
+  </cs:schedulesList>
+  <cs:eventListenersList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+  <cs:secretManagersList/>
+  <cs:operationsDashboardsList/>
+</cs:cloverServerConfiguration>
