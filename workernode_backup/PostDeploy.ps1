@@ -127,9 +127,6 @@ function Start-CloverDXMetaBackup
             $changes += [pscustomobject]::new()
         }
 
-       
-
-
         # If there are changes, backup database and upload to S3
         if ($changes.Count -gt 0)
         {
