@@ -96,25 +96,39 @@ function Start-CloverDXMetaBackup
         $planReadComplete = $false
         $i = 0
         $plan = @()
-
-        while ($planReadComplete -eq $false)
+        $changes = @()
+        if ($null -ne $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
         {
-            if ($null -eq $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
-            {
-                $planReadComplete = $true
-                break
-            }
-            
-            $plan = $plan += "$($OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])" | ConvertFrom-Json
-            $i++
-        }
 
-        # Use the following criteria to determine if there is a pending change
-        $changes = $plan.Where({
+            while ($planReadComplete -eq $false)
+            {
+                if ($null -eq $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
+                {
+                    $planReadComplete = $true
+                    break
+                }
+                
+                $plan = $plan += "$($OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])" | ConvertFrom-Json
+                $i++
+            }
+
+             # Use the following criteria to determine if there is a pending change
+            $changes = $plan.Where({
                 ($_.type -eq "planned_change") -and 
                 ($_.change.resource.resource_type -eq "aws_instance") -and 
                 ($_.change.resource.resource_name -eq "clover_worker")
-        })
+            })
+        }
+        else
+        {
+            Write-Host "No Terraform output was detected. We're assuming this is because the project has been deployed independantly of the single step."
+
+            # Dummy data to simulate number of changes greater than 1
+            $changes += [pscustomobject]::new()
+        }
+
+       
+
 
         # If there are changes, backup database and upload to S3
         if ($changes.Count -gt 0)
