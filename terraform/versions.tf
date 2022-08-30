@@ -3,11 +3,6 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
-    newrelic = {
-      source  = "newrelic/newrelic"
-      version = "~>2.37.0"
-    }
-
     ## Remove after PagerDuty resources have been deleted (after this change has been deployed everywhere)
     pagerduty = {
       source  = "pagerduty/pagerduty"
