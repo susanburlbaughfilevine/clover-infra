@@ -47,7 +47,6 @@ deploy-branch:
                             --space="MigrateTech-CloverDX" `
                             --package cloverdx-windows:${nupkgversion} `
                             --package="Backup CloverDX Meta:CloverDX Meta Backup:${releaseversion}" `
-                            --packageVersion="${nupkgversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting
 
