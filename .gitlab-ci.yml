@@ -77,7 +77,7 @@ deploy-master:
         octo push --package="workernode_backup.${gitversion}.nupkg" --space="MigrateTech-CloverDX" --overwrite-mode="OverwriteExisting"
         octo create-release --project="CloverDX Meta Backup" --space="MigrateTech-CloverDX" --package workernode_backup:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
         octo create-release --project="Deploy CloverDX Assets" --space="MigrateTech-CloverDX" --package clover-assets:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
-        octo create-release --project="Deploy CloverDX Infrastructure" --space="MigrateTech-CloverDX" --package cloverdx-windows:${gitversion} --packageVersion="${gitversion}" --version="${gitversion}" --ignoreExisting
+        octo create-release --project="Deploy CloverDX Infrastructure" --space="MigrateTech-CloverDX" --package cloverdx-windows:${gitversion} --version="${gitversion}" --ignoreExisting
         octo create-release --project="Deploy CloverDX Single Step" --space="MigrateTech-CloverDX"
       '
   only:
