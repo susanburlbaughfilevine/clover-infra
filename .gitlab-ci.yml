@@ -46,7 +46,7 @@ deploy-branch:
         octo create-release --project="Deploy CloverDX Infrastructure" `
                             --space="MigrateTech-CloverDX" `
                             --package cloverdx-windows:${nupkgversion} `
-                            --package="Backup CloverDX Meta:CloverDX Meta Backup:${releaseversion}"
+                            --package="Backup CloverDX Meta:CloverDX Meta Backup:${releaseversion}" `
                             --packageVersion="${nupkgversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting
