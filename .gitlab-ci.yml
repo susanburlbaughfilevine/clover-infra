@@ -23,8 +23,11 @@ deploy-branch:
         $manifest = Import-PowershellDataFile -Path clover-assets-manifest.psd1
         New-CloverAssetsPackage -DependancyManifest $manifest
         $gitversion = gitversion | convertfrom-json
+        $gitversion
         $nupkgversion = ${gitversion}.MajorMinorPatch + "-" + ${gitversion}.PreReleaseLabel
+        $nupkgversion
         $releaseversion = ${gitversion}.SemVer + "+" + ${gitversion}.ShortSha + "." + $env:CI_PIPELINE_IID
+        $releaseversion
         Remove-Item -Recurse -Force .git/
         octo pack --id="cloverdx-windows" --version="${nupkgversion}" --include="terraform/"
         octo pack --id="clover-assets" --version="${nupkgversion}" --include="clover-assets/"
@@ -43,6 +46,7 @@ deploy-branch:
         octo create-release --project="Deploy CloverDX Infrastructure" `
                             --space="MigrateTech-CloverDX" `
                             --package cloverdx-windows:${nupkgversion} `
+                            --package "Backup CloverDX Meta:CloverDX Meta Backup version 5.14.45-beta.1+679e4bd.621"
                             --packageVersion="${nupkgversion}" `
                             --version="${releaseversion}" `
                             --ignoreExisting
