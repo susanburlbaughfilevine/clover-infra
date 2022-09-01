@@ -9,7 +9,7 @@
     }
 
     tomcat = @{
-        PackageName      = "apache-tomcat-9.0.65.zip"
+        PackageName      = "apache-tomcat-9.0.65-windows-x64.zip"
         FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65-windows-x64.zip"
         Version          = "9.0.65"
         Checksum         = "9ca8b1e734b7c815335d408de172212be3b8beacdcb6a7b742ff30b859cb1653477b02c7b8eccc1c6dc76153d4275cc958a8f704feffb47ab2aa89b917472b47"
