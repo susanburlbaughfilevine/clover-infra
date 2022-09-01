@@ -61,7 +61,7 @@
         PackageName      = "log4j.jar"
         FileLink         = "https://dlcdn.apache.org/logging/log4j/2.18.0/apache-log4j-2.18.0-bin.zip"
         Version          = "2.18.0"
-        Checksum         = "3ac27e9104ebb4dcd4b9b071a841b4b8f44602788f259620c544668e79fcec95545132fe70396abe71a63a887099010d0d34b64d365d7dd069fd1afef476f71b"
+        Checksum         = "dbc7cafd91cf3bf444b889ffac195f26b43e7de2fd071e74d57795aee20160e614f16f6ff81c8c2f17fc386478d5511e245bbf1a972cca0e8bdcd950c36c1224"
         ChecksumType     = "sha512"
     }
 }
