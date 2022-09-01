@@ -57,11 +57,11 @@
         ChecksumType     = "none"
     }
 
-    log4j = @{
-        PackageName      = "log4j.jar"
-        FileLink         = "https://dlcdn.apache.org/logging/log4j/2.18.0/apache-log4j-2.18.0-bin.zip"
-        Version          = "2.18.0"
-        Checksum         = "dbc7cafd91cf3bf444b889ffac195f26b43e7de2fd071e74d57795aee20160e614f16f6ff81c8c2f17fc386478d5511e245bbf1a972cca0e8bdcd950c36c1224"
+    reload4j = @{
+        PackageName      = "reload4j.jar"
+        FileLink         = "https://repo1.maven.org/maven2/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar"
+        Version          = "1.2.22"
+        Checksum         = "FA09C72FB0E6973B10D8129BD379C30E0EADD530C725BA965743AB272046500FFEA975A0F824E9059038E4178FB9AD8B9C85DB60C6CF39A771E458A195600276"
         ChecksumType     = "sha512"
     }
 }

@@ -101,10 +101,10 @@ function Install-CloverDxServer
     Set-Location $tomcatPath\webapps\profiler\
     & "$($env:JAVA_HOME)\bin\jar.exe" -xvf $packageDir\profiler.war
 
-    # Copy updated Log4J bin to profiler server directory
+    # Install Reload4j bin, remove log4j
     New-Item -Type Directory -Path .\log4j
-    Expand-Archive -Path $packageDir\$($config["log4j"].PackageName) -DestinationPath .\log4j\ -Verbose
-    Copy-Item -Path ".\log4j\log4j-core-2.18.0.jar" -Destination ".\WEB-INF\lib\log4j-1.2.17.jar" -Verbose
+    Copy-Item -Path $packageDir\$($config["reload4j"].PackageName) -Destination ".\WEB-INF\lib\" -Verbose
+    Remove-Item -Path ".\WEB-INF\lib\log4j-1.2.17.jar" -Verbose
 
     # BouncyCastle Install
     Copy-Item -Path "$($packageDir)\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
