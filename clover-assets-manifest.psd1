@@ -58,10 +58,10 @@
     }
 
     log4j = @{
-        PackageName      = "pgjdbc.jar"
-        FileLink         = "https://jdbc.postgresql.org/download/postgresql-42.3.1.jar"
-        Version          = "42.3.1"
-        Checksum         = "none"
-        ChecksumType     = "none"
+        PackageName      = "log4j.jar"
+        FileLink         = "https://dlcdn.apache.org/logging/log4j/2.18.0/apache-log4j-2.18.0-bin.zip"
+        Version          = "2.18.0"
+        Checksum         = "3ac27e9104ebb4dcd4b9b071a841b4b8f44602788f259620c544668e79fcec95545132fe70396abe71a63a887099010d0d34b64d365d7dd069fd1afef476f71b"
+        ChecksumType     = "sha512"
     }
 }
