@@ -43,9 +43,9 @@
 
     profiler = @{
         PackageName      = "profiler.war"
-        FileLink         = "https://support.cloverdx.com/download?file=5.14.1/server/deploy/tomcat7-9/Application%20Files/profiler.war"
-        Version          = "5.14.1"
-        Checksum         = "15dbc918ac8bca9dba0677a590bf08de17f368c5463a6707d386fa667e79ce15"
+        FileLink         = "https://support.cloverdx.com/download?file=5.14.2/server/deploy/tomcat7-9/Application%20Files/profiler.war"
+        Version          = "5.14.2"
+        Checksum         = "f1c463a529e8bd9a80dfd84d7df68fd8e25cb4fa830119fb554e20b1188ec9c5"
         ChecksumType     = "sha256"
     }
 
