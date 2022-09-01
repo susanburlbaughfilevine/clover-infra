@@ -81,7 +81,7 @@ function Install-CloverDxServer
     #Write-Host "Executing: $c"
     $encryptedPass = Invoke-Expression $c
     #Write-Host "Result $encryptedPass"
-    New-Item -Type Directory -Path $tomcatPath\conf
+    
     $serverProperties = (Get-Content -Path $packageDir\config\cloverServer.properties)
     $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
     $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$DbInstanceAddress)
