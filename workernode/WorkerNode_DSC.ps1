@@ -12,29 +12,38 @@ Configuration WorkerNode
 
     Node localhost
     {
+        function GetCredentials()
+        {
+            Import-Module AWSPowershell
+            $filter = [Amazon.SecretsManager.Model.Filter]@{
+                "Key"    = "Name"
+                "Values" = "cloveretl-ssh-credentials"
+            }
+        
+            $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
+        
+            if ($null -eq $secSecret) {
+                return $false
+            }
+            
+            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
+            New-Object System.Management.Automation.PSCredential $InstallUser, $password
+        }
+
+        function GetEnvironment()
+        {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+            $instance = Get-EC2Instance -InstanceId $instanceId
+            $tag = $instance.Instances.Tags.Where({$_.Key -eq "env"}).Value
+            $tag
+        }
 
         User cloverEtlLogin
         {
             DependsOn = "[script]CloverEtlSecret"
             Ensure = "Present"
             UserName = "clover_etl_login"
-            Password = $(
-                Import-Module AWSPowershell
-                
-                $filter = [Amazon.SecretsManager.Model.Filter]@{
-                    "Key"    = "Name"
-                    "Values" = "cloveretl-ssh-credentials"
-                }
-            
-                $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-            
-                if ($null -eq $secSecret) {
-                    return $false
-                }
-                
-                $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
-                New-Object System.Management.Automation.PSCredential $InstallUser, $password
-            )
+            Password = GetCredentials
         }
 
         Group cloverEtlAsAdministrator
@@ -220,29 +229,15 @@ Configuration WorkerNode
             ServerName      = "localhost"
             InstanceName    = "MSSQLSERVER"
             DefaultDatabase = "master"
-            LoginCredential = $(
-                Import-Module AWSPowershell
-                $filter = [Amazon.SecretsManager.Model.Filter]@{
-                    "Key"    = "Name"
-                    "Values" = "cloveretl-ssh-credentials"
-                }
-            
-                $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-            
-                if ($null -eq $secSecret) {
-                    return $false
-                }
-                
-                $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
-                New-Object System.Management.Automation.PSCredential $InstallUser, $password
-            )
+            LoginCredential = GetCredentials
         }
 
         SqlScriptQuery CreateMetalUser
         {
-            DependsOn = "[cChocoPackageInstaller]SqlServer"
-            ServerName = "localhost"
+            DependsOn    = "[cChocoPackageInstaller]SqlServer"
+            ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
+            Credential   = Get-Credential
             SetQuery = "
                 USE [master]
                 GO
@@ -285,6 +280,7 @@ Configuration WorkerNode
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             SetQuery     = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
+            Credential   = Get-Credential
             TestQuery    = "
                 SELECT MemberPrincipalName 
                 FROM
@@ -313,10 +309,72 @@ Configuration WorkerNode
                     ON server_role_members.member_principal_id = members.principal_id
             "
         }
+
+        Script RestoreCloverDxMetaBackup
+        {
+            DependsOn = "[SqlLogin]AddCloverEtlLogin"
+            SetScript = {
+                # Grab most recent backup file
+                $backupObject = Get-S3Object -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups" | Sort-Object LastModified -Descending | Select-Object -First 1
+                $backupObject | Read-S3Object -File "$($env:SystemDrive)\Windows\Temp\backup.zip"
+                Expand-Archive -Path "$($env:SystemDrive)\Windows\Temp\backup.zip" -DestinationPath "$($env:SystemDrive)\Windows\Temp\backup"
+                $backupFiles = (Get-ChildItem "$($env:SystemDrive)\Windows\Temp\backup" -Recurse)
+                @{"Type"="Database";"Path"=$backupFiles.Where({$_.Name.EndsWith(".bak")})}, @{"Type"="Log";"Path"=$backupFiles.Where({$_.Name.EndsWith(".trn")})} | ForEach-Object {
+                    $restoreParams = @{
+                        ServerInstance = "localhost"
+                        Database       = "CloveDX_META"
+                        BackupFile     = $_.Path
+                        RestoreAction  = $_.Type
+                        Credential     = GetCredentials
+                    }
+
+                    Restore-SqlDatabase @restoreParams
+                }
+            }
+
+            GetScript = {
+                $bucket = Get-S3Bucket -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups"
+
+                $testParams = @{
+                    Credential = GetCredentials
+                    ServerInstance = "localhost"
+                    Query = "SELECT * FROM sys.databases"
+                }
+
+                $dbExists = (Invoke-Sqlcmd @testParams).Name.Contains("CloverDX_META")
+                
+                return [hashtable]@{
+                    "BackupBucketExists" = $null -eq $bucket
+                    "CloverDXMetaExists" = $dbExists
+                }
+            }
+
+            TestScript = {
+                $bucket = Get-S3Bucket -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups"
+
+                if ($null -ne $bucket)
+                {
+                    $testParams = @{
+                        Credential = GetCredentials
+                        ServerInstance = "localhost"
+                        Query = "SELECT * FROM sys.databases"
+                    }
+
+                    $dbExists = (Invoke-Sqlcmd @testParams).Name.Contains("CloverDX_META")
+
+                    if ($dbExists)
+                    {
+                        return $true
+                    }
+                }
+
+                return $false
+            }
+        }
     }
 }
 
 $global:DSCMachineStatus = 1
 
-workernode -InstallUser $InstallUser -ConfigurationData $ConfigData
+workernode -InstallUser "clover_etl_login" -ConfigurationData $ConfigData
 Start-DSCConfiguration ./workernode -Wait -Force
