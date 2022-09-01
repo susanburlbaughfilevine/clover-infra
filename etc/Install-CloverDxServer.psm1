@@ -60,7 +60,7 @@ function Install-CloverDxServer
     $jdkDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\jdk
     $jdkPath = Join-Path -Path $jdkDirectory.FullName -ChildPath ($config["jdk"].PackageName).Replace(".zip","")
     $tomcatPath = Join-Path -Path $tomcatDirectory.FullName -ChildPath $config["tomcat"].PackageName.Replace(".zip","")
-    Expand-Archive $packageDir\$($config["tomcat"].PackageName) -Destination $tomcatDirectory.FullName
+    Expand-Archive $packageDir\$($config["tomcat"].PackageName) -Destination $tomcatPath.FullName
     Expand-Archive $packageDir\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
 
     # Configure Tomcat installation
@@ -81,7 +81,7 @@ function Install-CloverDxServer
     #Write-Host "Executing: $c"
     $encryptedPass = Invoke-Expression $c
     #Write-Host "Result $encryptedPass"
-    New-Item -Type Directory -Path $tomcatPath\conf
+
     $serverProperties = (Get-Content -Path $packageDir\config\cloverServer.properties)
     $serverProperties = $serverProperties.Replace("##cryptoProviderLocation##","$($tomcatPath)\webapps\clover\WEB-INF\lib\")
     $serverProperties = $serverProperties.Replace("##rdsInstanceAddress##",$DbInstanceAddress)
