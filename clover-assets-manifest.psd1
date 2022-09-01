@@ -56,4 +56,12 @@
         Checksum         = "none"
         ChecksumType     = "none"
     }
+
+    log4j = @{
+        PackageName      = "pgjdbc.jar"
+        FileLink         = "https://jdbc.postgresql.org/download/postgresql-42.3.1.jar"
+        Version          = "42.3.1"
+        Checksum         = "none"
+        ChecksumType     = "none"
+    }
 }
