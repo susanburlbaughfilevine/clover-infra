@@ -101,6 +101,11 @@ function Install-CloverDxServer
     Set-Location $tomcatPath\webapps\profiler\
     & "$($env:JAVA_HOME)\bin\jar.exe" -xvf $packageDir\profiler.war
 
+    # Install Reload4j bin, remove log4j
+    New-Item -Type Directory -Path .\log4j
+    Copy-Item -Path $packageDir\$($config["reload4j"].PackageName) -Destination ".\WEB-INF\lib\" -Verbose
+    Remove-Item -Path ".\WEB-INF\lib\log4j-1.2.17.jar" -Verbose
+
     # BouncyCastle Install
     Copy-Item -Path "$($packageDir)\$($config["bouncycastle"].PackageName)" -Destination "$($tomcatPath)\webapps\clover\WEB-INF\lib\"
 

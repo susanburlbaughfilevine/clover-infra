@@ -43,9 +43,9 @@
 
     profiler = @{
         PackageName      = "profiler.war"
-        FileLink         = "https://support.cloverdx.com/download?file=5.14.1/server/deploy/tomcat7-9/Application%20Files/profiler.war"
-        Version          = "5.14.1"
-        Checksum         = "15dbc918ac8bca9dba0677a590bf08de17f368c5463a6707d386fa667e79ce15"
+        FileLink         = "https://support.cloverdx.com/download?file=5.14.2/server/deploy/tomcat7-9/Application%20Files/profiler.war"
+        Version          = "5.14.2"
+        Checksum         = "f1c463a529e8bd9a80dfd84d7df68fd8e25cb4fa830119fb554e20b1188ec9c5"
         ChecksumType     = "sha256"
     }
 
@@ -55,5 +55,13 @@
         Version          = "42.3.1"
         Checksum         = "none"
         ChecksumType     = "none"
+    }
+
+    reload4j = @{
+        PackageName      = "reload4j.jar"
+        FileLink         = "https://repo1.maven.org/maven2/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar"
+        Version          = "1.2.22"
+        Checksum         = "FA09C72FB0E6973B10D8129BD379C30E0EADD530C725BA965743AB272046500FFEA975A0F824E9059038E4178FB9AD8B9C85DB60C6CF39A771E458A195600276"
+        ChecksumType     = "sha512"
     }
 }
