@@ -57,12 +57,9 @@ function Install-CloverDxServer
 
     # Extract/Install JDK and Apache Tomcat
     $tomcatDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\tomcat
-    Write-Host "The tomcat directory is $tomcatDirectory"
     $jdkDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\jdk
     $jdkPath = Join-Path -Path $jdkDirectory.FullName -ChildPath ($config["jdk"].PackageName).Replace(".zip","")
     $tomcatPath = Join-Path -Path $tomcatDirectory.FullName -ChildPath $config["tomcat"].PackageName.Replace(".zip","")
-    Write-Host "The tomcat path is $tomcatPath"
-    Write-Host "The tomcat fullname is $($tomcatPath.FullName)"
     Expand-Archive $packageDir\$($config["tomcat"].PackageName) -Destination $tomcatDirectory.FullName
     Expand-Archive $packageDir\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
 
