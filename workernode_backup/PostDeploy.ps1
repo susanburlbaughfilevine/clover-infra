@@ -84,8 +84,8 @@ function Start-CloverDXMetaBackup
     [cmdletbinding()]
     Param
     (
-            [string]$EnvironmentName,
-            [string]$AWSRegion
+        [string]$EnvironmentName,
+        [string]$AWSRegion
     )
     
     try
