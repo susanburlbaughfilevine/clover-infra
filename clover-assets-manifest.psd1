@@ -9,6 +9,7 @@
     }
 
     tomcat = @{
+        # PackageName should be the name of the folder inside of the downladed zip
         PackageName      = "apache-tomcat-9.0.65.zip"
         FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65-windows-x64.zip"
         Version          = "9.0.65"

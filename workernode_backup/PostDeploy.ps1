@@ -97,20 +97,9 @@ function Start-CloverDXMetaBackup
         $i = 0
         $plan = @()
         $changes = @()
-        if ($null -ne $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
+        if ($null -ne $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"])
         {
-
-            while ($planReadComplete -eq $false)
-            {
-                if ($null -eq $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
-                {
-                    $planReadComplete = $true
-                    break
-                }
-                
-                $plan = $plan += "$($OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])" | ConvertFrom-Json
-                $i++
-            }
+            $changes = $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"] | ConvertFrom-Json
 
              # Use the following criteria to determine if there is a pending change
             $changes = $plan.Where({
