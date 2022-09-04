@@ -99,6 +99,8 @@ function Start-CloverDXMetaBackup
         $changes = @()
         if ($null -ne $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"])
         {
+            Write-Host "We've detected some changes"
+            
             $changes = $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"] | ConvertFrom-Json
 
              # Use the following criteria to determine if there is a pending change
@@ -117,40 +119,40 @@ function Start-CloverDXMetaBackup
         }
 
         # If there are changes, backup database and upload to S3
-        if ($changes.Count -gt 0)
-        {
-            $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
-            Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
-            Write-Host "-------"
+        # if ($changes.Count -gt 0)
+        # {
+        #     $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
+        #     Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
+        #     Write-Host "-------"
 
-            $backupFilePath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.bak")
-            $backupLogPath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.trn")
+        #     $backupFilePath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.bak")
+        #     $backupLogPath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.trn")
 
-            @{"BackupFile"=$backupFilePath;"BackupAction"="Database"},@{"BackupFile"=$backupLogPath;"BackupAction"="Log"} | ForEach-Object {
-                Write-Host "Backing up $($_.BackupAction)"
-                $backupParams = @{
-                    "BackupFile"      = $_.BackupFile
-                    "BackupAction"    = $_.BackupAction
-                    "Credential"      = Get-DbCredentials
-                    "Database"        = "CloverDX_META"
-                    "ServerInstance"  = "localhost"
-                }
+        #     @{"BackupFile"=$backupFilePath;"BackupAction"="Database"},@{"BackupFile"=$backupLogPath;"BackupAction"="Log"} | ForEach-Object {
+        #         Write-Host "Backing up $($_.BackupAction)"
+        #         $backupParams = @{
+        #             "BackupFile"      = $_.BackupFile
+        #             "BackupAction"    = $_.BackupAction
+        #             "Credential"      = Get-DbCredentials
+        #             "Database"        = "CloverDX_META"
+        #             "ServerInstance"  = "localhost"
+        #         }
 
-                Backup-SqlDatabase @backupParams
-            }
+        #         Backup-SqlDatabase @backupParams
+        #     }
 
-            $archivePath = "$($backupDirectory.FullName)" + ".zip"
-            Compress-Archive -Path $backupDirectory -DestinationPath $archivePath
+        #     $archivePath = "$($backupDirectory.FullName)" + ".zip"
+        #     Compress-Archive -Path $backupDirectory -DestinationPath $archivePath
 
-            if (Test-Path $archivePath)
-            {
-                Write-S3Object -BucketName "$($($EnvironmentName).ToLower())-cloverdx-meta-backups" -File $archivePath -Key "cloverdx-meta-backup-$((Get-Date).ToFileTimeUtc())"
-            }
-            else
-            {
-                throw "No backup ZIP archive found at $($backupDirectory.FullName).zip"
-            }
-        }
+        #     if (Test-Path $archivePath)
+        #     {
+        #         Write-S3Object -BucketName "$($($EnvironmentName).ToLower())-cloverdx-meta-backups" -File $archivePath -Key "cloverdx-meta-backup-$((Get-Date).ToFileTimeUtc())"
+        #     }
+        #     else
+        #     {
+        #         throw "No backup ZIP archive found at $($backupDirectory.FullName).zip"
+        #     }
+        # }
     }
     catch
     {
