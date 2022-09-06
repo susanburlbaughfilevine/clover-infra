@@ -95,13 +95,12 @@ function Start-CloverDXMetaBackup
         # Read TF plan output from Plan step
         $planReadComplete = $false
         $i = 0
-        $plan = @()
         $changes = @()
         if ($null -ne $OctopusParameters["planJson"])
         {
             Write-Host "We've detected some changes"
 
-            $changes = $OctopusParameters["planJson"] | ConvertFrom-Json
+            $plan = $OctopusParameters["planJson"] | ConvertFrom-Json
 
              # Use the following criteria to determine if there is a pending change
             $changes = $plan.Where({
