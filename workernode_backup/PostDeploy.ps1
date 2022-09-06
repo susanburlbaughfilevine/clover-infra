@@ -91,7 +91,6 @@ function Get-DbCredentials
 
 function Start-CloverDXMetaBackup
 {
-    #Requires -Modules AWSPowershell
     [cmdletbinding()]
     Param
     (
