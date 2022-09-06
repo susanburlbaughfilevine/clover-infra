@@ -121,6 +121,7 @@ function Start-CloverDXMetaBackup
         # If there are changes, backup database and upload to S3
         if ($changes.Count -gt 0)
         {
+            Write-Host "Detected $($changes.Count) changes"
             $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
             Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
             Write-Host "-------"
