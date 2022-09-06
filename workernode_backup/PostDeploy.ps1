@@ -6,15 +6,6 @@ function Create-BucketIfNotExists
         [string]$EnvironmentName,
         [string]$AWSRegion
     )
-    
-    try
-    {
-    	Import-Module AWS.Tools.S3
-    }
-    catch
-    {
-    	Write-Host "Module already imported"
-    }
 
 #     # This function is meant to be temporary since this is a change that is being introduced 
 #     # while a worker refresh is pending, meaning there will be race condition between bucket
