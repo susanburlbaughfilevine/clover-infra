@@ -111,6 +111,10 @@ function Start-CloverDXMetaBackup
                 ($_.change.resource.resource_type -eq "aws_instance") -and 
                 ($_.change.resource.resource_name -eq "clover_worker")
             })
+
+            Write-Host "Here are the changes"
+            $changes
+            $changes | gm 
         }
         else
         {
