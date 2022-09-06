@@ -1,9 +1,11 @@
-$OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"]
+Get-Variable
+
+$OctopusParameters["planJson"]
 
 Write-Host "null -ne"
-$null -ne $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"]
+$null -ne $OctopusParameters["planJson"]
 Write-Host "null -eq"
-$null -eq $OctopusParameters["Octopus.Action[Plan (custom)].Output.planJson"]
+$null -eq $OctopusParameters["planJson"]
 
 
 # function Create-BucketIfNotExists
