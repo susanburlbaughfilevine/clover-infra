@@ -1,3 +1,4 @@
+
 function Create-BucketIfNotExists
 {
     [cmdletbinding()]
@@ -6,6 +7,15 @@ function Create-BucketIfNotExists
         [string]$EnvironmentName,
         [string]$AWSRegion
     )
+    
+    try
+    {
+    	Import-Module AWS.Tools.S3
+    }
+    catch
+    {
+    	Write-Host "Module already imported"
+    }
 
 #     # This function is meant to be temporary since this is a change that is being introduced 
 #     # while a worker refresh is pending, meaning there will be race condition between bucket
@@ -24,6 +34,7 @@ function Create-BucketIfNotExists
         }
 
         $createBucketResult = New-S3Bucket @createBucketParams -Verbose
+        Write-Host "Create bucket result $createBucketResult"
 
         $publicAccessBlockConfig = @{
             "BucketName"                                          = $BucketName
@@ -52,11 +63,12 @@ function Create-BucketIfNotExists
 
         Set-S3BucketEncryption @setEncryptParams
     }
+    
+    Write-Host "Create-BucketIfNotExists finished for bucket $bucketName"
 }
 
 function Get-DbCredentials
 {
-    #Requires -Modules AWSPowershell
 
     [cmdletbinding()]
     [OutputType([System.Management.Automation.PSCredential])]
@@ -88,13 +100,15 @@ function Start-CloverDXMetaBackup
         [string]$AWSRegion
     )
     
+    Write-Host "Here is the plan output!"
+	$OctopusParameters["planJson"]
+    
     try
     {
+        Write-Host "Creating backup bucket if it doesn't exist"
         Create-BucketIfNotExists -EnvironmentName $EnvironmentName -AWSRegion $AWSRegion
 
         # Read TF plan output from Plan step
-        $planReadComplete = $false
-        $i = 0
         $changes = @()
         if ($null -ne $OctopusParameters["planJson"])
         {
@@ -152,6 +166,10 @@ function Start-CloverDXMetaBackup
             {
                 throw "No backup ZIP archive found at $($backupDirectory.FullName).zip"
             }
+        }
+        else
+        {
+        	Write-Host "No changes to CloverDX Worker Node detected in plan output. Not doing anything."
         }
     }
     catch
