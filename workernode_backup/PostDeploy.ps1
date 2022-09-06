@@ -157,6 +157,7 @@ function Start-CloverDXMetaBackup
     catch
     {
         Write-Error "Unable to complete database backup"
+        Write-Host $_.Exception.Message
         Write-Host $_.Exception
         Write-Host $_.ScriptStackTrace
     }
