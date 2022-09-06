@@ -1,4 +1,3 @@
-
 function Create-BucketIfNotExists
 {
     [cmdletbinding()]
