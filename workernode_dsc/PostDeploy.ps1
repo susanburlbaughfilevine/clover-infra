@@ -1,3 +1,13 @@
+Install-Module xPsDesiredStateConfiguration -Verbose
+Install-Module NetworkingDsc -Verbose
+Install-Module SqlServerDsc -Verbose
+Install-Module cChoco -Verbose
+
+$cert = New-SelfSignedCertificate -Type DocumentEncryptionCertLegacyCsp -DnsName 'DscEncryptionCert' -HashAlgorithm SHA256
+$cert | Export-Certificate -FilePath "C:\dsc\DscPublicKey.cer" -Force
+$thumbprint = $cert.Thumbprint
+Import-Certificate -FilePath "c:\dsc\DscPublicKey.cer" -CertStoreLocation Cert:\LocalMachine\My
+
 [DSCLocalConfigurationManager()]
 configuration LCMConfig
 {
@@ -11,19 +21,13 @@ configuration LCMConfig
   }
 }
 
-$cert = New-SelfSignedCertificate -Type DocumentEncryptionCertLegacyCsp -DnsName 'DscEncryptionCert' -HashAlgorithm SHA256
-$cert | Export-Certificate -FilePath "C:\dsc\DscPublicKey.cer" -Force
-$thumbprint = $cert.Thumbprint
-
-Import-Certificate -FilePath "c:\dsc\DscPublicKey.cer" -CertStoreLocation Cert:\LocalMachine\My
-
 LCMConfig
 
 Set-DscLocalConfigurationManager -Path .\LCMConfig
 
 $global:DSCMachineStatus = 1
 
-./WorkerNode_DSC.ps1
+. ./WorkerNode_DSC.ps1
 
 $ConfigData = @{
   AllNodes = @(
@@ -40,4 +44,4 @@ $ConfigData = @{
 
 WorkerNode -InstallUser "clover_etl_login" -ConfigurationData $ConfigData
 
-Start-DSCConfiguration ./workernode -wait -verbose -force
+Start-DSCConfiguration ./workernode -wait -force 

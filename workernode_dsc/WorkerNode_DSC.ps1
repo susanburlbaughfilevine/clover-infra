@@ -9,11 +9,14 @@ Configuration WorkerNode
     Import-DSCResource -ModuleName NetworkingDsc
     Import-DscResource -Module cChoco
     Import-DscResource -ModuleName 'SqlServerDsc'
+    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName 'ComputerManagementDSC'
+
 
     Node localhost
     {
-        function GetCredentials()
-        {
+        # Function for retriving Windows/SQL Login clover_etl_login credentials for use in the following DSC resources
+        $getCredentials = {
             Import-Module AWSPowershell
             $filter = [Amazon.SecretsManager.Model.Filter]@{
                 "Key"    = "Name"
@@ -27,15 +30,83 @@ Configuration WorkerNode
             }
             
             $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
-            New-Object System.Management.Automation.PSCredential $InstallUser, $password
+            return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
         }
 
-        function GetEnvironment()
-        {
+        # Function for getting the environment name from EC2 instance tags
+        $getEnvironment = {
             $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
             $instance = Get-EC2Instance -InstanceId $instanceId
             $tag = $instance.Instances.Tags.Where({$_.Key -eq "env"}).Value
-            $tag
+            return $tag
+        }
+
+        Script RenameComputerScript
+        {
+            SetScript = {
+                $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
+                Write-Verbose "Setting the name to $instanceName"
+                Rename-Computer -NewName "$instanceName" -Force
+            }
+            TestScript = {
+                $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
+                Write-Verbose "Checking if $instanceName matches $env:COMPUTERNAME"
+                $instanceName -match $env:COMPUTERNAME
+            }
+            GetScript = { @{ Result = ($env:COMPUTERNAME) } }
+        }
+
+        PendingReboot AfterRenameComputer {
+            Name = 'AfterRenameComputer'
+            DependsOn = '[Script]RenameComputerScript'
+        }
+
+        Script SftEthernetAssignment
+        {
+            SetScript = {
+                $activeEthernetInterface = (Get-NetAdapter) | Where {($_.InterfaceDescription -like "Amazon Elastic Network Adapter*")} | Select-Object -First 1 Name
+                $activeEthernetInterfaceName = $activeEthernetInterface.name
+                "`nAccessInterface: $activeEthernetInterfaceName" | Out-File -Encoding "utf8" -append "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml"
+                Restart-Service *scaleft*
+            }
+            TestScript = {
+                (Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" | Select-String -Pattern "AccessInterface" -AllMatches).Count -eq 1
+            }
+            GetScript = { @{ Result = Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" } }
+        }
+
+        Script NewRelicAgentEnabled
+        {
+            GetScript = {
+                $progData = [Environment]::GetFolderPath('CommonApplicationData')
+                $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+                $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+                return @{Result = [bool]$conf.configuration.agentEnabled}
+            }
+    
+            SetScript = {
+                $AgentEnabled = $true
+                $progData = [Environment]::GetFolderPath('CommonApplicationData')
+                $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+                $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+                $conf.configuration.agentEnabled = ([string]$AgentEnabled).ToLower()
+                $conf.Save($configPath)
+            }
+    
+            TestScript = {
+                $AgentEnabled = $true
+                $progData = [Environment]::GetFolderPath('CommonApplicationData')
+                $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
+                $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
+                $conf.configuration.agentEnabled -eq ([string]$AgentEnabled).ToLower()
+            }
+        }
+
+        Service NewRelicSvc
+        {
+            Name        = 'newrelic-infra'
+            StartupType = 'Automatic'
+            State       = 'Running'
         }
 
         User cloverEtlLogin
@@ -43,7 +114,7 @@ Configuration WorkerNode
             DependsOn = "[script]CloverEtlSecret"
             Ensure = "Present"
             UserName = "clover_etl_login"
-            Password = GetCredentials
+            Password = & $getCredentials
         }
 
         Group cloverEtlAsAdministrator
@@ -229,15 +300,15 @@ Configuration WorkerNode
             ServerName      = "localhost"
             InstanceName    = "MSSQLSERVER"
             DefaultDatabase = "master"
-            LoginCredential = GetCredentials
+            LoginCredential = & $getCredentials
         }
 
         SqlScriptQuery CreateMetalUser
         {
-            DependsOn    = "[cChocoPackageInstaller]SqlServer"
+            DependsOn    = "[SqlLogin]AddCloverEtlLogin"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
-            Credential   = Get-Credential
+            PsDscRunAsCredential = & $getCredentials
             SetQuery = "
                 USE [master]
                 GO
@@ -263,13 +334,19 @@ Configuration WorkerNode
             "
 
             TestQuery = "
-                USE [master]
-                SELECT 1 FROM sys.server_principals WHERE name = 'METAL_User'
-                GO
+            USE [master]
+            if (SELECT count(*) FROM sys.server_principals WHERE name = 'METAL_User') = 0
+            BEGIN
+                RAISERROR ('METAL_User not found',16,1)
+            END
+            ELSE
+            BEGIN
+                PRINT 'Found METAL_USER'
+            END
             "
             GetQuery = "
                 USE [master]
-                SELECT 1 FROM sys.server_principals WHERE name = 'METAL_User'
+                SELECT * FROM sys.server_principals WHERE name = 'METAL_User'
                 GO
             "
         }
@@ -280,22 +357,31 @@ Configuration WorkerNode
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             SetQuery     = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
-            Credential   = Get-Credential
+            PsDscRunAsCredential  = & $getCredentials
             TestQuery    = "
-                SELECT MemberPrincipalName 
-                FROM
-                    (
-                        SELECT	roles.principal_id						AS RolePrincipalID
-                        ,	roles.name									AS RolePrincipalName
-                        ,	server_role_members.member_principal_id		AS MemberPrincipalID
-                        ,	members.name								AS MemberPrincipalName
-                        FROM sys.server_role_members AS server_role_members
-                        INNER JOIN sys.server_principals AS roles
-                            ON server_role_members.role_principal_id = roles.principal_id
-                        INNER JOIN sys.server_principals AS members 
-                            ON server_role_members.member_principal_id = members.principal_id
-                    ) AS SUBQUERY
-                WHERE RolePrincipalName = 'METAL_user'
+                USE [master]
+                if (                
+                    SELECT count(*) MemberPrincipalName 
+                    FROM
+                        (
+                            SELECT	roles.principal_id						AS RolePrincipalID
+                            ,	roles.name									AS RolePrincipalName
+                            ,	server_role_members.member_principal_id		AS MemberPrincipalID
+                            ,	members.name								AS MemberPrincipalName
+                            FROM sys.server_role_members AS server_role_members
+                            INNER JOIN sys.server_principals AS roles
+                                ON server_role_members.role_principal_id = roles.principal_id
+                            INNER JOIN sys.server_principals AS members 
+                                ON server_role_members.member_principal_id = members.principal_id
+                        ) AS SUBQUERY
+                    WHERE RolePrincipalName = 'METAL_user') = 0
+                BEGIN
+                    RAISERROR ('Role principal not found',16,1)
+                END
+                ELSE
+                BEGIN
+                    PRINT 'Found clover_etl_login as member of METAL_User'
+                END
             "
             GetQuery = "
                 SELECT	roles.principal_id						    AS RolePrincipalID
@@ -312,20 +398,41 @@ Configuration WorkerNode
 
         Script RestoreCloverDxMetaBackup
         {
-            DependsOn = "[SqlLogin]AddCloverEtlLogin"
+            PsDscRunAsCredential =  & $getCredentials
+            DependsOn = "[SqlScriptQuery]CreateMetalUser"
             SetScript = {
+                Install-Module sqlserver -Force -AllowClobber
+                $cred = Invoke-Expression "$($using:getCredentials)"
+                $env = Invoke-Expression "$($using:GetEnvironment)"
+
                 # Grab most recent backup file
-                $backupObject = Get-S3Object -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups" | Sort-Object LastModified -Descending | Select-Object -First 1
+                $backupObject = Get-S3Object -BucketName "$($($env).ToLower())-cloverdx-meta-backups" | Sort-Object LastModified -Descending | Select-Object -First 1
                 $backupObject | Read-S3Object -File "$($env:SystemDrive)\Windows\Temp\backup.zip"
-                Expand-Archive -Path "$($env:SystemDrive)\Windows\Temp\backup.zip" -DestinationPath "$($env:SystemDrive)\Windows\Temp\backup"
+                Expand-Archive -Path "$($env:SystemDrive)\Windows\Temp\backup.zip" -DestinationPath "$($env:SystemDrive)\Windows\Temp\backup" -Force
+                
+                $acl = Get-Acl "$($env:SystemDrive)\Windows\Temp\backup"
+                $perm = "NT Service\MSSQLSERVER", "Write, Read, ReadAndExecute", "Allow"
+                $rule = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $perm
+                $acl.SetAccessRule($rule)
+                $acl | Set-Acl -Path "$($env:SystemDrive)\Windows\Temp\backup"
+
                 $backupFiles = (Get-ChildItem "$($env:SystemDrive)\Windows\Temp\backup" -Recurse)
-                @{"Type"="Database";"Path"=$backupFiles.Where({$_.Name.EndsWith(".bak")})}, @{"Type"="Log";"Path"=$backupFiles.Where({$_.Name.EndsWith(".trn")})} | ForEach-Object {
+                
+                # If we end up wanting to perform tlog restores as well, add the following string before the pipe below
+                # ,@{"Type"="Log";"Path"=$backupFiles.Where({$_.Name.EndsWith(".trn")})
+                @{"Type"="Database";"Path"=$backupFiles.Where({$_.Name.EndsWith(".bak")})} | ForEach-Object {
+                    $acl = Get-Acl $_.Path.FullName
+                    $perm = "NT Service\MSSQLSERVER", "Write, Read, ReadAndExecute", "Allow"
+                    $rule = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $perm
+                    $acl.SetAccessRule($rule)
+                    $acl | Set-Acl -Path $_.Path.FullName
+
                     $restoreParams = @{
                         ServerInstance = "localhost"
-                        Database       = "CloveDX_META"
-                        BackupFile     = $_.Path
+                        Database       = "CloverDX_META"
+                        BackupFile     = $_.Path.FullName
                         RestoreAction  = $_.Type
-                        Credential     = GetCredentials
+                        Credential     = $cred
                     }
 
                     Restore-SqlDatabase @restoreParams
@@ -333,10 +440,11 @@ Configuration WorkerNode
             }
 
             GetScript = {
-                $bucket = Get-S3Bucket -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups"
+                Install-Module sqlserver -Force -AllowClobber
+                $cred = Invoke-Expression "$($using:getCredentials)"
 
                 $testParams = @{
-                    Credential = GetCredentials
+                    Credential = $cred
                     ServerInstance = "localhost"
                     Query = "SELECT * FROM sys.databases"
                 }
@@ -344,18 +452,21 @@ Configuration WorkerNode
                 $dbExists = (Invoke-Sqlcmd @testParams).Name.Contains("CloverDX_META")
                 
                 return [hashtable]@{
-                    "BackupBucketExists" = $null -eq $bucket
-                    "CloverDXMetaExists" = $dbExists
+                    "Result" = "CloverDX Meta exists: $dbExists"
                 }
             }
 
             TestScript = {
-                $bucket = Get-S3Bucket -BucketName "$($(Get-Environment).ToLower())-cloverdx-meta-backups"
+                Install-Module sqlserver -Force -AllowClobber
+                $cred = Invoke-Expression "$($using:getCredentials)"
+                $env = Invoke-Expression "$($using:GetEnvironment)"
+
+                $bucket = Get-S3Bucket -BucketName "$($($env).ToLower())-cloverdx-meta-backups"
 
                 if ($null -ne $bucket)
                 {
                     $testParams = @{
-                        Credential = GetCredentials
+                        Credential = $cred
                         ServerInstance = "localhost"
                         Query = "SELECT * FROM sys.databases"
                     }
@@ -373,8 +484,3 @@ Configuration WorkerNode
         }
     }
 }
-
-$global:DSCMachineStatus = 1
-
-workernode -InstallUser "clover_etl_login" -ConfigurationData $ConfigData
-Start-DSCConfiguration ./workernode -Wait -Force

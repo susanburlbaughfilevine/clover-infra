@@ -42,9 +42,7 @@ Configuration InstallOctopus
         [String]
         $ComputerName=$(hostname)
     )
-
-    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
-    Import-DscResource -ModuleName 'ComputerManagementDsc'
+    
     Import-DscResource -ModuleName 'OctopusDSC'
 
     cTentacleAgent OctopusTentacle
@@ -69,154 +67,19 @@ Configuration InstallOctopus
     }
 }
 
-# Don't use the Default RenameComputer DSC as of 3 Mar 2020 as it limits to 15 char password
-# Default to setting the compiled configuration to current computer name.  Pass a name in to change it.
-Configuration ScriptRenameComputer
-{
-    param
-    (
-        [String]
-        $NewComputerName
-    )
-
-    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
-    Import-DscResource -ModuleName 'ComputerManagementDSC'
-
-    Node localhost
-    {
-        Script RenameComputerScript
-        {
-            SetScript = {
-                Write-Verbose "Setting the name to $using:NewComputerName"
-                Rename-Computer -NewName "$using:NewComputerName" -Force
-            }
-            TestScript = {
-                Write-Verbose "Checking if $using:NewComputerName matches $env:COMPUTERNAME"
-                $using:NewComputerName -match $env:COMPUTERNAME
-            }
-            GetScript = { @{ Result = ($env:COMPUTERNAME) } }
-        }
-
-        PendingReboot AfterRenameComputer {
-            Name = 'AfterRenameComputer'
-            DependsOn = '[Script]RenameComputerScript'
-        }
-    }
-}
-
-Install-Module xPsDesiredStateConfiguration -Force -Verbose
-
-
-Configuration SftEthernetAssignment
-    {
-    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
-    Import-DscResource -ModuleName 'ComputerManagementDSC'
-
-    Script SftEthernetAssignment
-    {
-        SetScript = {
-            $activeEthernetInterface = (Get-NetAdapter) | Where {($_.InterfaceDescription -like "Amazon Elastic Network Adapter*")} | Select-Object -First 1 Name
-            $activeEthernetInterfaceName = $activeEthernetInterface.name
-            "`nAccessInterface: $activeEthernetInterfaceName" | Out-File -Encoding "utf8" -append "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml"
-            Restart-Service *scaleft*
-        }
-        TestScript = {
-            (Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" | Select-String -Pattern "AccessInterface" -AllMatches).Count -eq 1
-        }
-        GetScript = { @{ Result = Get-Content "C:\Windows\System32\config\systemprofile\AppData\Local\ScaleFT\sftd.yaml" } }
-    }
-}
-
-Configuration NewRelicInfraAgent
-{
-    param(
-        [Parameter(Mandatory)]
-        [string]$StartupType,
-
-        [Parameter(Mandatory)]
-        [string]$State
-    )
-
-    Service NewRelicSvc
-    {
-        Name        = 'newrelic-infra'
-        StartupType = $StartupType
-        State       = $State
-    }
-}
-
-Configuration NewRelicNetAgent
-{
-    param(
-        [Parameter(Mandatory)]
-        [bool]$AgentEnabled
-    )
-
-    Script NewRelicAgentEnabled
-    {
-        GetScript = {
-            $progData = [Environment]::GetFolderPath('CommonApplicationData')
-            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
-            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
-            return @{Result = [bool]$conf.configuration.agentEnabled}
-        }
-
-        SetScript = {
-            $progData = [Environment]::GetFolderPath('CommonApplicationData')
-            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
-            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
-            $conf.configuration.agentEnabled = ([string]$using:AgentEnabled).ToLower()
-            $conf.Save($configPath)
-        }
-
-        TestScript = {
-            $progData = [Environment]::GetFolderPath('CommonApplicationData')
-            $configPath = Join-Path -Path $progData -ChildPath 'New Relic\.NET Agent\newrelic.config'
-            $conf = [xml](Get-Content -LiteralPath $configPath -Raw)
-            $conf.configuration.agentEnabled -eq ([string]$using:AgentEnabled).ToLower()
-        }
-    }
-}
-
 # Execute AllInOne Module made up of combined modules from above.
 Configuration AllInOne {
-    param (
+    param 
+    (
         [Parameter(Mandatory)]
-        [string]$newcomputername,
-
-        [Parameter(Mandatory)]
-        [string]$NrStartupType,
-
-        [Parameter(Mandatory)]
-        [string]$NrState,
-
-        [Parameter(Mandatory)]
-        [bool]$NrNetEnabled
-        )
+        [string]$newcomputername
+    )
 
     node localhost {
-
-        ScriptRenameComputer myrename
-		{
-            NewComputerName = $newcomputername
-        }
 
         InstallOctopus mytentacle
         {
             ComputerName = $newcomputername
-        }
-
-        SftEthernetAssignment EthernetAssignment {}
-
-        NewRelicInfraAgent nrinfra
-        {
-            StartupType = $NrStartupType
-            State = $NrState
-        }
-
-        NewRelicNetAgent nrnet
-        {
-            AgentEnabled = $NrNetEnabled
         }
     }
 }
@@ -228,108 +91,7 @@ Set-DscLocalConfigurationManager -Path .\LCMConfig -Verbose
 # Enable rebooting if needed
 $global:DSCMachineStatus = 1
 
-$nrState = 'Stopped'
-$nrStartupType = 'Disabled'
-$nrNetEnabled = $false
-if ("${newrelic_enabled}" -eq 'true')
-{
-    $nrState = 'Running'
-    $nrStartupType = 'Automatic'
-    $nrNetEnabled = $true
-}
-
-[Reflection.Assembly]::LoadWithPartialName("System.Web")
-$password = [System.Web.Security.Membership]::GeneratePassword(14,2)
-net user clover_etl_login $password /add /active:yes
-net localgroup administrators /add clover_etl_login
-
-$configPath = "$env:ProgramData\ssh\sshd_config"
-$sshdConfig = Get-Content $configPath
-$sshdConfig = $sshdConfig.Replace("AllowUsers Administrator","AllowGroups Administrators") 
-$sshdConfig | Out-File -FilePath "$env:ProgramData\ssh\sshd_config" -Encoding utf8 -Force
-
-$filter = [Amazon.SecretsManager.Model.Filter]@{
-    "Key"    = "Name"
-    "Values" = "cloveretl-ssh-credentials"
-}
-
-$secSecret = Get-SECSecretList -Filter $filter
-
-$updateParams = @{
-    "SecretString" = (@{"password"=$password} | ConvertTo-Json)
-    "Description"  = "Password for the clover_etl_login user"
-    "SecretId"     = $secSecret.ARN
-}
-
-Update-SECSecret @updateParams
-
-# User the administrator account due to issues with RunAs and the ssm-user when using Start-Process
-choco install -y sql-server-2019 --params "'/SQLSYSADMINACCOUNTS:$($env:USERNAME) /IgnorePendingReboot'" 
-
-[System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
-
-$wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
-
-$tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
-$tcp.IsEnabled = $true
-$tcp.Alter()
-
-Restart-Service -Name MSSQLSERVER -Force
-
-$sqlFirewallRuleCreate = @{
-    "Name"        = "sql-server-in"
-    "DisplayName" = "sql-server-in"
-    "LocalPort"   = 1433
-    "Protocol"    = "tcp"
-    "Direction"   = "Inbound"
-    "Action"      = "Allow"
-}
-
-New-NetFirewallRule @sqlFirewallRuleCreate
-
-$securePass = ConvertTo-SecureString $password -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential "clover_etl_login", $securePass
-
-$createMetalRole = @'
-    USE [master]
-    GO
-
-    /****** Object:  StoredProcedure [dbo].[usp_CreateServerRoles]    Script Date: 11/1/2020 12:48:39 PM ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-
-    /*METAL_User Role*/
-    IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = 'METAL_User')
-        BEGIN
-            CREATE SERVER ROLE [METAL_User];
-            ALTER SERVER ROLE [securityadmin] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [serveradmin] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [setupadmin] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [processadmin] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [diskadmin] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [dbcreator] ADD MEMBER [METAL_User]
-            ALTER SERVER ROLE [bulkadmin] ADD MEMBER [METAL_User]
-        END
-'@
-
-$changeLoginMode = @'
-    USE [master]
-    GO
-    EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', 
-        N'Software\Microsoft\MSSQLServer\MSSQLServer',
-        N'LoginMode', REG_DWORD, 2
-    GO
-'@
-
-Install-Module SQLServer -Verbose -Force -AllowClobber
-Invoke-SqlCmd -Query $createMetalRole -ServerInstance localhost
-Add-SqlLogin -LoginPSCredential $credential -LoginType SqlLogin -ServerInstance localhost -Enable -GrantConnectSql -DefaultDatabase master
-Invoke-SqlCmd -Query $changeLoginMode -ServerInstance localhost -Verbose
-Invoke-SqlCmd -Query "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login" -ServerInstance localhost -Verbose
-
 # Compile and apply the AllinOne configuration
-AllInOne -NewComputerName $instanceName -NrStartupType $nrStartupType -NrState $nrState -NrNetEnabled $nrNetEnabled
+AllInOne -NewComputerName $instanceName
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
 </powershell>
