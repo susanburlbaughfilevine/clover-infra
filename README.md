@@ -7,7 +7,7 @@ Below you'll find answers to what are assumed to be common questions regarding d
 [Diagram](https://lucid.app/lucidchart/78662cca-5751-4deb-8979-a73e3303664c/edit?invitationId=inv_c8292159-99cb-4f87-a4b5-d63542d91be1)
 
 ### I need to deploy a release of CloverDX server and its supporting infrastructure to an existing environment.
-- Navigate to the Octopus Deploy project [Deploy CloverDX Server - Windows](https://octopus.filevinedev.com/app#/Spaces-243/projects/deploy-cloverdx-server-windows/deployments). Select a release and deploy to the environment of your choice.
+- Navigate to the Octopus Deploy project [Deploy CloverDX Single Step](https://octopus.filevinedev.com/app#/Spaces-243/projects/deploy-cloverdx-single-step/deployments). Select a release and deploy to the environment of your choice.
 
 ### I need to deploy CloverDX server and its supporting infrastructure to a new environment.
 - Create a new Octopus tenant in the [MigrateTech-CloverDX](https://octopus.filevinedev.com/app#/Spaces-243/tenants) space.

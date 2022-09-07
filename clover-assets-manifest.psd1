@@ -27,10 +27,10 @@
     }
 
     securecfg = @{
-        PackageName      = "secure-cfg-tool.5.14.1.zip"
-        FileLink         = "https://support.cloverdx.com/download?file=5.14.1/server/common/Utilities/secure-cfg-tool.5.14.1.zip"
-        Version          = "5.14.1"
-        Checksum         = "b740b100a4bbd6ed34ae33a664dfb80e3e4c45da6dc6ebff698517f58a8c27ef"
+        PackageName      = "secure-cfg-tool.5.14.2.zip"
+        FileLink         = "https://support.cloverdx.com/download?file=5.14.2/server/common/Utilities/secure-cfg-tool.5.14.2.zip"
+        Version          = "5.14.2"
+        Checksum         = "0534ea2393a1cc223387c258fd1a35368a69fa6f8656f4d4437379cf22326e5a"
         ChecksumType     = "sha256"
     }
 
