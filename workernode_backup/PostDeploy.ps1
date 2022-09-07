@@ -64,6 +64,8 @@ function Get-DbCredentials
     [OutputType([System.Management.Automation.PSCredential])]
     Param()
 
+    Import-Module AWSPowershell -Force
+
     $filter = [Amazon.SecretsManager.Model.Filter]@{
         "Key"    = "Name"
         "Values" = "cloveretl-ssh-credentials"
