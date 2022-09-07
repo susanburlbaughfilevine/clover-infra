@@ -63,9 +63,8 @@ function Get-DbCredentials
     [cmdletbinding()]
     [OutputType([System.Management.Automation.PSCredential])]
     Param()
-
-    Remove-Module AWSPowershell -Force
-    Import-Module AWSPowershell -Force
+    Get-Module
+    Import-Module AWSPowershell -Force -ErrorAction Continue
 
     $filter = [Amazon.SecretsManager.Model.Filter]@{
         "Key"    = "Name"
