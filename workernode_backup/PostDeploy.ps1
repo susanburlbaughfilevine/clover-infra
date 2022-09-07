@@ -98,36 +98,29 @@ function Start-CloverDXMetaBackup
         Create-BucketIfNotExists -EnvironmentName $EnvironmentName -AWSRegion $AWSRegion
 
         # Read TF plan output from Plan step
-        $changes = @()
+        $backup = $false
         if ($null -ne $OctopusParameters["planJson"])
         {
             Write-Host "We've detected some changes"
 
             $plan = $OctopusParameters["planJson"] | ConvertFrom-Json
 
-             # Use the following criteria to determine if there is a pending change
-            $changes = $plan.Where({
-                ($_.type -eq "planned_change") -and 
-                ($_.change.resource.resource_type -eq "aws_instance") -and 
-                ($_.change.resource.resource_name -eq "clover_worker")
-            })
-
-            Write-Host "Here are the changes"
-            $changes
-            $changes | gm 
+            if (@("aws_instance.clover_worker: Plan to replace", "aws_instance.clover_worker: Plan to update", "aws_instance.clover_worker: Plan to delete").Contains($_."@message"))
+            {
+                $backup = $true 
+            }
         }
         else
         {
             Write-Host "No Terraform output was detected. We're assuming this is because the project has been deployed independantly of the single step."
 
             # Dummy data to simulate number of changes greater than 1
-            $changes += [pscustomobject]::new()
+            $backup = $true
         }
 
         # If there are changes, backup database and upload to S3
-        if ($changes.Count -gt 0)
+        if ($backup)
         {
-            Write-Host "Detected $($changes.Count) changes"
             $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
             Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
             Write-Host "-------"
