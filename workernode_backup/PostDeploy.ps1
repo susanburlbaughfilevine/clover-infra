@@ -104,10 +104,11 @@ function Start-CloverDXMetaBackup
             Write-Host "We've detected some changes"
 
             $plan = $OctopusParameters["planJson"] | ConvertFrom-Json
-
-            if (@("aws_instance.clover_worker: Plan to replace", "aws_instance.clover_worker: Plan to update", "aws_instance.clover_worker: Plan to delete").Contains($_."@message"))
-            {
-                $backup = $true 
+            $plan | ForEach-Object {
+                if (@("aws_instance.clover_worker: Plan to replace", "aws_instance.clover_worker: Plan to update", "aws_instance.clover_worker: Plan to delete").Contains($_."@message"))
+                {
+                    $backup = $true 
+                }
             }
         }
         else
