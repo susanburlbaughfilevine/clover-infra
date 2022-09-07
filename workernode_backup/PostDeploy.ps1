@@ -7,10 +7,10 @@ function Create-BucketIfNotExists
         [string]$AWSRegion
     )
 
-    # This function is meant to be temporary since this is a change that is being introduced 
-    # while a worker refresh is pending, meaning there will be race condition between bucket
-    # creation and needing to perform the backup. To be removed at a later date and instead,
-    # import the resultant s3 bucket into the tf state
+#     # This function is meant to be temporary since this is a change that is being introduced 
+#     # while a worker refresh is pending, meaning there will be race condition between bucket
+#     # creation and needing to perform the backup. To be removed at a later date and instead,
+#     # import the resultant s3 bucket into the tf state
 
     $bucketName = "$($($EnvironmentName).ToLower())-cloverdx-meta-backups"
     $bucketExists = $(Get-S3Bucket).BucketName.Contains($bucketName)
@@ -24,6 +24,7 @@ function Create-BucketIfNotExists
         }
 
         $createBucketResult = New-S3Bucket @createBucketParams -Verbose
+        Write-Host "Create bucket result $createBucketResult"
 
         $publicAccessBlockConfig = @{
             "BucketName"                                          = $BucketName
@@ -52,11 +53,12 @@ function Create-BucketIfNotExists
 
         Set-S3BucketEncryption @setEncryptParams
     }
+    
+    Write-Host "Create-BucketIfNotExists finished for bucket $bucketName"
 }
 
 function Get-DbCredentials
 {
-    #Requires -Modules AWSPowershell
 
     [cmdletbinding()]
     [OutputType([System.Management.Automation.PSCredential])]
@@ -80,95 +82,81 @@ function Get-DbCredentials
 
 function Start-CloverDXMetaBackup
 {
-    #Requires -Modules AWSPowershell
     [cmdletbinding()]
     Param
     (
-            [string]$EnvironmentName,
-            [string]$AWSRegion
+        [string]$EnvironmentName,
+        [string]$AWSRegion
     )
     
-    try
+    Write-Host "Here is the plan output!"
+	$OctopusParameters["planJson"]
+    
+    Write-Host "Creating backup bucket if it doesn't exist"
+    Create-BucketIfNotExists -EnvironmentName $EnvironmentName -AWSRegion $AWSRegion
+
+    # Read TF plan output from Plan step
+    $backup = $false
+    if ($null -ne $OctopusParameters["planJson"])
     {
-        Create-BucketIfNotExists -EnvironmentName $EnvironmentName -AWSRegion $AWSRegion
+        Write-Host "We've detected some changes"
 
-        # Read TF plan output from Plan step
-        $planReadComplete = $false
-        $i = 0
-        $plan = @()
-        $changes = @()
-        if ($null -ne $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
-        {
-
-            while ($planReadComplete -eq $false)
+        $plan = $OctopusParameters["planJson"] | ConvertFrom-Json
+        $plan | ForEach-Object {
+            if (@("aws_instance.clover_worker: Plan to replace", "aws_instance.clover_worker: Plan to update", "aws_instance.clover_worker: Plan to delete").Contains($_."@message"))
             {
-                if ($null -eq $OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])
-                {
-                    $planReadComplete = $true
-                    break
-                }
-                
-                $plan = $plan += "$($OctopusParameters["Octopus.Action[Plan].Output.TerraformPlanLine[$i].JSON"])" | ConvertFrom-Json
-                $i++
+                $backup = $true 
+            }
+        }
+    }
+    else
+    {
+        Write-Host "No Terraform output was detected. We're assuming this is because the project has been deployed independantly of the single step."
+
+        # Dummy data to simulate number of changes greater than 1
+        $backup = $true
+    }
+
+    # If there are changes, backup database and upload to S3
+    if ($backup)
+    {
+        $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
+        Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
+        Write-Host "-------"
+
+        $backupFilePath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.bak")
+        $backupLogPath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.trn")
+
+        @{"BackupFile"=$backupFilePath;"BackupAction"="Database"},@{"BackupFile"=$backupLogPath;"BackupAction"="Log"} | ForEach-Object {
+            Write-Host "Backing up $($_.BackupAction)"
+            $backupParams = @{
+                "BackupFile"      = $_.BackupFile
+                "BackupAction"    = $_.BackupAction
+                "Credential"      = Get-DbCredentials
+                "Database"        = "CloverDX_META"
+                "ServerInstance"  = "localhost"
             }
 
-             # Use the following criteria to determine if there is a pending change
-            $changes = $plan.Where({
-                ($_.type -eq "planned_change") -and 
-                ($_.change.resource.resource_type -eq "aws_instance") -and 
-                ($_.change.resource.resource_name -eq "clover_worker")
-            })
+            Backup-SqlDatabase @backupParams
+        }
+
+        $archivePath = "$($backupDirectory.FullName)" + ".zip"
+        Compress-Archive -Path $backupDirectory -DestinationPath $archivePath
+
+        if (Test-Path $archivePath)
+        {
+            Write-S3Object -BucketName "$($($EnvironmentName).ToLower())-cloverdx-meta-backups" -File $archivePath -Key "cloverdx-meta-backup-$((Get-Date).ToFileTimeUtc())"
         }
         else
         {
-            Write-Host "No Terraform output was detected. We're assuming this is because the project has been deployed independantly of the single step."
-
-            # Dummy data to simulate number of changes greater than 1
-            $changes += [pscustomobject]::new()
-        }
-
-        # If there are changes, backup database and upload to S3
-        if ($changes.Count -gt 0)
-        {
-            $backupDirectory = New-Item -Type Directory -Path "$($env:SYSTEMDRIVE)\Windows\Temp\$((Get-Date).ToFileTimeUtc())-CDXMETABACKUP"
-            Write-Host "Performing backup of CloverDX_META database at $($backupDirectory.FullName)"
-            Write-Host "-------"
-
-            $backupFilePath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.bak")
-            $backupLogPath = $(Join-Path -Path $backupDirectory.FullName -ChildPath "backup.trn")
-
-            @{"BackupFile"=$backupFilePath;"BackupAction"="Database"},@{"BackupFile"=$backupLogPath;"BackupAction"="Log"} | ForEach-Object {
-                Write-Host "Backing up $($_.BackupAction)"
-                $backupParams = @{
-                    "BackupFile"      = $_.BackupFile
-                    "BackupAction"    = $_.BackupAction
-                    "Credential"      = Get-DbCredentials
-                    "Database"        = "CloverDX_META"
-                    "ServerInstance"  = "localhost"
-                }
-
-                Backup-SqlDatabase @backupParams
-            }
-
-            $archivePath = "$($backupDirectory.FullName)" + ".zip"
-            Compress-Archive -Path $backupDirectory -DestinationPath $archivePath
-
-            if (Test-Path $archivePath)
-            {
-                Write-S3Object -BucketName "$($($EnvironmentName).ToLower())-cloverdx-meta-backups" -File $archivePath -Key "cloverdx-meta-backup-$((Get-Date).ToFileTimeUtc())"
-            }
-            else
-            {
-                throw "No backup ZIP archive found at $($backupDirectory.FullName).zip"
-            }
+            throw "No backup ZIP archive found at $($backupDirectory.FullName).zip"
         }
     }
-    catch
+    else
     {
-        Write-Error "Unable to complete database backup"
-        Write-Host $_.Exception
-        Write-Host $_.ScriptStackTrace
+        Write-Host "No changes to CloverDX Worker Node detected in plan output. Not doing anything."
     }
 }
 
+Import-Module AWSPowershell
 Start-CloverDXMetaBackup -EnvironmentName $OctopusParameters["Octopus.Deployment.Tenant.Name"] -AWSRegion $aws_region
