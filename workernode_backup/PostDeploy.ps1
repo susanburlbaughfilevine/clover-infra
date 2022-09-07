@@ -63,8 +63,6 @@ function Get-DbCredentials
     [cmdletbinding()]
     [OutputType([System.Management.Automation.PSCredential])]
     Param()
-    Get-Module
-    Import-Module AWSPowershell -Force -ErrorAction Continue
 
     $filter = [Amazon.SecretsManager.Model.Filter]@{
         "Key"    = "Name"
@@ -160,5 +158,5 @@ function Start-CloverDXMetaBackup
     }
 }
 
-
+Import-Module AWSPowershell
 Start-CloverDXMetaBackup -EnvironmentName $OctopusParameters["Octopus.Deployment.Tenant.Name"] -AWSRegion $aws_region
