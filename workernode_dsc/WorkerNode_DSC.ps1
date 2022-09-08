@@ -289,6 +289,7 @@ Configuration WorkerNode
             DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
                 Start-Sleep -Seconds 180
+                New-Item -Type File -Path "serviceRestarted.tmp"
                 Restart-Service -Name MSSQLSERVER -Force
             }
             GetScript = {
@@ -297,21 +298,10 @@ Configuration WorkerNode
 		        }
             }
             TestScript = {
-                try {
-                    $testParams = @{
-                        ServerInstance = "localhost"
-                        Query = "SELECT * FROM sys.databases"
-                    }
-    
-                    Invoke-Sqlcmd @testParams
-                    Write-Verbose "Initial MSSQL login with clover_etl_login was successful"
+                if (Test-Path "serviceRestarted.tmp") {
                     return $true
                 }
-                catch
-                {
-                    Write-Verbose "Initial MSSQL login with clover_etl_login failed"
-                    Write-Verbose "$($_.Exception.Message)"
-                    Write-Verbose "$($_.ScriptStackTrace)"
+                else {
                     return $false
                 }
             }
