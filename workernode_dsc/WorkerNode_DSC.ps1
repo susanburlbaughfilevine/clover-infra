@@ -268,6 +268,7 @@ Configuration WorkerNode
 
         Script RestartMSSQLService
         {
+            PsDscRunAsCredential = & $getCredentials
             DependsOn = "[Script]EnableMSSQLTcp"
             SetScript = {
                 Restart-Service -Name MSSQLSERVER -Force
@@ -279,10 +280,7 @@ Configuration WorkerNode
             }
             TestScript = {
                 try {
-                    $cred = Invoke-Expression "$($using:getCredentials)"
-
                     $testParams = @{
-                        Credential = $cred
                         ServerInstance = "localhost"
                         Query = "SELECT * FROM sys.databases"
                     }
