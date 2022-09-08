@@ -431,7 +431,6 @@ Configuration WorkerNode
 
         Script RestoreCloverDxMetaBackup
         {
-            PsDscRunAsCredential =  & $getCredentials
             DependsOn = "[SqlScriptQuery]CreateMetalUser"
             SetScript = {
                 Install-Module sqlserver -Force -AllowClobber
