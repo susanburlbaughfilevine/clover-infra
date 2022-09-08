@@ -95,6 +95,21 @@ function Start-CloverDXMetaBackup
     Write-Host "Creating backup bucket if it doesn't exist"
     Create-BucketIfNotExists -EnvironmentName $EnvironmentName -AWSRegion $AWSRegion
 
+    Write-Host "Checking to see if there is an existing database..."
+    $testParams = @{
+        Credential = Get-DbCredentials
+        ServerInstance = "localhost"
+        Query = "SELECT * FROM sys.databases"
+    }
+
+    $dbExists = (Invoke-Sqlcmd @testParams).Name.Contains("CloverDX_META")
+
+    if (-not $dbExists)
+    {
+        Write-Host "No CloverDX_META database detected on $($env:COMPUTERNAME). Doing nothing"
+        return
+    }
+    
     # Read TF plan output from Plan step
     $backup = $false
     if ($null -ne $OctopusParameters["planJson"])
