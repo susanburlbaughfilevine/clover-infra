@@ -33,6 +33,23 @@ Configuration WorkerNode
             return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
         }
 
+        $getPlainTextCredentials = {
+            Import-Module AWSPowershell
+            $filter = [Amazon.SecretsManager.Model.Filter]@{
+                "Key"    = "Name"
+                "Values" = "cloveretl-ssh-credentials"
+            }
+        
+            $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
+        
+            if ($null -eq $secSecret) {
+                return $false
+            }
+            
+            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+            return $password
+        }
+
         # Function for getting the environment name from EC2 instance tags
         $getEnvironment = {
             $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
@@ -269,7 +286,7 @@ Configuration WorkerNode
         Script RestartMSSQLService
         {
             PsDscRunAsCredential = & $getCredentials
-            DependsOn = "[Script]EnableMSSQLTcp"
+            DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
                 Restart-Service -Name MSSQLSERVER -Force
             }
@@ -301,7 +318,7 @@ Configuration WorkerNode
 
         Registry LoginMode
         {
-            DependsOn = "[Script]RestartMSSQLService"
+            DependsOn = "[cChocoPackageInstaller]SqlServer"
             Ensure      = "Present"
             Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQLServer"
             ValueName   = "LoginMode"
@@ -312,7 +329,7 @@ Configuration WorkerNode
 
         Firewall MSSQLPort
         {
-            DependsOn = "[Script]RestartMSSQLService"
+            DependsOn = "[cChocoPackageInstaller]SqlServer"
             Ensure      = "Present"
             Enabled     = "True"
             Name        = "sql-server-in"
@@ -323,22 +340,84 @@ Configuration WorkerNode
             Protocol    = "tcp" 
         }
 
-        SqlLogin AddCloverEtlLogin
+        # SqlLogin AddCloverEtlLogin
+        # {
+        #     DependsOn = "[Script]RestartMSSQLService"
+        #     Ensure          = "Present"
+        #     LoginMustChangePassword =  $false
+        #     Name            = "clover_etl_login"
+        #     LoginType       = "SqlLogin"
+        #     ServerName      = "localhost"
+        #     InstanceName    = "MSSQLSERVER"
+        #     DefaultDatabase = "master"
+        #     LoginCredential = & $getCredentials
+        # }
+
+        SqlScriptQuery FixPermissions
         {
+            # Because the CloverDX_META database is restored with an existing clover_etl_login user, we need to recreate the permissions
+            # (login and user + each permissions) necessary on the database to make it accessible
             DependsOn = "[Script]RestartMSSQLService"
-            Ensure          = "Present"
-            LoginMustChangePassword =  $false
-            Name            = "clover_etl_login"
-            LoginType       = "SqlLogin"
-            ServerName      = "localhost"
-            InstanceName    = "MSSQLSERVER"
-            DefaultDatabase = "master"
-            LoginCredential = & $getCredentials
+            ServerName = "localhost"
+            InstanceName = "MSSQLSERVER"
+            PsDscRunAsCredential = & $getCredentials
+            Variable = @("PASSWORD=$(& $getPlainTextCredentials)")
+            SetQuery = "
+                USE [CloverDX_META]
+                IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
+                    CREATE USER TempUser WITHOUT LOGIN;
+                END
+
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [TempUser]
+                GO
+                
+                DROP USER IF EXISTS clover_etl_login
+                GO
+                
+                EXEC sp_changedbowner 'DM-DEV-CLOVER-0\clover_etl_login'
+                GO
+                DROP LOGIN clover_etl_login
+                GO
+                
+                CREATE LOGIN clover_etl_login
+                    WITH PASSWORD='`$(PASSWORD)',
+                    DEFAULT_DATABASE = master
+                
+                CREATE USER clover_etl_login FOR LOGIN clover_etl_login
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [clover_etl_login]
+                ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
+                GO
+            "
+
+            # This is a test to get this working today - I realize that this isn't a good indication of actual functionality 
+            TestQuery = "
+                USE [CloverDX_META]
+                if (SELECT count(*) FROM sys.database_principals WHERE name = 'TempUser') = 0
+                BEGIN
+                    RAISERROR ('TempUser does not yet exist',16,1)
+                END
+                ELSE
+                BEGIN
+                    PRINT 'Found TempUser'
+                END
+            "
+
+            GetQuery = "
+                USE [master]
+                SELECT * FROM sys.database_principals WHERE name = 'TempUser'
+                GO
+            "
         }
 
         SqlScriptQuery CreateMetalUser
         {
-            DependsOn    = "[SqlLogin]AddCloverEtlLogin"
+            DependsOn    = "[SqlScriptQuery]FixPermissions"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
@@ -367,16 +446,16 @@ Configuration WorkerNode
             "
 
             TestQuery = "
-            USE [master]
-            if (SELECT count(*) FROM sys.server_principals WHERE name = 'METAL_User') = 0
-            BEGIN
-                RAISERROR ('METAL_User not found',16,1)
-            END
-            ELSE
-            BEGIN
-                PRINT 'Found METAL_USER'
-            END
-            "
+                USE [master]
+                if (SELECT count(*) FROM sys.server_principals WHERE name = 'METAL_User') = 0
+                BEGIN
+                    RAISERROR ('METAL_User not found',16,1)
+                END
+                ELSE
+                BEGIN
+                    PRINT 'Found METAL_USER'
+                END
+                "
             GetQuery = "
                 USE [master]
                 SELECT * FROM sys.server_principals WHERE name = 'METAL_User'
