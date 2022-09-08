@@ -288,6 +288,7 @@ Configuration WorkerNode
             PsDscRunAsCredential = & $getCredentials
             DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
+                Start-Sleep -Seconds 180
                 Restart-Service -Name MSSQLSERVER -Force
             }
             GetScript = {

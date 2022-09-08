@@ -37,6 +37,7 @@ function Get-DbCredentials {
     return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
 }
 
+Install-Module SQLServer -Force -AllowClobber
 Import-Module AWSPowershell
 
 $bucketName = "$($($EnvironmentName).ToLower())-cloverdx-meta-backups"
