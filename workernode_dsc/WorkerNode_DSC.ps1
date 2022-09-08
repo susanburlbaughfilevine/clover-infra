@@ -266,9 +266,44 @@ Configuration WorkerNode
             }
         }
 
+        Script RestartMSSQLService
+        {
+            DependsOn = "[Script]EnableMSSQLTcp"
+            SetScript = {
+                Restart-Service -Name MSSQLSERVER -Force
+            }
+            GetScript = {
+                [hashtable]@{
+			        "Result" = (Get-Service MSSQLSERVER)
+		        }
+            }
+            TestScript = {
+                try {
+                    $cred = Invoke-Expression "$($using:getCredentials)"
+
+                    $testParams = @{
+                        Credential = $cred
+                        ServerInstance = "localhost"
+                        Query = "SELECT * FROM sys.databases"
+                    }
+    
+                    Invoke-Sqlcmd @testParams
+                    Write-Verbose "Initial MSSQL login with clover_etl_login was successful"
+                    return $true
+                }
+                catch
+                {
+                    Write-Verbose "Initial MSSQL login with clover_etl_login failed"
+                    Write-Verbose "$($_.Exception.Message)"
+                    Write-Verbose "$($_.ScriptStackTrace)"
+                    return $false
+                }
+            }
+        }
+
         Registry LoginMode
         {
-            DependsOn = "[cChocoPackageInstaller]SqlServer"
+            DependsOn = "[Script]RestartMSSQLService"
             Ensure      = "Present"
             Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQLServer"
             ValueName   = "LoginMode"
@@ -279,7 +314,7 @@ Configuration WorkerNode
 
         Firewall MSSQLPort
         {
-            DependsOn = "[cChocoPackageInstaller]SqlServer"
+            DependsOn = "[Script]RestartMSSQLService"
             Ensure      = "Present"
             Enabled     = "True"
             Name        = "sql-server-in"
@@ -292,7 +327,7 @@ Configuration WorkerNode
 
         SqlLogin AddCloverEtlLogin
         {
-            DependsOn = "[cChocoPackageInstaller]SqlServer"
+            DependsOn = "[Script]RestartMSSQLService"
             Ensure          = "Present"
             LoginMustChangePassword =  $false
             Name            = "clover_etl_login"
