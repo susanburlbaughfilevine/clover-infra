@@ -84,6 +84,8 @@ while ($dbNotRestored) {
     if ([datetime]::now -gt $stopTime) {
         throw "Timeout reached! CloverDX_META database not restored!"
     }
+
+    Start-Sleep -Seconds 2
 }
 
 
