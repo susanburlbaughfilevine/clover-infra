@@ -55,6 +55,8 @@ Configuration WorkerNode
         # much rather use the variable parameter.
 
         $getSetQuery = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+
             $query = "
                 USE [CloverDX_META]
                 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
@@ -93,9 +95,43 @@ Configuration WorkerNode
                 ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [clover_etl_login]
                 ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
                 GO
+
+                IF NOT EXISTS (SELECT * FROM sys.extended_properties WHERE name ='instance')
+                BEGIN
+                    EXEC sys.sp_addextendedproperty
+                    @name  = N'instance',
+                    @value = N'##INSTANCEID##'
+                END
+                ELSE
+                BEGIN
+                    EXEC sys.sp_updateextendedproperty
+                    @name  = N'instance',
+                    @value = N'##INSTANCEID##'
+                END
+                GO
             "
 
-            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $env:COMPUTERNAME)
+            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $env:COMPUTERNAME).Replace("##INSTANCEID##", $instanceId)
+            return $query
+        }
+
+        $getTestQuery = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+
+            $query = "
+                USE [CloverDX_META]
+                if (SELECT value FROM sys.extended_properties WHERE name = 'instance') = '##INSTANCEID##'
+                BEGIN
+                    PRINT 'Already executed for instance ##INSTANCEID##'
+                END
+                ELSE
+                BEGIN
+                    RAISERROR ('FixPermissions has not yet run for instance ##INSTANCEID##',16,1)
+                END
+                GO
+            "
+
+            $query = $query.Replace("##INSTANCEID##", $instanceId)
             return $query
         }
 
@@ -392,21 +428,8 @@ Configuration WorkerNode
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
-            SetQuery = & $getSetQuery
-
-            # This is a test to get this working today - I realize that this isn't a good indication of actual functionality 
-            TestQuery = "
-                USE [CloverDX_META]
-                if (SELECT count(*) FROM sys.database_principals WHERE name = 'TempUser') = 0
-                BEGIN
-                    RAISERROR ('TempUser does not yet exist',16,1)
-                END
-                ELSE
-                BEGIN
-                    PRINT 'Found TempUser'
-                END
-            "
-
+            SetQuery  = & $getSetQuery
+            TestQuery = & $getTestQuery
             GetQuery = "
                 USE [master]
                 SELECT * FROM sys.database_principals WHERE name = 'TempUser'
