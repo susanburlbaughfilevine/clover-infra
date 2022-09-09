@@ -47,7 +47,9 @@ Configuration WorkerNode
             }
             
             $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
-            return $password
+            $passwordString = "PASSWORD=`'$password`'"
+            Write-Verbose "Returning $passwordString "
+            return $passwordString
         }
 
         # Function for getting the environment name from EC2 instance tags
@@ -354,7 +356,7 @@ Configuration WorkerNode
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
-            Variable = @("PASSWORD=`'$(& $getPlainTextCredentials)`'")
+            Variable = & $getPlainTextCredentials
             SetQuery = "
                 USE [CloverDX_META]
                 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
