@@ -356,7 +356,7 @@ Configuration WorkerNode
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
-            Variable = & $getPlainTextCredentials
+            Variable = (& $getPlainTextCredentials).replace("=","'+CHAR(61)+'")
             SetQuery = "
                 USE [CloverDX_META]
                 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
