@@ -289,7 +289,7 @@ Configuration WorkerNode
             DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
                 Start-Sleep -Seconds 180
-                New-Item -Type File -Path "serviceRestarted.tmp"
+                New-Item -Type File -Path "$($env:SystemDrive)\dsc\serviceRestarted.tmp"
                 Restart-Service -Name MSSQLSERVER -Force
             }
             GetScript = {
@@ -298,10 +298,12 @@ Configuration WorkerNode
 		        }
             }
             TestScript = {
-                if (Test-Path "serviceRestarted.tmp") {
+                if (Test-Path "$($env:SystemDrive)\dsc\serviceRestarted.tmp") {
+                    Write-Host "MSSQL Service has already been restarted successfully"
                     return $true
                 }
                 else {
+                    Write-Host "MSSQL Service will be restarted"
                     return $false
                 }
             }
