@@ -50,6 +50,14 @@ Configuration WorkerNode
             return $password
         }
 
+        # Using something here like $ENV:ComputerName does not work because functions are executed at compile time and not run time, 
+        # so the computer name will NOT be correct
+        $getTagName = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+            $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
+            return ($instanceName.SubString(0,15))
+        }
+
         # Why does the below function exist? Because Invoke-SqlCmd, used by the SqlScriptQuery DSC resource, is unable to handle
         # special characters passed as a variable into the script. So, we have to resort to this. Trust me when I say that I would
         # much rather use the variable parameter.
@@ -111,7 +119,7 @@ Configuration WorkerNode
                 GO
             "
 
-            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $env:COMPUTERNAME).Replace("##INSTANCEID##", $instanceId)
+            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $(& $getTagName)).Replace("##INSTANCEID##", $instanceId)
             return $query
         }
 
