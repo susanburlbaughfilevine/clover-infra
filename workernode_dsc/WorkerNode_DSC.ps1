@@ -111,7 +111,7 @@ Configuration WorkerNode
         {
             SetScript = {
                 $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
-                $instanceName = ((Get-EC2Instance -InstanceId (&).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
+                $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
                 Write-Verbose "Setting the name to $instanceName"
                 Rename-Computer -NewName "$instanceName" -Force
             }
