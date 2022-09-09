@@ -47,9 +47,56 @@ Configuration WorkerNode
             }
             
             $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
-            $passwordString = "PASSWORD=`'$password`'"
-            Write-Verbose "Returning $passwordString "
-            return $passwordString
+            return $password
+        }
+
+        # Why does the below function exist? Because Invoke-SqlCmd, used by the SqlScriptQuery DSC resource, is unable to handle
+        # special characters passed as a variable into the script. So, we have to resort to this. Trust me when I say that I would
+        # much rather use the variable parameter.
+
+        $getSetQuery = {
+            $query = "
+                USE [CloverDX_META]
+                IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
+                    CREATE USER TempUser WITHOUT LOGIN;
+                END
+
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [TempUser]
+                GO
+                
+                DROP USER IF EXISTS clover_etl_login
+                GO
+                
+                EXEC sp_changedbowner 'DM-DEV-CLOVER-0\clover_etl_login'
+                GO
+                
+                IF EXISTS
+                (
+                    SELECT * FROM sys.server_principals
+                    WHERE name = 'clover_etl_login' AND type_desc = 'SQL_LOGIN'
+                )
+                BEGIN
+                    DROP LOGIN clover_etl_login
+                END
+                
+                CREATE LOGIN clover_etl_login
+                    WITH PASSWORD='##PASSWORD##',
+                    DEFAULT_DATABASE = master
+                
+                CREATE USER clover_etl_login FOR LOGIN clover_etl_login
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [clover_etl_login]
+                ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
+                GO
+            "
+
+            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials))
+            return $query
         }
 
         # Function for getting the environment name from EC2 instance tags
@@ -352,43 +399,11 @@ Configuration WorkerNode
         {
             # Because the CloverDX_META database is restored with an existing clover_etl_login user, we need to recreate the permissions
             # (login and user + each permissions) necessary on the database to make it accessible
-            DependsOn = "[Script]RestartMSSQLService"
+            DependsOn = "[Script]RestoreCloverDxMetaBackup"
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
-            Variable = (& $getPlainTextCredentials).replace("=","'+CHAR(61)+'")
-            SetQuery = "
-                USE [CloverDX_META]
-                IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
-                    CREATE USER TempUser WITHOUT LOGIN;
-                END
-
-                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [TempUser]
-                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [TempUser]
-                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [TempUser]
-                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [TempUser]
-                GO
-                
-                DROP USER IF EXISTS clover_etl_login
-                GO
-                
-                EXEC sp_changedbowner 'DM-DEV-CLOVER-0\clover_etl_login'
-                GO
-                DROP LOGIN clover_etl_login
-                GO
-                
-                CREATE LOGIN clover_etl_login
-                    WITH PASSWORD='`$(PASSWORD)',
-                    DEFAULT_DATABASE = master
-                
-                CREATE USER clover_etl_login FOR LOGIN clover_etl_login
-                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [clover_etl_login]
-                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [clover_etl_login]
-                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [clover_etl_login]
-                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [clover_etl_login]
-                ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
-                GO
-            "
+            SetQuery = & $getSetQuery
 
             # This is a test to get this working today - I realize that this isn't a good indication of actual functionality 
             TestQuery = "
@@ -412,7 +427,7 @@ Configuration WorkerNode
 
         SqlScriptQuery CreateMetalUser
         {
-            DependsOn    = "[SqlScriptQuery]FixPermissions"
+            DependsOn    = "[Script]RestartMSSQLService"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
@@ -460,7 +475,7 @@ Configuration WorkerNode
 
         SqlScriptQuery AlterMetalUserRole
         {
-            DependsOn    = "[SqlScriptQuery]CreateMetalUser"
+            DependsOn    = "[SqlScriptQuery]FixPermissions"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             SetQuery     = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
@@ -505,10 +520,10 @@ Configuration WorkerNode
 
         Script RestoreCloverDxMetaBackup
         {
-            DependsOn = "[SqlScriptQuery]CreateMetalUser"
+            PsDscRunAsCredential  = & $getCredentials
+            DependsOn = "[Script]RestartMSSQLService"
             SetScript = {
                 Install-Module sqlserver -Force -AllowClobber
-                $cred = Invoke-Expression "$($using:getCredentials)"
                 $env = Invoke-Expression "$($using:GetEnvironment)"
 
                 # Grab most recent backup file
@@ -538,7 +553,6 @@ Configuration WorkerNode
                         Database       = "CloverDX_META"
                         BackupFile     = $_.Path.FullName
                         RestoreAction  = $_.Type
-                        Credential     = $cred
                     }
 
                     Restore-SqlDatabase @restoreParams
@@ -564,7 +578,6 @@ Configuration WorkerNode
 
             TestScript = {
                 Install-Module sqlserver -Force -AllowClobber
-                $cred = Invoke-Expression "$($using:getCredentials)"
                 $env = Invoke-Expression "$($using:GetEnvironment)"
 
                 $bucket = Get-S3Bucket -BucketName "$($($env).ToLower())-cloverdx-meta-backups"
@@ -572,7 +585,6 @@ Configuration WorkerNode
                 if ($null -ne $bucket)
                 {
                     $testParams = @{
-                        Credential = $cred
                         ServerInstance = "localhost"
                         Query = "SELECT * FROM sys.databases"
                     }
