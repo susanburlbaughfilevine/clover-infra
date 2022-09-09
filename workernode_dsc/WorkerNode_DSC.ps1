@@ -70,7 +70,7 @@ Configuration WorkerNode
                 DROP USER IF EXISTS clover_etl_login
                 GO
                 
-                EXEC sp_changedbowner 'DM-DEV-CLOVER-0\clover_etl_login'
+                EXEC sp_changedbowner '##HOSTNAME##\clover_etl_login'
                 GO
                 
                 IF EXISTS
@@ -95,7 +95,7 @@ Configuration WorkerNode
                 GO
             "
 
-            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials))
+            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $env:COMPUTERNAME)
             return $query
         }
 
@@ -381,19 +381,6 @@ Configuration WorkerNode
             Action      = "Allow"
             Protocol    = "tcp" 
         }
-
-        # SqlLogin AddCloverEtlLogin
-        # {
-        #     DependsOn = "[Script]RestartMSSQLService"
-        #     Ensure          = "Present"
-        #     LoginMustChangePassword =  $false
-        #     Name            = "clover_etl_login"
-        #     LoginType       = "SqlLogin"
-        #     ServerName      = "localhost"
-        #     InstanceName    = "MSSQLSERVER"
-        #     DefaultDatabase = "master"
-        #     LoginCredential = & $getCredentials
-        # }
 
         SqlScriptQuery FixPermissions
         {
