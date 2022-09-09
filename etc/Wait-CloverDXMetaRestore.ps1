@@ -37,6 +37,7 @@ function Get-DbCredentials {
     return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
 }
 
+Install-Module SQLServer -Force -AllowClobber
 Import-Module AWSPowershell
 
 $bucketName = "$($($EnvironmentName).ToLower())-cloverdx-meta-backups"
@@ -83,6 +84,8 @@ while ($dbNotRestored) {
     if ([datetime]::now -gt $stopTime) {
         throw "Timeout reached! CloverDX_META database not restored!"
     }
+
+    Start-Sleep -Seconds 2
 }
 
 

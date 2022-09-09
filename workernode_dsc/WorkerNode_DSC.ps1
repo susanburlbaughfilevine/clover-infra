@@ -6,9 +6,9 @@ Configuration WorkerNode
         [string]$InstallUser
     )
 
-    Import-DSCResource -ModuleName NetworkingDsc
-    Import-DscResource -Module cChoco
-    Import-DscResource -ModuleName 'SqlServerDsc'
+    Import-DSCResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
+    Import-DscResource -Module cChoco -ModuleVersion 2.5.0.0
+    Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion 16.0.0
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     Import-DscResource -ModuleName 'ComputerManagementDSC'
 
@@ -33,6 +33,116 @@ Configuration WorkerNode
             return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
         }
 
+        $getPlainTextCredentials = {
+            Import-Module AWSPowershell
+            $filter = [Amazon.SecretsManager.Model.Filter]@{
+                "Key"    = "Name"
+                "Values" = "cloveretl-ssh-credentials"
+            }
+        
+            $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
+        
+            if ($null -eq $secSecret) {
+                return $false
+            }
+            
+            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+            return $password
+        }
+
+        # Using something here like $ENV:ComputerName does not work because functions are executed at compile time and not run time, 
+        # so the computer name will NOT be correct
+        $getTagName = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+            $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
+            return ($instanceName.SubString(0,15))
+        }
+
+        # Why does the below function exist? Because Invoke-SqlCmd, used by the SqlScriptQuery DSC resource, is unable to handle
+        # special characters passed as a variable into the script. So, we have to resort to this. Trust me when I say that I would
+        # much rather use the variable parameter.
+
+        $getSetQuery = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+
+            $query = "
+                USE [CloverDX_META]
+                IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
+                    CREATE USER TempUser WITHOUT LOGIN;
+                END
+
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [TempUser]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [TempUser]
+                GO
+                
+                DROP USER IF EXISTS clover_etl_login
+                GO
+                
+                EXEC sp_changedbowner '##HOSTNAME##\clover_etl_login'
+                GO
+                
+                IF EXISTS
+                (
+                    SELECT * FROM sys.server_principals
+                    WHERE name = 'clover_etl_login' AND type_desc = 'SQL_LOGIN'
+                )
+                BEGIN
+                    DROP LOGIN clover_etl_login
+                END
+                
+                CREATE LOGIN clover_etl_login
+                    WITH PASSWORD='##PASSWORD##',
+                    DEFAULT_DATABASE = master
+                
+                CREATE USER clover_etl_login FOR LOGIN clover_etl_login
+                ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO [clover_etl_login]
+                ALTER AUTHORIZATION ON SCHEMA::[db_accessadmin] TO [clover_etl_login]
+                ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
+                GO
+
+                IF NOT EXISTS (SELECT * FROM sys.extended_properties WHERE name ='instance')
+                BEGIN
+                    EXEC sys.sp_addextendedproperty
+                    @name  = N'instance',
+                    @value = N'##INSTANCEID##'
+                END
+                ELSE
+                BEGIN
+                    EXEC sys.sp_updateextendedproperty
+                    @name  = N'instance',
+                    @value = N'##INSTANCEID##'
+                END
+                GO
+            "
+
+            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $(& $getTagName)).Replace("##INSTANCEID##", $instanceId)
+            return $query
+        }
+
+        $getTestQuery = {
+            $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
+
+            $query = "
+                USE [CloverDX_META]
+                if (SELECT value FROM sys.extended_properties WHERE name = 'instance') = '##INSTANCEID##'
+                BEGIN
+                    PRINT 'Already executed for instance ##INSTANCEID##'
+                END
+                ELSE
+                BEGIN
+                    RAISERROR ('FixPermissions has not yet run for instance ##INSTANCEID##',16,1)
+                END
+                GO
+            "
+
+            $query = $query.Replace("##INSTANCEID##", $instanceId)
+            return $query
+        }
+
         # Function for getting the environment name from EC2 instance tags
         $getEnvironment = {
             $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
@@ -44,11 +154,13 @@ Configuration WorkerNode
         Script RenameComputerScript
         {
             SetScript = {
+                $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
                 $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
                 Write-Verbose "Setting the name to $instanceName"
                 Rename-Computer -NewName "$instanceName" -Force
             }
             TestScript = {
+                $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
                 $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
                 Write-Verbose "Checking if $instanceName matches $env:COMPUTERNAME"
                 $instanceName -match $env:COMPUTERNAME
@@ -269,8 +381,10 @@ Configuration WorkerNode
         Script RestartMSSQLService
         {
             PsDscRunAsCredential = & $getCredentials
-            DependsOn = "[Script]EnableMSSQLTcp"
+            DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
+                Start-Sleep -Seconds 180
+                New-Item -Type File -Path "$($env:SystemDrive)\dsc\serviceRestarted.tmp"
                 Restart-Service -Name MSSQLSERVER -Force
             }
             GetScript = {
@@ -279,21 +393,12 @@ Configuration WorkerNode
 		        }
             }
             TestScript = {
-                try {
-                    $testParams = @{
-                        ServerInstance = "localhost"
-                        Query = "SELECT * FROM sys.databases"
-                    }
-    
-                    Invoke-Sqlcmd @testParams
-                    Write-Verbose "Initial MSSQL login with clover_etl_login was successful"
+                if (Test-Path "$($env:SystemDrive)\dsc\serviceRestarted.tmp") {
+                    Write-Host "MSSQL Service has already been restarted successfully"
                     return $true
                 }
-                catch
-                {
-                    Write-Verbose "Initial MSSQL login with clover_etl_login failed"
-                    Write-Verbose "$($_.Exception.Message)"
-                    Write-Verbose "$($_.ScriptStackTrace)"
+                else {
+                    Write-Host "MSSQL Service will be restarted"
                     return $false
                 }
             }
@@ -301,7 +406,7 @@ Configuration WorkerNode
 
         Registry LoginMode
         {
-            DependsOn = "[Script]RestartMSSQLService"
+            DependsOn = "[cChocoPackageInstaller]SqlServer"
             Ensure      = "Present"
             Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQLServer"
             ValueName   = "LoginMode"
@@ -312,7 +417,7 @@ Configuration WorkerNode
 
         Firewall MSSQLPort
         {
-            DependsOn = "[Script]RestartMSSQLService"
+            DependsOn = "[cChocoPackageInstaller]SqlServer"
             Ensure      = "Present"
             Enabled     = "True"
             Name        = "sql-server-in"
@@ -323,22 +428,26 @@ Configuration WorkerNode
             Protocol    = "tcp" 
         }
 
-        SqlLogin AddCloverEtlLogin
+        SqlScriptQuery FixPermissions
         {
-            DependsOn = "[Script]RestartMSSQLService"
-            Ensure          = "Present"
-            LoginMustChangePassword =  $false
-            Name            = "clover_etl_login"
-            LoginType       = "SqlLogin"
-            ServerName      = "localhost"
-            InstanceName    = "MSSQLSERVER"
-            DefaultDatabase = "master"
-            LoginCredential = & $getCredentials
+            # Because the CloverDX_META database is restored with an existing clover_etl_login user, we need to recreate the permissions
+            # (login and user + each permissions) necessary on the database to make it accessible
+            DependsOn = "[Script]RestoreCloverDxMetaBackup", "[PendingReboot]AfterRenameComputer"
+            ServerName = "localhost"
+            InstanceName = "MSSQLSERVER"
+            PsDscRunAsCredential = & $getCredentials
+            SetQuery  = & $getSetQuery
+            TestQuery = & $getTestQuery
+            GetQuery = "
+                USE [master]
+                SELECT * FROM sys.database_principals WHERE name = 'TempUser'
+                GO
+            "
         }
 
         SqlScriptQuery CreateMetalUser
         {
-            DependsOn    = "[SqlLogin]AddCloverEtlLogin"
+            DependsOn    = "[Script]RestartMSSQLService"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
@@ -367,16 +476,16 @@ Configuration WorkerNode
             "
 
             TestQuery = "
-            USE [master]
-            if (SELECT count(*) FROM sys.server_principals WHERE name = 'METAL_User') = 0
-            BEGIN
-                RAISERROR ('METAL_User not found',16,1)
-            END
-            ELSE
-            BEGIN
-                PRINT 'Found METAL_USER'
-            END
-            "
+                USE [master]
+                if (SELECT count(*) FROM sys.server_principals WHERE name = 'METAL_User') = 0
+                BEGIN
+                    RAISERROR ('METAL_User not found',16,1)
+                END
+                ELSE
+                BEGIN
+                    PRINT 'Found METAL_USER'
+                END
+                "
             GetQuery = "
                 USE [master]
                 SELECT * FROM sys.server_principals WHERE name = 'METAL_User'
@@ -386,7 +495,7 @@ Configuration WorkerNode
 
         SqlScriptQuery AlterMetalUserRole
         {
-            DependsOn    = "[SqlScriptQuery]CreateMetalUser"
+            DependsOn    = "[SqlScriptQuery]FixPermissions"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             SetQuery     = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
@@ -431,11 +540,10 @@ Configuration WorkerNode
 
         Script RestoreCloverDxMetaBackup
         {
-            PsDscRunAsCredential =  & $getCredentials
-            DependsOn = "[SqlScriptQuery]CreateMetalUser"
+            PsDscRunAsCredential  = & $getCredentials
+            DependsOn = "[Script]RestartMSSQLService"
             SetScript = {
                 Install-Module sqlserver -Force -AllowClobber
-                $cred = Invoke-Expression "$($using:getCredentials)"
                 $env = Invoke-Expression "$($using:GetEnvironment)"
 
                 # Grab most recent backup file
@@ -465,7 +573,6 @@ Configuration WorkerNode
                         Database       = "CloverDX_META"
                         BackupFile     = $_.Path.FullName
                         RestoreAction  = $_.Type
-                        Credential     = $cred
                     }
 
                     Restore-SqlDatabase @restoreParams
@@ -491,7 +598,6 @@ Configuration WorkerNode
 
             TestScript = {
                 Install-Module sqlserver -Force -AllowClobber
-                $cred = Invoke-Expression "$($using:getCredentials)"
                 $env = Invoke-Expression "$($using:GetEnvironment)"
 
                 $bucket = Get-S3Bucket -BucketName "$($($env).ToLower())-cloverdx-meta-backups"
@@ -499,7 +605,6 @@ Configuration WorkerNode
                 if ($null -ne $bucket)
                 {
                     $testParams = @{
-                        Credential = $cred
                         ServerInstance = "localhost"
                         Query = "SELECT * FROM sys.databases"
                     }
