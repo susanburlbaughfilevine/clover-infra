@@ -354,7 +354,7 @@ Configuration WorkerNode
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
-            Variable = @("PASSWORD=$(& $getPlainTextCredentials)")
+            Variable = @("PASSWORD=`'$(& $getPlainTextCredentials)`'")
             SetQuery = "
                 USE [CloverDX_META]
                 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'TempUser') BEGIN
