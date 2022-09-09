@@ -424,7 +424,7 @@ Configuration WorkerNode
         {
             # Because the CloverDX_META database is restored with an existing clover_etl_login user, we need to recreate the permissions
             # (login and user + each permissions) necessary on the database to make it accessible
-            DependsOn = "[Script]RestoreCloverDxMetaBackup"
+            DependsOn = "[Script]RestoreCloverDxMetaBackup, [PendingReboot]AfterRenameComputer"
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
             PsDscRunAsCredential = & $getCredentials
