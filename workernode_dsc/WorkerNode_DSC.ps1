@@ -244,6 +244,7 @@ Configuration WorkerNode
                 $sshdConfig = Get-Content $configPath
                 $sshdConfig = $sshdConfig.Replace("AllowUsers Administrator","AllowGroups Administrators")
                 $sshdConfig | Out-File -FilePath "$env:ProgramData\ssh\sshd_config" -Encoding utf8 -Force
+                Restart-Service -Name sshd
             }
 
             TestScript = {
