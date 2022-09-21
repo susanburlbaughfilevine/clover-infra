@@ -621,5 +621,14 @@ Configuration WorkerNode
                 return $false
             }
         }
+        {
+            Package InstallSybase17
+            {
+                Ensure      = "Present"
+                Path        = "https://d5d4ifzqzkhwt.cloudfront.net/sqla17client/SQLA17_Windows_Client.exe"
+                Name        = "SQLA17_Windows_Client"
+                ProductId   = "SQLA17_Windows_Client"
+            }
+        }
     }
 }
