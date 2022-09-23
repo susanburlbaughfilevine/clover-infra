@@ -626,8 +626,8 @@ Configuration WorkerNode
         {
             Ensure      = "Present"
             Path        = "https://d5d4ifzqzkhwt.cloudfront.net/sqla17client/SQLA17_Windows_Client.exe"
-            Name        = "SQLA17_Windows_Client"
-            ProductId   = "SQLA17_Windows_Client"
+            Name        = "SQL Anywhere 17"
+            ProductId   = "8AF8FFC2-8C0E-40FE-BFD7-872E65EB235C"
         }
     }
 }
