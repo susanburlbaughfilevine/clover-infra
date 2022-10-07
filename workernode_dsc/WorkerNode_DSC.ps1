@@ -95,6 +95,8 @@ Configuration WorkerNode
                 CREATE LOGIN clover_etl_login
                     WITH PASSWORD='##PASSWORD##',
                     DEFAULT_DATABASE = master
+
+                ALTER SERVER ROLE [sysadmin] ADD MEMBER [clover_etl_login]
                 
                 CREATE USER clover_etl_login FOR LOGIN clover_etl_login
                 ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [clover_etl_login]
