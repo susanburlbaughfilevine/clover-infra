@@ -106,6 +106,12 @@ Configuration WorkerNode
                 ALTER ROLE [db_owner] ADD MEMBER [clover_etl_login]
                 GO
 
+                EXEC sp_configure 'show advanced options', '1'
+                RECONFIGURE
+
+                EXEC sp_configure 'xp_cmdshell', '1' 
+                RECONFIGURE
+
                 IF NOT EXISTS (SELECT * FROM sys.extended_properties WHERE name ='instance')
                 BEGIN
                     EXEC sys.sp_addextendedproperty
@@ -345,7 +351,7 @@ Configuration WorkerNode
             DependsOn = "[User]cloverEtlLogin"
             Ensure = "Present"
             Name   = "sql-server-2019"
-            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /IgnorePendingReboot'"
+            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD=""$(& $getPlainTextCredentials)"" /IgnorePendingReboot'"
         }
 
         cChocoPackageInstaller SqlServerCU
