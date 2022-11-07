@@ -421,6 +421,33 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jmoshier</cs:username>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>dm_user</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>gburkholder</cs:username>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>dm_user</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jschumann</cs:username>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>dm_user</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
   </cs:usersList>
   <cs:userGroupsList/>
   <cs:sandboxesList/>
