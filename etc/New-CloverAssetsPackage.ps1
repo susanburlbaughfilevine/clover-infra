@@ -1,5 +1,7 @@
 function Get-DownloadScript
 {
+    $outputPath = Join-Path -Path $using:packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
+
     return [scriptblock]{
             function Start-TryDownload
             {
@@ -23,7 +25,7 @@ function Get-DownloadScript
 
                     Write-Output "Downloading $($dependancy.Value.PackageName)..."
 
-                    $outputPath = Join-Path -Path $OutputDirectory.FullName -ChildPath $dependancy.Value.PackageName
+                    
                     
                     try 
                     {
@@ -50,7 +52,7 @@ function Get-DownloadScript
                 continue
             }
 
-            Start-TryDownload -Dependancy $dependancy -OutputDirectory $using:packageDirectory.FullName
+            Start-TryDownload -Dependancy $dependancy -OutputDirectory $outputPath
 
             if ($dependancy.Value.Checksum -ne "none")
             {
