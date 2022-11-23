@@ -1,4 +1,41 @@
 
+function Start-TryDownload
+{
+    [cmdletbinding()]
+    Param
+    (
+        [System.Collections.DictionaryEntry]$Dependancy,
+        [System.IO.DirectoryInfo]$OutputDirectory
+    )
+
+    $notDownloaded = $true
+    $attempts = 0
+
+    while ($notDownloaded)
+    {
+        if ($attempts -ge 5)
+        {
+            Write-Host "Max download attempts for $($dependancy.Value.FileLink) reached"
+            throw "Download failed for $($dependancy.Value.FileLink)"
+        }
+
+        Write-Output "Downloading $($dependancy.Value.PackageName)..."
+
+        $outputPath = Join-Path -Path $OutputDirectory.FullName -ChildPath $dependancy.Value.PackageName
+        
+        try 
+        {
+            Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
+            $notDownloaded = $false
+        }
+        catch
+        {
+            Write-Host "Failed to download file from $($dependancy.Value.FileLink). Retrying..."
+            $attempts ++
+        }
+    }
+}
+
 function New-CloverAssetsPackage
 {
     [cmdletbinding()]
@@ -64,42 +101,4 @@ function New-CloverAssetsPackage
             Write-Output $_.ScriptStackTrace
         }
     }
-}
-
-function Start-TryDownload
-{
-    [cmdletbinding()]
-    Param
-    (
-        [System.Collections.DictionaryEntry]$Dependancy,
-        [System.IO.DirectoryInfo]$OutputDirectory
-    )
-
-    $notDownloaded = $true
-    $attempts = 0
-
-    while ($notDownloaded)
-    {
-        if ($attempts -ge 5)
-        {
-            Write-Host "Max download attempts for $($dependancy.Value.FileLink) reached"
-            throw "Download failed for $($dependancy.Value.FileLink)"
-        }
-
-        Write-Output "Downloading $($dependancy.Value.PackageName)..."
-
-        $outputPath = Join-Path -Path $OutputDirectory.FullName -ChildPath $dependancy.Value.PackageName
-        
-        try 
-        {
-            Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
-            $notDownloaded = $false
-        }
-        catch
-        {
-            Write-Host "Failed to download file from $($dependancy.Value.FileLink). Retrying..."
-            $attempts ++
-        }
-    }
-
 }
