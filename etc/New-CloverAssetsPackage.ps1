@@ -52,7 +52,7 @@ function Get-DownloadScript
             }
 
             $outputFile = Join-Path -Path $using:outputPath -ChildPath $dependancy.Value.PackageName
-            Start-TryDownload -Dependancy $dependancy -OutputDirectory 
+            Start-TryDownload -Dependancy $dependancy -OutputDirectory $outputFile
 
             if ($dependancy.Value.Checksum -ne "none")
             {
@@ -90,7 +90,7 @@ function New-CloverAssetsPackage
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
             $outputPath = Get-Item $packageDirectory.FullName
-            
+
             $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript)
 
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
