@@ -1,6 +1,11 @@
 function Get-DownloadScript
 {
-    $outputPath = Join-Path -Path $using:packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
+    [cmdletbinding()]
+    Param
+    (
+        [System.IO.DirectoryInfo]$OutputDirectory
+    )
+    $outputPath = Join-Path -Path $OutputDirectory -ChildPath $dependancy.Value.PackageName
 
     return [scriptblock]{
             function Start-TryDownload
@@ -25,8 +30,7 @@ function Get-DownloadScript
 
                     Write-Output "Downloading $($dependancy.Value.PackageName)..."
 
-                    
-                    
+    
                     try 
                     {
                         Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
@@ -89,7 +93,7 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript)
+            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript -OutputDirectory $packageDirectory)
 
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
