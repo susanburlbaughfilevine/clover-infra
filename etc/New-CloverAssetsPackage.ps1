@@ -89,7 +89,7 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript)
+            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel [scriptblock](Get-DownloadScript)
 
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
