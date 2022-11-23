@@ -23,7 +23,6 @@ function Get-DownloadScript
 
                     Write-Output "Downloading $($dependancy.Value.PackageName)..."
 
-    
                     try 
                     {
                         Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $using:outputPath
@@ -32,6 +31,9 @@ function Get-DownloadScript
                     catch
                     {
                         Write-Host "Failed to download file from $($dependancy.Value.FileLink). Retrying..."
+                        Write-Host $_.Exception
+                        Write-Host $_.Exception.Message
+                        Write-Host $_.ErrorDetails
                         $attempts ++
                     }
                 }
