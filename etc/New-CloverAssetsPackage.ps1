@@ -1,12 +1,5 @@
 function Get-DownloadScript
 {
-    [cmdletbinding()]
-    Param
-    (
-        [System.IO.DirectoryInfo]$OutputDirectory
-    )
-    $outputPath = Join-Path -Path $OutputDirectory -ChildPath $dependancy.Value.PackageName
-
     return [scriptblock]{
             function Start-TryDownload
             {
@@ -33,7 +26,7 @@ function Get-DownloadScript
     
                     try 
                     {
-                        Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $outputPath
+                        Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $using:outputPath
                         $notDownloaded = $false
                     }
                     catch
@@ -56,12 +49,12 @@ function Get-DownloadScript
                 continue
             }
 
-            Start-TryDownload -Dependancy $dependancy -OutputDirectory $outputPath
+            Start-TryDownload -Dependancy $dependancy -OutputDirectory $using:outputPath
 
             if ($dependancy.Value.Checksum -ne "none")
             {
                 $theirHash = $dependancy.Value.Checksum
-                $ourHash = (Get-FileHash -Path $outputPath -Algorithm $dependancy.Value.ChecksumType).Hash
+                $ourHash = (Get-FileHash -Path $using:outputPath -Algorithm $dependancy.Value.ChecksumType).Hash
 
                 if ($theirHash -ne $ourHash)
                 {
@@ -93,7 +86,9 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript -OutputDirectory $packageDirectory)
+            $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
+
+            $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript)
 
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
             Copy-Item -Path ./config/ -Destination clover-assets/ -Recurse
