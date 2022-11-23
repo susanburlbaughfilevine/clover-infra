@@ -25,7 +25,7 @@ function Get-DownloadScript
 
                     try 
                     {
-                        Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $using:outputPath
+                        Invoke-WebRequest -Uri $dependancy.Value.FileLink -OutFile $OutputDirectory
                         $notDownloaded = $false
                     }
                     catch
@@ -51,12 +51,13 @@ function Get-DownloadScript
                 continue
             }
 
-            Start-TryDownload -Dependancy $dependancy -OutputDirectory $using:outputPath
+            $outputFile = Join-Path -Path $using:outputPath -ChildPath $dependancy.Value.PackageName
+            Start-TryDownload -Dependancy $dependancy -OutputDirectory 
 
             if ($dependancy.Value.Checksum -ne "none")
             {
                 $theirHash = $dependancy.Value.Checksum
-                $ourHash = (Get-FileHash -Path $using:outputPath -Algorithm $dependancy.Value.ChecksumType).Hash
+                $ourHash = (Get-FileHash -Path $outputFile -Algorithm $dependancy.Value.ChecksumType).Hash
 
                 if ($theirHash -ne $ourHash)
                 {
@@ -88,8 +89,8 @@ function New-CloverAssetsPackage
         {
             $packageDirectory = New-Item -Type Directory -Name clover-assets
 
-            $outputPath = Join-Path -Path $packageDirectory.FullName -ChildPath $dependancy.Value.PackageName
-
+            $outputPath = Get-Item $packageDirectory.FullName
+            
             $DependancyManifest.GetEnumerator() | ForEach-Object -ThrottleLimit 10 -Parallel (Get-DownloadScript)
 
             Copy-Item -Path ./octopus/package-clover-assets/PostDeploy.ps1 -Destination clover-assets/ 
