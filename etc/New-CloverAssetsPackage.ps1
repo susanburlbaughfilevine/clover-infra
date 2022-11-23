@@ -1,7 +1,6 @@
 function Get-DownloadScript
 {
     return [scriptblock]{
-        {
             function Start-TryDownload
             {
                 [cmdletbinding()]
@@ -65,7 +64,6 @@ function Get-DownloadScript
                 }
             }
         }
-    }
 }
 
 
