@@ -351,7 +351,7 @@ Configuration WorkerNode
             DependsOn = "[User]cloverEtlLogin"
             Ensure = "Present"
             Name   = "sql-server-2019"
-            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='`'$(& $getPlainTextCredentials)'`' /IgnorePendingReboot'"
+            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='$(& $getPlainTextCredentials)' /IgnorePendingReboot'"
         }
 
         cChocoPackageInstaller SqlServerCU
@@ -363,6 +363,9 @@ Configuration WorkerNode
 
         Script EnableMSSQLTcp
         {
+            # Issues running this script may be related to failures in the SqlServer install.
+            # Verify that SqlServer installed succesfully as a first step to troubleshooting
+            # errors here
             DependsOn = "[cChocoPackageInstaller]SqlServer"
             SetScript = {
                 Import-Module SqlServer
