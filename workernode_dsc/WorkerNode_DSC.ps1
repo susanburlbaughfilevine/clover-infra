@@ -288,6 +288,12 @@ Configuration WorkerNode
                 
                 $password = Get-SECRandomPassword
 
+                if ($password.Contains(")") -or $password.Contains("&"))
+                {
+                    $password = $password.Replace(")","")
+                    $password = $password.Replace("&","")
+                }
+
                 $secSecret = Get-SECSecretList -Filter $filter
 
                 $updateParams = @{
