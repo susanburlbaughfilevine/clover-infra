@@ -288,11 +288,10 @@ Configuration WorkerNode
                 
                 $password = Get-SECRandomPassword
 
-                if ($password.Contains(")") -or $password.Contains("&"))
-                {
-                    $password = $password.Replace(")","")
-                    $password = $password.Replace("&","")
-                }
+                # The following characters have been known to cause issues with the sql-server install via choco.
+                # Removing them here should resolve this issue
+                $password = $password.Replace(")","")
+                $password = $password.Replace("&","")
 
                 $secSecret = Get-SECSecretList -Filter $filter
 
