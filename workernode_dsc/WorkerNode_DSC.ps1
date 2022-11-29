@@ -351,7 +351,7 @@ Configuration WorkerNode
             DependsOn = "[User]cloverEtlLogin"
             Ensure = "Present"
             Name   = "sql-server-2019"
-            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD=""$(& $getPlainTextCredentials)"" /IgnorePendingReboot'"
+            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='`'$(& $getPlainTextCredentials)'`' /IgnorePendingReboot'"
         }
 
         cChocoPackageInstaller SqlServerCU
