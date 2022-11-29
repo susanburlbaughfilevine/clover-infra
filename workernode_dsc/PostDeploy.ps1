@@ -2,6 +2,7 @@ Install-Module xPsDesiredStateConfiguration -Verbose -Force
 Install-Module NetworkingDsc -Verbose -Force
 Install-Module SqlServerDsc -Verbose -Force
 Install-Module cChoco -Verbose -Force
+Install-Module SqlServer -Verbose -Force
 
 $cert = New-SelfSignedCertificate -Type DocumentEncryptionCertLegacyCsp -DnsName 'DscEncryptionCert' -HashAlgorithm SHA256
 $cert | Export-Certificate -FilePath "C:\dsc\DscPublicKey.cer" -Force

@@ -288,6 +288,11 @@ Configuration WorkerNode
                 
                 $password = Get-SECRandomPassword
 
+                # The following characters have been known to cause issues with the sql-server install via choco.
+                # Removing them here should resolve this issue
+                $password = $password.Replace(")","")
+                $password = $password.Replace("&","")
+
                 $secSecret = Get-SECSecretList -Filter $filter
 
                 $updateParams = @{
@@ -351,7 +356,7 @@ Configuration WorkerNode
             DependsOn = "[User]cloverEtlLogin"
             Ensure = "Present"
             Name   = "sql-server-2019"
-            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD=""$(& $getPlainTextCredentials)"" /IgnorePendingReboot'"
+            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='$(& $getPlainTextCredentials)' /IgnorePendingReboot'"
         }
 
         cChocoPackageInstaller SqlServerCU
@@ -363,8 +368,12 @@ Configuration WorkerNode
 
         Script EnableMSSQLTcp
         {
+            # Issues running this script may be related to failures in the SqlServer install.
+            # Verify that SqlServer installed succesfully as a first step to troubleshooting
+            # errors here
             DependsOn = "[cChocoPackageInstaller]SqlServer"
             SetScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
@@ -372,12 +381,14 @@ Configuration WorkerNode
                 $tcp.Alter()
             }
             TestScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
                 $tcp.IsEnabled
             }
             GetScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement') | Out-Null
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
