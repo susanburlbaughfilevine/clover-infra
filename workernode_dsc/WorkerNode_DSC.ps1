@@ -365,6 +365,7 @@ Configuration WorkerNode
         {
             DependsOn = "[cChocoPackageInstaller]SqlServer"
             SetScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
@@ -372,12 +373,14 @@ Configuration WorkerNode
                 $tcp.Alter()
             }
             TestScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
                 $tcp.IsEnabled
             }
             GetScript = {
+                Import-Module SqlServer
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement') | Out-Null
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
                 $tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
