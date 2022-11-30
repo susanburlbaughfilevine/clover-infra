@@ -86,6 +86,7 @@ resource "aws_iam_policy" "secrets_manager_access" {
           "secretsmanager:CreateSecret",
           "secretsmanager:DeleteSecret",
           "secretsmanager:UpdateSecret",
+          "secretsmanager:GetRandomPassword"
         ]
         Effect   = "Allow"
         Resource = "arn:aws:secretsmanager:*:*:secret:*"
