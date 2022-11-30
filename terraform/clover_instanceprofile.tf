@@ -85,8 +85,7 @@ resource "aws_iam_policy" "secrets_manager_access" {
           "secretsmanager:PutSecretValue",
           "secretsmanager:CreateSecret",
           "secretsmanager:DeleteSecret",
-          "secretsmanager:UpdateSecret",
-          "secretsmanager:GetRandomPassword"
+          "secretsmanager:UpdateSecret"
         ]
         Effect   = "Allow"
         Resource = "arn:aws:secretsmanager:*:*:secret:*"
@@ -95,6 +94,12 @@ resource "aws_iam_policy" "secrets_manager_access" {
         Sid      = "ListAllSecrets",
         Effect   = "Allow",
         Action   = "secretsmanager:ListSecrets",
+        Resource = "*"
+      },
+      {
+        Sid      = "GeneratePassword",
+        Effect   = "Allow",
+        Action   = "secretsmanager:GetRandomPassword",
         Resource = "*"
       }
     ]
