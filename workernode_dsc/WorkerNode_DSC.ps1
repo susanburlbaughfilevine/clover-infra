@@ -292,16 +292,30 @@ Configuration WorkerNode
                 # Removing them here should resolve this issue
                 $password = $password.Replace(")","")
                 $password = $password.Replace("&","")
+                $password = $password.Replace("`"","")
 
                 $secSecret = Get-SECSecretList -Filter $filter
 
-                $updateParams = @{
-                    "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
-                    "Description"  = "Password for the clover_etl_login user"
-                    "SecretId"     = $secSecret.ARN
-                }
+                if ($null -eq $secSecret)
+                {
+                    $createSecretParams = @{
+                        "Description" = "Password for the clover_etl_login user";
+                        "Name" = "cloveretl-ssh-credentials";
+                        "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
+                    }
 
-                Update-SECSecret @updateParams
+                    New-SECSecret @createSecretParams
+                }
+                else
+                {
+                    $updateParams = @{
+                        "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
+                        "Description"  = "Password for the clover_etl_login user"
+                        "SecretId"     = $secSecret.ARN
+                    }
+    
+                    Update-SECSecret @updateParams
+                }
             }
 
             TestScript = {
@@ -317,7 +331,16 @@ Configuration WorkerNode
                     return $false
                 }
 
-                $secretValue = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+                $secretValue = [string]::new()
+
+                try
+                {
+                    $secretValue = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+                }
+                catch
+                {
+                    return $false
+                }
                 
                 # We'll make the assumption that if the value is here that it is the right
                 # one for the sake of configuration simplicity. Otherwise password has to be
@@ -325,8 +348,6 @@ Configuration WorkerNode
                 if (([string]::IsNullOrEmpty($secretValue) -eq $false) -or ($secretValue -eq "null")) {
                     return $true
                 }
-
-                $false
             }
 
             GetScript = {
