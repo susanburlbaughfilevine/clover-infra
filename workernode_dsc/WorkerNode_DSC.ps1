@@ -293,6 +293,7 @@ Configuration WorkerNode
                 $password = $password.Replace(")","")
                 $password = $password.Replace("&","")
                 $password = $password.Replace("`"","")
+                $password = $password.Replace("$","")
 
                 $secSecret = Get-SECSecretList -Filter $filter
 
@@ -331,7 +332,7 @@ Configuration WorkerNode
                     return $false
                 }
 
-                $secretValue = [string]::new()
+                $secretValue = ""
 
                 try
                 {
