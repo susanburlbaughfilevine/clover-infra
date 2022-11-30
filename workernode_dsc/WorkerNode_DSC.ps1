@@ -71,27 +71,18 @@ Configuration WorkerNode
         $getCredentials = {
             Import-Module AWSPowershell
 
-            $filter = [Amazon.SecretsManager.Model.Filter]@{
-                "Key"    = "Name"
-                "Values" = "cloveretl-ssh-credentials"
-            }
-
             & $createOrUpdateSecret
             
-            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
+            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
             return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
         }
 
         $getPlainTextCredentials = {
             Import-Module AWSPowershell
-            $filter = [Amazon.SecretsManager.Model.Filter]@{
-                "Key"    = "Name"
-                "Values" = "cloveretl-ssh-credentials"
-            }
-        
+
             & $createOrUpdateSecret
             
-            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password
             return $password
         }
 
