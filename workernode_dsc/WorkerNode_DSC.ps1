@@ -11,82 +11,15 @@ Configuration WorkerNode
     Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion 16.0.0
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     Import-DscResource -ModuleName 'ComputerManagementDSC'
-
+    Import-Module clover-powershell
 
     Node localhost
     {
-        # Function to create secret. Discovered that we can't do this in DSC since it needs to be resolvable in the below
-        # script blocks during MOF complilation... 
-        $createOrUpdateSecret = {
-            Import-Module AWSPowershell
-
-            $filter = [Amazon.SecretsManager.Model.Filter]@{
-                "Key"    = "Name"
-                "Values" = "cloveretl-ssh-credentials"
-            }
-            
-            $password = Get-SECRandomPassword
-
-            # The following characters have been known to cause issues with the sql-server install via choco.
-            # Removing them here should resolve this issue
-            #  Update 11/30: Remove all special characters for now. Too many issues with Choco
-            $password = $password -replace "[^a-zA-Z0-9 ]"
-
-            $secSecret = Get-SECSecretList -Filter $filter
-
-            if ($null -eq $secSecret)
-            {
-                $createSecretParams = @{
-                    "Description" = "Password for the clover_etl_login user";
-                    "Name" = "cloveretl-ssh-credentials";
-                    "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
-                }
-
-                New-SECSecret @createSecretParams
-            }
-            else
-            {
-                try
-                {
-                    # Test to see if we can successfully retrieve a value
-                    # Get-SECSecretValue will throw an expcetion if it can't, so leverage try/catch
-                    $null = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString)
-                }
-                catch
-                {
-                    $updateParams = @{
-                        "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
-                        "Description"  = "Password for the clover_etl_login user"
-                        "SecretId"     = $secSecret.ARN
-                    }
-    
-                    Update-SECSecret @updateParams
-                }
-            }
-        }
-
-        # Function for retriving Windows/SQL Login clover_etl_login credentials for use in the following DSC resources
-        $getCredentials = {
-            Import-Module AWSPowershell
-
-            & $createOrUpdateSecret
-            
-            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
-            return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
-        }
-
-        $getPlainTextCredentials = {
-            Import-Module AWSPowershell
-
-            & $createOrUpdateSecret
-            
-            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password
-            return $password
-        }
 
         # Using something here like $ENV:ComputerName does not work because functions are executed at compile time and not run time, 
         # so the computer name will NOT be correct
         $getTagName = {
+            Import-Module AWSPowershell
             $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
             $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
             return ($instanceName.SubString(0,15))
@@ -161,7 +94,7 @@ Configuration WorkerNode
                 GO
             "
 
-            $query = $query.Replace("##PASSWORD##", $(& $getPlainTextCredentials)).Replace("##HOSTNAME##", $(& $getTagName)).Replace("##INSTANCEID##", $instanceId)
+            $query = $query.Replace("##PASSWORD##", $(Get-CloverEtlUserSecret -AsPlainText)).Replace("##HOSTNAME##", $(& $getTagName)).Replace("##INSTANCEID##", $instanceId)
             return $query
         }
 
@@ -187,6 +120,7 @@ Configuration WorkerNode
 
         # Function for getting the environment name from EC2 instance tags
         $getEnvironment = {
+            Import-Module AWSPowershell
             $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
             $instance = Get-EC2Instance -InstanceId $instanceId
             $tag = $instance.Instances.Tags.Where({$_.Key -eq "env"}).Value
@@ -196,12 +130,14 @@ Configuration WorkerNode
         Script RenameComputerScript
         {
             SetScript = {
+                Import-Module AWSPowershell
                 $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
                 $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
                 Write-Verbose "Setting the name to $instanceName"
                 Rename-Computer -NewName "$instanceName" -Force
             }
             TestScript = {
+                Import-Module AWSPowershell
                 $instanceId = (iwr http://169.254.169.254/latest/meta-data/instance-id -UseBasicParsing | select content).content
                 $instanceName = ((Get-EC2Instance -InstanceId $instanceId).Instances[0].Tag | ? {$_.key -eq 'Name'}).Value
                 Write-Verbose "Checking if $instanceName matches $env:COMPUTERNAME"
@@ -268,7 +204,7 @@ Configuration WorkerNode
             #DependsOn = "[script]CloverEtlSecret"
             Ensure = "Present"
             UserName = "clover_etl_login"
-            Password = & $getCredentials
+            Password = Get-CloverEtlUserSecret
         }
 
         Group cloverEtlAsAdministrator
@@ -315,7 +251,7 @@ Configuration WorkerNode
             DependsOn = "[User]cloverEtlLogin"
             Ensure = "Present"
             Name   = "sql-server-2019"
-            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='$(& $getPlainTextCredentials)' /IgnorePendingReboot'"
+            Params = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='$(Get-CloverEtlUserSecret -AsPlainText)' /IgnorePendingReboot'"
         }
 
         cChocoPackageInstaller SqlServerCU
@@ -359,7 +295,7 @@ Configuration WorkerNode
 
         Script RestartMSSQLService
         {
-            PsDscRunAsCredential = & $getCredentials
+            PsDscRunAsCredential = Get-CloverEtlUserSecret
             DependsOn = "[Script]EnableMSSQLTcp","[Registry]LoginMode","[Firewall]MSSQLPort"
             SetScript = {
                 Start-Sleep -Seconds 180
@@ -414,7 +350,7 @@ Configuration WorkerNode
             DependsOn = "[Script]RestoreCloverDxMetaBackup", "[PendingReboot]AfterRenameComputer"
             ServerName = "localhost"
             InstanceName = "MSSQLSERVER"
-            PsDscRunAsCredential = & $getCredentials
+            PsDscRunAsCredential = Get-CloverEtlUserSecret
             SetQuery  = & $getSetQuery
             TestQuery = & $getTestQuery
             GetQuery = "
@@ -429,7 +365,7 @@ Configuration WorkerNode
             DependsOn    = "[Script]RestartMSSQLService"
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
-            PsDscRunAsCredential = & $getCredentials
+            PsDscRunAsCredential = Get-CloverEtlUserSecret
             SetQuery = "
                 USE [master]
                 GO
@@ -478,7 +414,7 @@ Configuration WorkerNode
             ServerName   = "localhost"
             InstanceName = "MSSQLSERVER"
             SetQuery     = "ALTER SERVER ROLE METAL_User ADD MEMBER clover_etl_login"
-            PsDscRunAsCredential  = & $getCredentials
+            PsDscRunAsCredential  = Get-CloverEtlUserSecret
             TestQuery    = "
                 USE [master]
                 if (                
@@ -519,7 +455,7 @@ Configuration WorkerNode
 
         Script RestoreCloverDxMetaBackup
         {
-            PsDscRunAsCredential  = & $getCredentials
+            PsDscRunAsCredential  = Get-CloverEtlUserSecret
             DependsOn = "[Script]RestartMSSQLService"
             SetScript = {
                 Install-Module sqlserver -Force -AllowClobber
@@ -560,7 +496,7 @@ Configuration WorkerNode
 
             GetScript = {
                 Install-Module sqlserver -Force -AllowClobber
-                $cred = Invoke-Expression "$($using:getCredentials)"
+                $cred = Get-CloverEtlUserSecret
 
                 $testParams = @{
                     Credential = $cred
