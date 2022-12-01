@@ -29,10 +29,8 @@ Configuration WorkerNode
 
             # The following characters have been known to cause issues with the sql-server install via choco.
             # Removing them here should resolve this issue
-            $password = $password.Replace(")","")
-            $password = $password.Replace("&","")
-            $password = $password.Replace("`"","")
-            $password = $password.Replace("$","")
+            #  Update 11/30: Remove all special characters for now. Too many issues with Choco
+            $password = $password -replace "[^a-zA-Z0-9 ]"
 
             $secSecret = Get-SECSecretList -Filter $filter
 
