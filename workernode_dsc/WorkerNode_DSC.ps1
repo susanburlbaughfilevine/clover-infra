@@ -15,38 +15,72 @@ Configuration WorkerNode
 
     Node localhost
     {
-        # Function for retriving Windows/SQL Login clover_etl_login credentials for use in the following DSC resources
-        $getCredentials = {
+        # Function to create secret. Discovered that we can't do this in DSC since it needs to be resolvable in the below
+        # script blocks during MOF complilation... 
+        $createOrUpdateSecret = {
             Import-Module AWSPowershell
+
             $filter = [Amazon.SecretsManager.Model.Filter]@{
                 "Key"    = "Name"
                 "Values" = "cloveretl-ssh-credentials"
             }
-        
-            $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-        
-            if ($null -eq $secSecret) {
-                return $false
-            }
             
-            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
+            $password = Get-SECRandomPassword
+
+            # The following characters have been known to cause issues with the sql-server install via choco.
+            # Removing them here should resolve this issue
+            #  Update 11/30: Remove all special characters for now. Too many issues with Choco
+            $password = $password -replace "[^a-zA-Z0-9 ]"
+
+            $secSecret = Get-SECSecretList -Filter $filter
+
+            if ($null -eq $secSecret)
+            {
+                $createSecretParams = @{
+                    "Description" = "Password for the clover_etl_login user";
+                    "Name" = "cloveretl-ssh-credentials";
+                    "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
+                }
+
+                New-SECSecret @createSecretParams
+            }
+            else
+            {
+                try
+                {
+                    # Test to see if we can successfully retrieve a value
+                    # Get-SECSecretValue will throw an expcetion if it can't, so leverage try/catch
+                    $null = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString)
+                }
+                catch
+                {
+                    $updateParams = @{
+                        "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
+                        "Description"  = "Password for the clover_etl_login user"
+                        "SecretId"     = $secSecret.ARN
+                    }
+    
+                    Update-SECSecret @updateParams
+                }
+            }
+        }
+
+        # Function for retriving Windows/SQL Login clover_etl_login credentials for use in the following DSC resources
+        $getCredentials = {
+            Import-Module AWSPowershell
+
+            & $createOrUpdateSecret
+            
+            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force
             return New-Object System.Management.Automation.PSCredential "clover_etl_login", $password
         }
 
         $getPlainTextCredentials = {
             Import-Module AWSPowershell
-            $filter = [Amazon.SecretsManager.Model.Filter]@{
-                "Key"    = "Name"
-                "Values" = "cloveretl-ssh-credentials"
-            }
-        
-            $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-        
-            if ($null -eq $secSecret) {
-                return $false
-            }
+
+            & $createOrUpdateSecret
             
-            $password = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
+            $password = ((Get-SECSecretValue -SecretId "cloveretl-ssh-credentials").SecretString | ConvertFrom-Json).password
             return $password
         }
 
@@ -231,7 +265,7 @@ Configuration WorkerNode
 
         User cloverEtlLogin
         {
-            DependsOn = "[script]CloverEtlSecret"
+            #DependsOn = "[script]CloverEtlSecret"
             Ensure = "Present"
             UserName = "clover_etl_login"
             Password = & $getCredentials
@@ -272,81 +306,6 @@ Configuration WorkerNode
                 
                 return [hashtable]@{
 			        "Result" = (Get-Content "$env:ProgramData\ssh\sshd_config")
-		        }
-            }
-        }
-
-        Script CloverEtlSecret
-        {
-            SetScript = {
-                Import-Module AWSPowershell
-
-                $filter = [Amazon.SecretsManager.Model.Filter]@{
-                    "Key"    = "Name"
-                    "Values" = "cloveretl-ssh-credentials"
-                }
-                
-                $password = Get-SECRandomPassword
-
-                # The following characters have been known to cause issues with the sql-server install via choco.
-                # Removing them here should resolve this issue
-                $password = $password.Replace(")","")
-                $password = $password.Replace("&","")
-
-                $secSecret = Get-SECSecretList -Filter $filter
-
-                $updateParams = @{
-                    "SecretString" = (@{"password"=$($password)} | ConvertTo-Json)
-                    "Description"  = "Password for the clover_etl_login user"
-                    "SecretId"     = $secSecret.ARN
-                }
-
-                Update-SECSecret @updateParams
-            }
-
-            TestScript = {
-                Import-Module AWSPowershell
-                $filter = [Amazon.SecretsManager.Model.Filter]@{
-                    "Key"    = "Name"
-                    "Values" = "cloveretl-ssh-credentials"
-                }
-
-                $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-
-                if ($null -eq $secSecret) {
-                    return $false
-                }
-
-                $secretValue = ((Get-SECSecretValue -SecretId $secSecret.name).SecretString | ConvertFrom-Json).password
-                
-                # We'll make the assumption that if the value is here that it is the right
-                # one for the sake of configuration simplicity. Otherwise password has to be
-                # generated outside of DSC configuration
-                if (([string]::IsNullOrEmpty($secretValue) -eq $false) -or ($secretValue -eq "null")) {
-                    return $true
-                }
-
-                $false
-            }
-
-            GetScript = {
-                Import-Module AWSPowershell
-
-                $filter = [Amazon.SecretsManager.Model.Filter]@{
-                    "Key"    = "Name"
-                    "Values" = "cloveretl-ssh-credentials"
-                }
-
-                $secSecret = Get-SECSecretList -Filter $filter | Select-Object -First 1
-
-                if ($null -eq $secSecret) {
-                    return [hashtable]@{
-			            "Result" = [Amazon.SecretsManager.Model.SecretListEntry]::new()
-		            }
-                }
-
-	            [hashtable]@{
-			        "Result"= (Get-SECSecretValue -SecretId $secSecret.name).SecretString
 		        }
             }
         }
