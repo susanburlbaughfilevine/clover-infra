@@ -22,6 +22,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -35,6 +36,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -48,6 +50,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -61,6 +64,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -74,6 +78,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -87,6 +92,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -100,6 +106,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -107,12 +114,13 @@
     <cs:userGroup>
       <cs:code>red_pepper</cs:code>
       <cs:name>Red Pepper</cs:name>
-      <cs:description>Legal Devs Partner user group</cs:description>
+      <cs:description>Red Pepper Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
@@ -126,6 +134,7 @@
         <cs:permission>sandbox_list</cs:permission>
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
