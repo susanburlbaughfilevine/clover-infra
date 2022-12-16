@@ -14,7 +14,7 @@
   <cs:usersList>
     <cs:user disabled="false">
       <cs:username>mstratford</cs:username>
-      <cs:firstName>nakoa</cs:firstName>
+      <cs:firstName>nakoa_</cs:firstName>
       <cs:email>mindy@bitlinksolutions.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -25,7 +25,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>amecham</cs:username>
-      <cs:firstName>nakoa</cs:firstName>
+      <cs:firstName>nakoa_</cs:firstName>
       <cs:email>Andrew.mecham@nakoatechnologies.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -36,7 +36,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>jblair</cs:username>
-      <cs:firstName>nakoa</cs:firstName>
+      <cs:firstName>nakoa_</cs:firstName>
       <cs:email>James.blair@nakoatechnologies.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -47,7 +47,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>ding</cs:username>
-      <cs:firstName>nakoa</cs:firstName>
+      <cs:firstName>nakoa_</cs:firstName>
       <cs:email>dane@bitlinksolutions.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -58,7 +58,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>abarde</cs:username>
-      <cs:firstName>legaldevs</cs:firstName>
+      <cs:firstName>legaldevs_</cs:firstName>
       <cs:email>ahmad@legaldevs.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -69,7 +69,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>rmangaong</cs:username>
-      <cs:firstName>legaldevs</cs:firstName>
+      <cs:firstName>legaldevs_</cs:firstName>
       <cs:email>roy@legaldevs.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -80,7 +80,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>imiranda</cs:username>
-      <cs:firstName>legaldevs</cs:firstName>
+      <cs:firstName>legaldevs_</cs:firstName>
       <cs:email>belle@legaldevs.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -91,7 +91,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>jbillones</cs:username>
-      <cs:firstName>legaldevs</cs:firstName>
+      <cs:firstName>legaldevs_</cs:firstName>
       <cs:email>jes@legaldevs.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -102,7 +102,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>tcopeland</cs:username>
-      <cs:firstName>vinetegrate</cs:firstName>
+      <cs:firstName>vinetegrate_</cs:firstName>
       <cs:email>tom@vinetegrate.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -113,7 +113,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>vkamra</cs:username>
-      <cs:firstName>bespokean</cs:firstName>
+      <cs:firstName>bespokean_</cs:firstName>
       <cs:email>vikram@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -124,7 +124,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>psheppard</cs:username>
-      <cs:firstName>bespokean</cs:firstName>
+      <cs:firstName>bespokean_</cs:firstName>
       <cs:email>peggy@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -135,7 +135,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>ccash</cs:username>
-      <cs:firstName>bespokean</cs:firstName>
+      <cs:firstName>bespokean_</cs:firstName>
       <cs:email>crystal@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -146,7 +146,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>rriefke</cs:username>
-      <cs:firstName>encoretech</cs:firstName>
+      <cs:firstName>encoretech_</cs:firstName>
       <cs:email>rick@encoretech.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -157,7 +157,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>apreda</cs:username>
-      <cs:firstName>encoretech</cs:firstName>
+      <cs:firstName>encoretech_</cs:firstName>
       <cs:email>apreda@encoretech.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
@@ -168,7 +168,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>syahia</cs:username>
-      <cs:firstName>encoretech</cs:firstName>
+      <cs:firstName>encoretech_</cs:firstName>
       <cs:email>syahia@encoretech.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
