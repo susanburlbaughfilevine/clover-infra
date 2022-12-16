@@ -42,7 +42,7 @@
       </cs:groupPermissions>
     </cs:userGroup>
     <cs:userGroup>
-      <cs:code>fuel_digital</cs:code>
+      <cs:code>fueldigital</cs:code>
       <cs:name>Fuel Digital</cs:name>
       <cs:description>Fuel Digital Partner user group</cs:description>
       <cs:assignedUsers/>
@@ -70,7 +70,7 @@
       </cs:groupPermissions>
     </cs:userGroup>
     <cs:userGroup>
-      <cs:code>legal_devs</cs:code>
+      <cs:code>legaldevs</cs:code>
       <cs:name>Legal Devs</cs:name>
       <cs:description>Legal Devs Partner user group</cs:description>
       <cs:assignedUsers/>
@@ -112,7 +112,7 @@
       </cs:groupPermissions>
     </cs:userGroup>
     <cs:userGroup>
-      <cs:code>red_pepper</cs:code>
+      <cs:code>redpepper</cs:code>
       <cs:name>Red Pepper</cs:name>
       <cs:description>Red Pepper Partner user group</cs:description>
       <cs:assignedUsers/>
