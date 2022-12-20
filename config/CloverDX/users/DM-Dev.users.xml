@@ -14,11 +14,11 @@
   <cs:usersList>
     <cs:user disabled="false">
       <cs:username>testuser</cs:username>
-      <cs:firstName>test-1</cs:firstName>
+      <cs:firstName>test-1_</cs:firstName>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
-		<cs:groupCode>test</cs:groupCode>
+		<cs:groupCode>test-1</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>

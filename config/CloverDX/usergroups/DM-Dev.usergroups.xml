@@ -14,13 +14,11 @@
   <cs:usersList/>
   <cs:userGroupsList>
     <cs:userGroup>
-      <cs:code>test</cs:code>
-      <cs:name>Test</cs:name>
+      <cs:code>test-1</cs:code>
+      <cs:name>Test-1</cs:name>
       <cs:description>Test Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
