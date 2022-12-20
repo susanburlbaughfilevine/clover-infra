@@ -19,8 +19,6 @@
       <cs:description>Bespokean Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>secret_managers_unlimited</cs:permission>
@@ -33,8 +31,6 @@
       <cs:description>Encoretech Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -46,8 +42,6 @@
       <cs:description>Fuel Digital Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -59,8 +53,6 @@
       <cs:description>Irvine Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -72,8 +64,6 @@
       <cs:description>Legal Devs Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -85,8 +75,6 @@
       <cs:description>Nakoa Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -98,8 +86,6 @@
       <cs:description>Neostella Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -111,8 +97,6 @@
       <cs:description>Red Pepper Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
@@ -124,8 +108,6 @@
       <cs:description>Vinetegrate Partner user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
         <cs:permission>open_server_console</cs:permission>
