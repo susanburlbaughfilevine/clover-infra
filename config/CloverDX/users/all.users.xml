@@ -449,9 +449,9 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>intake_service_worker</cs:username>
       <cs:firstName>Intake</cs:firstName>
       <cs:lastName>Service Worker</cs:lastName>
-      <cs:username>intake_service_worker</cs:username>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">@rmxnO2PWgP1@E9hKU6BiwY%XTR1K9bYEVc1</cs:password>
       <cs:userGroups>
