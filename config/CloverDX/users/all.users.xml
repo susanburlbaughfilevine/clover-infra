@@ -31,7 +31,7 @@
       <cs:lastName>porter</cs:lastName>
       <cs:email>bporter@filevine.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
@@ -41,7 +41,7 @@
     <cs:user disabled="false">
       <cs:username>ygelfand</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
@@ -51,7 +51,7 @@
     <cs:user disabled="false">
       <cs:username>lmies</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
@@ -61,7 +61,7 @@
     <cs:user disabled="false">
       <cs:username>sburlbaugh</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
@@ -71,30 +71,30 @@
     <cs:user disabled="false">
       <cs:username>bquesada</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>kjumonville</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
 	<cs:groupCode>admin</cs:groupCode>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>egunderson</cs:username>
       <cs:firstName>evan</cs:firstName>
       <cs:lastName>gunderson</cs:lastName>
       <cs:email>evangunderson@filevine.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -105,7 +105,7 @@
       <cs:firstName>Christopher</cs:firstName>
       <cs:lastName>cshauble</cs:lastName>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -116,36 +116,36 @@
       <cs:firstName>David</cs:firstName>
       <cs:lastName>Lloyd</cs:lastName>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>jmortensen</cs:username>
       <cs:firstName>Josh</cs:firstName>
       <cs:lastName>Mortensen</cs:lastName>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>kschmeisser</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>phonegger</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -154,7 +154,7 @@
     <cs:user disabled="false">
       <cs:username>sfinney</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -163,7 +163,7 @@
     <cs:user disabled="false">
       <cs:username>btailor</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -172,7 +172,7 @@
     <cs:user disabled="false">
       <cs:username>hgreen</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -181,7 +181,7 @@
     <cs:user disabled="false">
       <cs:username>hmcneally</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -190,7 +190,7 @@
     <cs:user disabled="false">
       <cs:username>jsetzer</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -199,16 +199,16 @@
     <cs:user disabled="false">
       <cs:username>ldeleon</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>skim</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -217,7 +217,7 @@
     <cs:user disabled="false">
       <cs:username>alanguet</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -226,7 +226,7 @@
     <cs:user disabled="false">
       <cs:username>cstuart</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -235,7 +235,7 @@
     <cs:user disabled="false">
       <cs:username>jcobb</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -244,16 +244,16 @@
     <cs:user disabled="false">
       <cs:username>kcarter</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>rhsu</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -262,7 +262,7 @@
     <cs:user disabled="false">
       <cs:username>rschudde</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -271,7 +271,7 @@
     <cs:user disabled="false">
       <cs:username>tgreen</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -280,16 +280,16 @@
     <cs:user disabled="false">
       <cs:username>bsoares</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>bmugo</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -298,7 +298,7 @@
     <cs:user disabled="false">
       <cs:username>bmonroe</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -307,7 +307,7 @@
     <cs:user disabled="false">
       <cs:username>gmay</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -316,7 +316,7 @@
     <cs:user disabled="false">
       <cs:username>jhanna</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -325,7 +325,7 @@
     <cs:user disabled="false">
       <cs:username>jlobato</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -334,16 +334,16 @@
     <cs:user disabled="false">
       <cs:username>mcepko</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>pcelis</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -352,7 +352,7 @@
     <cs:user disabled="false">
       <cs:username>sswensen</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -361,16 +361,16 @@
     <cs:user disabled="false">
       <cs:username>cmohn</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>dmahon</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -379,7 +379,7 @@
     <cs:user disabled="false">
       <cs:username>dlakin</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -388,25 +388,25 @@
     <cs:user disabled="false">
       <cs:username>dmyers</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>jjohnston</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>jgreen</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -415,7 +415,7 @@
     <cs:user disabled="false">
       <cs:username>rblack</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -424,7 +424,7 @@
     <cs:user disabled="false">
       <cs:username>jmoshier</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -433,7 +433,7 @@
     <cs:user disabled="false">
       <cs:username>gburkholder</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
@@ -442,13 +442,15 @@
     <cs:user disabled="false">
       <cs:username>jschumann</cs:username>
       <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">~hECkz,$SC"m3'u`</cs:password>
+      <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
       <cs:userGroups>
         <cs:groupCode>dm_user</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:firstName>Intake</cs:firstName>
+      <cs:lastName>Service Worker</cs:lastName>
       <cs:username>intake_service_worker</cs:username>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">@rmxnO2PWgP1@E9hKU6BiwY%XTR1K9bYEVc1</cs:password>

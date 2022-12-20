@@ -37,7 +37,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -51,7 +50,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -65,7 +63,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -79,7 +76,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -93,7 +89,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -107,7 +102,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -121,7 +115,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -135,7 +128,6 @@
         <cs:permission>data_service_list</cs:permission>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
