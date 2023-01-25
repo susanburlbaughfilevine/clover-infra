@@ -251,6 +251,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>amathur</cs:username>
+      <cs:firstName>bespokean_</cs:firstName>
+      <cs:email>anish@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>rriefke</cs:username>
       <cs:firstName>encoretech_</cs:firstName>
       <cs:email>rick@encoretech.com</cs:email>
