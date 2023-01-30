@@ -29,8 +29,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
 
         if ($configType -eq "users")
         {
-            $configFullPath = "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower())*.xml"
-            $configFullPath = (Resolve-Path $configFullPath).Path
+            $configFullPath = "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower()).xml"
             [xml]$baseXml = Get-Content $configFullPath -Raw
             $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
             $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
@@ -53,7 +52,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
             Set-ServerConfiguration @params
 
             Write-Host "Applying $tenantName configuration for $configType"
-            $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower())*.xml" -Raw
+            $config = Get-Content "$($packagePath)/config/CloverDX/$configType/$($tenantName).$($configType.ToLower()).xml" -Raw
     
             $params = @{
                 "dryRun"         = $false;
