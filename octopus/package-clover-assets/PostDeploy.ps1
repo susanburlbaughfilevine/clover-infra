@@ -30,6 +30,7 @@ foreach ($configType in @("userGroups","users","sandboxes","jobConfigs","schedul
         if ($configType -eq "users")
         {
             $configFullPath = "$($packagePath)/config/CloverDX/$configType/all.$($configType.ToLower())*.xml"
+            $configFullPath = (Resolve-Path $configFullPath).Path
             [xml]$baseXml = Get-Content $configFullPath -Raw
             $xmlTextReader = [System.Xml.XmlTextReader]::new($configFullPath)
             $xmlNsMgr = [System.Xml.XmlNamespaceManager]::new($xmlTextReader.NameTable)
