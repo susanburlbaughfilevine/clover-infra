@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.16.1.17" exporter="clover" timeZone="UTC" timestamp="2022-01-28T20:32:08.939Z">
+  <cs:exportOptions>
+    <cs:exportUsers>true</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>false</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList>
+    <cs:user disabled="false">
+      <cs:username>testuser2</cs:username>
+      <cs:firstName>test-1_</cs:firstName>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>test-1</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+  </cs:usersList>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>
