@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.16.1.17" exporter="billporter" timeZone="UTC" timestamp="2022-01-28T20:35:33.945Z">
+  <cs:exportOptions>
+    <cs:exportUsers>false</cs:exportUsers>
+    <cs:exportUserGroups>true</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>false</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList/>
+  <cs:userGroupsList>
+    <cs:userGroup>
+      <cs:code>bespokean</cs:code>
+      <cs:name>Bespokean</cs:name>
+      <cs:description>Bespokean Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>secret_managers_unlimited</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>encoretech</cs:code>
+      <cs:name>Encoretech</cs:name>
+      <cs:description>Encoretech Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>fueldigital</cs:code>
+      <cs:name>Fuel Digital</cs:name>
+      <cs:description>Fuel Digital Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>irvine</cs:code>
+      <cs:name>Irvine</cs:name>
+      <cs:description>Irvine Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>legaldevs</cs:code>
+      <cs:name>Legal Devs</cs:name>
+      <cs:description>Legal Devs Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>nakoa</cs:code>
+      <cs:name>Nakoa</cs:name>
+      <cs:description>Nakoa Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>neostella</cs:code>
+      <cs:name>Neostella</cs:name>
+      <cs:description>Neostella Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>redpepper</cs:code>
+      <cs:name>Red Pepper</cs:name>
+      <cs:description>Red Pepper Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>vinetegrate</cs:code>
+      <cs:name>Vinetegrate</cs:name>
+      <cs:description>Vinetegrate Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+  </cs:userGroupsList>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>

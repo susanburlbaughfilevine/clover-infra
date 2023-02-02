@@ -1,0 +1,596 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cs:cloverServerConfiguration xmlns:cs="http://cloveretl.com/server/data" cloverVersion="5.16.1.17" exporter="clover" timeZone="UTC" timestamp="2022-01-28T20:32:08.939Z">
+  <cs:exportOptions>
+    <cs:exportUsers>true</cs:exportUsers>
+    <cs:exportUserGroups>false</cs:exportUserGroups>
+    <cs:exportSandboxes>false</cs:exportSandboxes>
+    <cs:exportJobConfigs>false</cs:exportJobConfigs>
+    <cs:exportSchedules>false</cs:exportSchedules>
+    <cs:exportEventListeners>false</cs:exportEventListeners>
+    <cs:exportLaunchServices>false</cs:exportLaunchServices>
+    <cs:exportDataServices>false</cs:exportDataServices>
+    <cs:exportTempSpaces>false</cs:exportTempSpaces>
+  </cs:exportOptions>
+  <cs:usersList>
+    <cs:user disabled="false">
+      <cs:username>mstratford</cs:username>
+      <cs:email>mindy@bitlinksolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>nakoa</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>amecham</cs:username>
+      <cs:email>Andrew.mecham@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>nakoa</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jblair</cs:username>
+      <cs:email>James.blair@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>nakoa</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ding</cs:username>
+      <cs:email>dane@bitlinksolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>nakoa</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>abarde</cs:username>
+      <cs:email>ahmad@legaldevs.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>legaldevs</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>rmangaong</cs:username>
+      <cs:email>roy@legaldevs.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>legaldevs</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>imiranda</cs:username>
+      <cs:email>belle@legaldevs.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>legaldevs</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jbillones</cs:username>
+      <cs:email>jes@legaldevs.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>legaldevs</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>tcopeland</cs:username>
+      <cs:email>tom@vinetegrate.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>vinetegrate</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>bmonroe</cs:username>
+      <cs:email>bryan@vinetegrate.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>vinetegrate</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jsetzer</cs:username>
+      <cs:email>jack@vinetegrate.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>vinetegrate</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>vkamra</cs:username>
+      <cs:email>vikram@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>psheppard</cs:username>
+      <cs:email>peggy@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ccash</cs:username>
+      <cs:email>crystal@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>dmahon</cs:username>
+      <cs:email>darin@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>kschmeisser</cs:username>
+      <cs:email>katelyn@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>phonegger</cs:username>
+      <cs:email>Paul@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>amathur</cs:username>
+      <cs:email>anish@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>bespokean</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>rriefke</cs:username>
+      <cs:email>rick@encoretech.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>encoretech</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>apreda</cs:username>
+      <cs:email>apreda@encoretech.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>encoretech</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>syahia</cs:username>
+      <cs:email>syahia@encoretech.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>encoretech</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ccook</cs:username>
+      <cs:email>chris.cook@fueldigital.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ccook1</cs:username>
+      <cs:email>casey.cook@fueldigital.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>lthompson</cs:username>
+      <cs:email>luke.thompson@fuel.digital</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>egriffith</cs:username>
+      <cs:email>emma.griffith@fuel.digital</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>aperkinson</cs:username>
+      <cs:email>andrew.perkinson@fuel.digital</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>acox</cs:username>
+      <cs:email>alvin.cox@fuel.digital</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>gdunn</cs:username>
+      <cs:email>grace.dunn@fuel.digital</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>fueldigital</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>egunderson</cs:username>
+      <cs:email>evan@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>irvine</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jgreen</cs:username>
+      <cs:email>jordon@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>irvine</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>bmugo</cs:username>
+      <cs:email>brian@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>irvine</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>skim</cs:username>
+      <cs:email>sion@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>irvine</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>aplummer</cs:username>
+      <cs:email>Alexander.plummer@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>bmayer</cs:username>
+      <cs:email>brian.mayer@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ggast</cs:username>
+      <cs:email>gabby.gast@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jjohnston</cs:username>
+      <cs:email>jacob.johnston@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>josorio</cs:username>
+      <cs:email>Jefersson.osorio@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>amayer</cs:username>
+      <cs:email>Alayna.mayer@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>mtalha</cs:username>
+      <cs:email>mat.talha@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>nolson</cs:username>
+      <cs:email>nick.olson@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>nvaghela</cs:username>
+      <cs:email>nitin.vaghela@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>pcelis</cs:username>
+      <cs:email>pablo.celis@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>sbickley</cs:username>
+      <cs:email>Scott.Bickley@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>macosta</cs:username>
+      <cs:email>melissa.acosta@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+  </cs:usersList>
+  <cs:userGroupsList/>
+  <cs:sandboxesList/>
+  <cs:jobConfigsList/>
+  <cs:schedulesList/>
+  <cs:eventListenersList/>
+  <cs:launchServicesList/>
+  <cs:dataServicesList/>
+  <cs:tempSpacesList/>
+</cs:cloverServerConfiguration>
