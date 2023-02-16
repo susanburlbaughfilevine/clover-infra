@@ -181,6 +181,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>ldeleon</cs:username>
+      <cs:firstName>vinetegrate_</cs:firstName>
+      <cs:email>lourdes@vinetegrate.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>vinetegrate</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>vkamra</cs:username>
       <cs:firstName>bespokean_</cs:firstName>
       <cs:email>vikram@bespokean.com</cs:email>
