@@ -8,7 +8,7 @@ Configuration WorkerNode
 
     Import-DSCResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
     Import-DscResource -Module cChoco -ModuleVersion 2.5.0.0
-    Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion 16.0.0
+    Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion 16.1.0
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     Import-DscResource -ModuleName 'ComputerManagementDSC'
     Import-Module clover-powershell

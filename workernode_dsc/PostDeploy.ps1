@@ -1,6 +1,6 @@
 Install-Module xPsDesiredStateConfiguration -Verbose -Force
 Install-Module NetworkingDsc -Verbose -Force
-Install-Module SqlServerDsc -Verbose -Force -RequiredVersion "16.0.0"
+Install-Module SqlServerDsc -Verbose -Force
 Install-Module cChoco -Verbose -Force
 Install-Module SqlServer -Verbose -Force
 
