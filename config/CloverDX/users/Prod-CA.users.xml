@@ -22,7 +22,6 @@
 		<cs:groupCode>nakoa</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -36,7 +35,6 @@
 		<cs:groupCode>nakoa</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -50,7 +48,6 @@
 		<cs:groupCode>nakoa</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -64,63 +61,6 @@
 		<cs:groupCode>nakoa</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
-      </cs:userGroups>
-      <cs:changePassword>true</cs:changePassword>
-    </cs:user>
-    <cs:user disabled="false">
-      <cs:username>abarde</cs:username>
-      <cs:firstName>legaldevs_</cs:firstName>
-      <cs:email>ahmad@legaldevs.com</cs:email>
-      <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">temp</cs:password>
-      <cs:userGroups>
-		<cs:groupCode>legaldevs</cs:groupCode>
-		<cs:groupCode>partner_dataloader</cs:groupCode>
-		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
-      </cs:userGroups>
-      <cs:changePassword>true</cs:changePassword>
-    </cs:user>
-    <cs:user disabled="false">
-      <cs:username>rmangaong</cs:username>
-      <cs:firstName>legaldevs_</cs:firstName>
-      <cs:email>roy@legaldevs.com</cs:email>
-      <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">temp</cs:password>
-      <cs:userGroups>
-		<cs:groupCode>legaldevs</cs:groupCode>
-		<cs:groupCode>partner_dataloader</cs:groupCode>
-		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
-      </cs:userGroups>
-      <cs:changePassword>true</cs:changePassword>
-    </cs:user>
-    <cs:user disabled="false">
-      <cs:username>imiranda</cs:username>
-      <cs:firstName>legaldevs_</cs:firstName>
-      <cs:email>belle@legaldevs.com</cs:email>
-      <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">temp</cs:password>
-      <cs:userGroups>
-		<cs:groupCode>legaldevs</cs:groupCode>
-		<cs:groupCode>partner_dataloader</cs:groupCode>
-		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
-      </cs:userGroups>
-      <cs:changePassword>true</cs:changePassword>
-    </cs:user>
-    <cs:user disabled="false">
-      <cs:username>jbillones</cs:username>
-      <cs:firstName>legaldevs_</cs:firstName>
-      <cs:email>jes@legaldevs.com</cs:email>
-      <cs:domain>clover</cs:domain>
-      <cs:password plainText="true">temp</cs:password>
-      <cs:userGroups>
-		<cs:groupCode>legaldevs</cs:groupCode>
-		<cs:groupCode>partner_dataloader</cs:groupCode>
-		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -316,7 +256,6 @@
 		<cs:groupCode>encoretech</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -330,7 +269,6 @@
 		<cs:groupCode>encoretech</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -344,7 +282,6 @@
 		<cs:groupCode>encoretech</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -358,7 +295,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -372,7 +308,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -386,7 +321,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -400,7 +334,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -414,7 +347,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -428,7 +360,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -442,7 +373,6 @@
 		<cs:groupCode>fueldigital</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -456,7 +386,6 @@
 		<cs:groupCode>irvine</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -470,7 +399,6 @@
 		<cs:groupCode>irvine</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -484,7 +412,6 @@
 		<cs:groupCode>irvine</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -498,7 +425,6 @@
 		<cs:groupCode>irvine</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
@@ -512,7 +438,6 @@
 		<cs:groupCode>irvine</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
-		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
