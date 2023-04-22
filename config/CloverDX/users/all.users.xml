@@ -73,7 +73,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>hgreen</cs:username>
       <cs:firstName>Holly</cs:firstName>
       <cs:lastName>Green</cs:lastName>
