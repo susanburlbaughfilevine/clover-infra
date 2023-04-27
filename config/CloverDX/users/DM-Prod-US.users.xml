@@ -670,6 +670,71 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
+    <cs:user disabled="false">
+      <cs:username>manderson</cs:username>
+      <cs:firstName>Michael</cs:firstName>
+      <cs:lastName>Anderson</cs:lastName>
+      <cs:email>michael@filevine.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>lighthouse</cs:groupCode>
+		<cs:groupCode>lighthouse_docscan</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>tlubke</cs:username>
+      <cs:firstName>Tiffany</cs:firstName>
+      <cs:lastName>Lubke</cs:lastName>
+      <cs:email>tiffanylubke@filevine.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>lighthouse</cs:groupCode>
+		<cs:groupCode>lighthouse_docscan</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>mbergeron</cs:username>
+      <cs:firstName>Marshall</cs:firstName>
+      <cs:lastName>Bergeron</cs:lastName>
+      <cs:email>marshallbergeron@filevine.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>lighthouse</cs:groupCode>
+		<cs:groupCode>lighthouse_docscan</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>zbrenner</cs:username>
+      <cs:firstName>Zach</cs:firstName>
+      <cs:lastName>Brenner</cs:lastName>
+      <cs:email>zacharybrenner@filevine.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>lighthouse</cs:groupCode>
+		<cs:groupCode>lighthouse_docscan</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ccarter</cs:username>
+      <cs:firstName>Christian</cs:firstName>
+      <cs:lastName>Carter</cs:lastName>
+      <cs:email>christiancarter@filevine.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>lighthouse</cs:groupCode>
+		<cs:groupCode>lighthouse_docscan</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
   </cs:usersList>
   <cs:userGroupsList/>
   <cs:sandboxesList/>
