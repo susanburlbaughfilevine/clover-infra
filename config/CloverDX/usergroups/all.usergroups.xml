@@ -158,6 +158,19 @@
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
+        <cs:userGroup>
+      <cs:code>lighthouse_docscan</cs:code>
+      <cs:name>DocScan Lighthouse Sandbox Group</cs:name>
+      <cs:description>Global User Group to Assign Lighthouse to the docscan sandbox</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>sandbox_list</cs:permission>
+        <cs:permission>data_service_list</cs:permission>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
     <cs:userGroup>
       <cs:code>partner_s3create</cs:code>
       <cs:name>S3 Create Partner Sandbox Group</cs:name>
