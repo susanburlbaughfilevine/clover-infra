@@ -138,14 +138,6 @@
           <cs:operation>execute</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
-          <cs:userGroupCode>admin</cs:userGroupCode>
-          <cs:operation>cleanResults</cs:operation>
-        </cs:permission>
-        <cs:permission>
           <cs:userGroupCode>dm_user</cs:userGroupCode>
           <cs:operation>read</cs:operation>
         </cs:permission>
@@ -158,8 +150,28 @@
           <cs:operation>execute</cs:operation>
         </cs:permission>
         <cs:permission>
-          <cs:userGroupCode>dm_user</cs:userGroupCode>
-          <cs:operation>viewResults</cs:operation>
+          <cs:userGroupCode>lighthouse</cs:userGroupCode>
+          <cs:operation>read</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>lighthouse</cs:userGroupCode>
+          <cs:operation>write</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>lighthouse</cs:userGroupCode>
+          <cs:operation>execute</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>partner_docscan</cs:userGroupCode>
+          <cs:operation>read</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>partner_docscan</cs:userGroupCode>
+          <cs:operation>write</cs:operation>
+        </cs:permission>
+        <cs:permission>
+          <cs:userGroupCode>partner_docscan</cs:userGroupCode>
+          <cs:operation>execute</cs:operation>
         </cs:permission>
       </cs:sandboxPermissions>
       <cs:suspended>false</cs:suspended>
