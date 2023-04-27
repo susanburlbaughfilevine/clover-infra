@@ -123,6 +123,32 @@
       <cs:dataAppEnabled>true</cs:dataAppEnabled>
       <cs:alertLevel>MEDIUM</cs:alertLevel>
     </cs:dataService>
+    <cs:dataService>
+      <cs:id>488066</cs:id>
+      <cs:enabled>true</cs:enabled>
+      <cs:ownerUsername>bporter</cs:ownerUsername>
+      <cs:sandboxCode>DocScan</cs:sandboxCode>
+      <cs:jobFile>data-service/DocScan_Service_CSV.rjob</cs:jobFile>
+      <cs:publicAccess>false</cs:publicAccess>
+      <cs:saveRunRecord>true</cs:saveRunRecord>
+      <cs:healthConfiguration>
+        <cs:id>488067</cs:id>
+        <cs:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cs:taskSendEmail" taskType="email">
+          <cs:addJobLog>false</cs:addJobLog>
+          <cs:emailTemplate>
+            <cs:id>488069</cs:id>
+            <cs:pattern>false</cs:pattern>
+          </cs:emailTemplate>
+        </cs:task>
+        <cs:failureDetectionStrategy>EVERY_ERROR</cs:failureDetectionStrategy>
+        <cs:useFailureRatio>false</cs:useFailureRatio>
+        <cs:failureStatusCodes>404,500,501,502,504-599</cs:failureStatusCodes>
+        <cs:useConsecutiveFailures>false</cs:useConsecutiveFailures>
+        <cs:taskEnabled>false</cs:taskEnabled>
+      </cs:healthConfiguration>
+      <cs:dataAppEnabled>true</cs:dataAppEnabled>
+      <cs:alertLevel>MEDIUM</cs:alertLevel>
+    </cs:dataService>
   </cs:dataServicesList>
   <cs:tempSpacesList/>
   <cs:secretManagersList/>
