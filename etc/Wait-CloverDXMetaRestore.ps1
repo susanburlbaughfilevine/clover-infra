@@ -66,7 +66,7 @@ while ($dbNotRestored) {
 
     try
     {
-        $dbExists = (Invoke-Sqlcmd @testParams).Name.Contains("CloverDX_META")
+        $dbExists = (Invoke-Sqlcmd -TrustServerCertificate @testParams).Name.Contains("CloverDX_META")
     }
     catch
     {

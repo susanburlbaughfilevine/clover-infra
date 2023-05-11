@@ -108,6 +108,7 @@ function New-CloverAssetsPackage
             Write-Output $_.Exception
             Write-Output $_.ErrorDetails
             Write-Output $_.ScriptStackTrace
+            throw "failed with error $_"
         }
     }
 }

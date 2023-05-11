@@ -154,3 +154,26 @@ variable "nr_account_id" {
 variable "nr_api_key" {
 
 }
+
+##########################
+# Instance / Lun Storage Variables 
+##########################
+variable "ec2_storage_size" {
+  description = "Storage Size"
+  default     = 200
+}
+
+variable "ec2_storage_type" {
+  description = "Storage Type.  Options include gp2 and gp3.  Default is gp3"
+  default     = "gp3"
+}
+
+variable "ebs_lun_storage_size" {
+  description = "Storage Size"
+  default     = 3200
+}
+
+variable "ebs_lun_storage_type" {
+  description = "Storage Type.  Options include gp2 and gp3.  Default is gp3"
+  default     = "gp3"
+}
