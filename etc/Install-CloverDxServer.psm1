@@ -65,7 +65,7 @@ function Install-CloverDxServer
 
     # Configure Tomcat installation
     [Environment]::SetEnvironmentVariable("JAVA_HOME", "$jdkPath", "Machine")
-    [Environment]::SetEnvironmentVariable("JRE_HOME", "$jdkPath\bin", "Machine")
+    [Environment]::SetEnvironmentVariable("JRE_HOME", "$jdkPath", "Machine")
     $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable("JAVA_HOME","Machine")
     $env:JRE_HOME = [System.Environment]::GetEnvironmentVariable("JRE_HOME","Machine")
 
