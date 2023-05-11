@@ -154,7 +154,11 @@ resource "aws_instance" "clover" {
   monitoring = false
 
   root_block_device {
-    volume_size = 200
+    volume_size = var.ec2_storage_size
+    volume_type = var.ec2_storage_type
+    throughput  = module.gp3_matrix_ec2.storage_throughput
+    iops        = module.gp3_matrix_ec2.storage_iops    
+
     encrypted   = true
     kms_key_id  = data.aws_kms_alias.backend.target_key_arn
   }
