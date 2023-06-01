@@ -279,6 +279,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>tlightfoot</cs:username>
+      <cs:firstName>bespokean_</cs:firstName>
+      <cs:email>tim@bespokean.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="false">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>bespokean</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>rriefke</cs:username>
       <cs:firstName>encoretech_</cs:firstName>
       <cs:email>rick@encoretech.com</cs:email>
@@ -674,6 +688,48 @@
       <cs:username>ckozeny</cs:username>
       <cs:firstName>neostella_</cs:firstName>
       <cs:email>cj.kozeny@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>dgiraldo</cs:username>
+      <cs:firstName>neostella_</cs:firstName>
+      <cs:email>david.giraldo@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jbetancur</cs:username>
+      <cs:firstName>neostella_</cs:firstName>
+      <cs:email>juan.betancur@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		<cs:groupCode>neostella</cs:groupCode>
+		<cs:groupCode>partner_dataloader</cs:groupCode>
+		<cs:groupCode>partner_docscan</cs:groupCode>
+		<cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jgarcia</cs:username>
+      <cs:firstName>neostella_</cs:firstName>
+      <cs:email>juan.garcia@neostella.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
