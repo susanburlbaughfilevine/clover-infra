@@ -153,17 +153,36 @@ Configuration WorkerNode
             Params    = "'/SQLSYSADMINACCOUNTS:$($InstallUser) /SQLSVCACCOUNT:"".\$($InstallUser)"" /SQLSVCPASSWORD='$(Get-CloverEtlUserSecret -AsPlainText)' /IgnorePendingReboot'"
         }
 
-        cChocoPackageInstaller SqlServerCU {
+        cChocoPackageInstallerSet SqlServerCU {
             DependsOn = "[cChocoPackageInstaller]SqlServer"
             Ensure    = "Present"
-            Name      = "sql-server-2019-cumulative-update"
+            Name      = @(
+              "sql-server-2019-cumulative-update"
+            )
         }
+
+        cChocoPackageInstallerSet OtherPackages {
+            Ensure    = "Present"
+            Name      = @(
+              "visualstudio2019community"  ,
+              "sqlpackage",
+              "firefox",
+              "sql-server-management-studio",
+              "googlechrome",
+              "treesizefree",
+              "python",
+              "sql-server-express"
+            )
+        }
+
+        # data storage and processing
+
 
         Script EnableMSSQLTcp {
             # Issues running this script may be related to failures in the SqlServer install.
             # Verify that SqlServer installed succesfully as a first step to troubleshooting
             # errors here
-            DependsOn  = "[cChocoPackageInstaller]SqlServerCU"
+            DependsOn  = "[cChocoPackageInstallerSet]SqlServerCU"
             SetScript  = {
                 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
                 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
@@ -189,7 +208,7 @@ Configuration WorkerNode
 
         Script RestartMSSQLService {
             PsDscRunAsCredential = Get-CloverEtlUserSecret
-            DependsOn            = "[Script]EnableMSSQLTcp", "[Registry]LoginMode", "[Firewall]MSSQLPort"
+            DependsOn            = "[Script]EnableMSSQLTcp", "[Registry]LoginMode", "[Firewall]MSSQLPort", "[cChocoPackageInstallerSet]OtherPackages"
             SetScript            = {
                 Start-Sleep -Seconds 180
                 New-Item -Type File -Path "$($env:SystemDrive)\dsc\serviceRestarted.tmp"
@@ -213,7 +232,7 @@ Configuration WorkerNode
         }
 
         Registry LoginMode {
-            DependsOn = "[cChocoPackageInstaller]SqlServer"
+            DependsOn = "[cChocoPackageInstaller]SqlServer", "[cChocoPackageInstallerSet]SqlServerCU"
             Ensure    = "Present"
             Key       = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQLServer"
             ValueName = "LoginMode"
