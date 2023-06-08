@@ -170,8 +170,7 @@ Configuration WorkerNode
               "sql-server-management-studio",
               "googlechrome",
               "treesizefree",
-              "python",
-              "sql-server-express"
+              "python"
             )
         }
 
