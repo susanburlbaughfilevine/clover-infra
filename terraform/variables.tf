@@ -137,6 +137,11 @@ variable "zpa_subnet_cidr" {
 }
 
 variable "filevine_shard_cidr" {
+  description = "Subnets where Filevine Shards exist for the cell"
+}
+
+variable "filevine_common_services_cidr" {
+  description = "This a CIDR for common services of this cell"
 }
 
 variable "nr_slack_webhook" {
