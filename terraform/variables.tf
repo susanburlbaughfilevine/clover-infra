@@ -1,3 +1,21 @@
+locals {
+  cs_cidr = split(",", var.filevine_common_services_cidr)
+  cs_cidr1 = concat(local.cs_cidr, formatlist(var.filevine_shard_cidr))
+  cidr_blocks = concat(local.cs_cidr1, formatlist(data.aws_vpc.clover.cidr_block))
+}
+
+output "filevine_common_services_cidr" {
+  value = var.filevine_common_services_cidr
+}
+output "cs_cidr" {
+  value = local.cs_cidr
+}
+output "cs_cidr1" {
+  value = local.cs_cidr1
+}
+output "cidr_blocks" {
+  value = local.cidr_blocks
+}
 
 variable "envName" {
   description = ""
