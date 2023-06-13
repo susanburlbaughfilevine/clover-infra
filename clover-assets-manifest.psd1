@@ -27,18 +27,18 @@
     }
 
     securecfg = @{
-        PackageName      = "secure-cfg-tool.5.16.1.zip"
-        FileLink         = "https://support.cloverdx.com/download?file=5.16.1/server/common/Utilities/secure-cfg-tool.5.16.1.zip"
-        Version          = "5.16.1"
-        Checksum         = "e83a3a81f31a3f014e3644e66e6063145fc3b709ad921408e76f72331cdfa6e7"
+        PackageName      = "secure-cfg-tool.6.0.0.zip"
+        FileLink         = "https://support.cloverdx.com/download?file=6.0.0/server/common/Utilities/secure-cfg-tool.6.0.0.zip"
+        Version          = "6.0.0"
+        Checksum         = "b120d93a7b6cd1ecf0bb6e3121b8586f36e3048149d7834e91dc316dea0dacd0"
         ChecksumType     = "sha256"
     }
 
     clover = @{
         PackageName      = "clover.war"
-        FileLink         = "https://support.cloverdx.com/download?file=5.16.1/server/deploy/tomcat7-9/Application%20Files/clover.war"
-        Version          = "5.16.1"
-        Checksum         = "1aec6eafe13a644f68ffaba4fbeba306225cf076ee47f63db879ac99e985982e"
+        FileLink         = "https://support.cloverdx.com/download?file=6.0.0/server/deploy/tomcat7-9/Application%20Files/clover.war"
+        Version          = "6.0.0"
+        Checksum         = "a46eb2173fbc26dbdcf7d90a4ea9250fb1349b6756007d926b8c987a8cf70c9d"
         ChecksumType     = "sha256"
     }
 
