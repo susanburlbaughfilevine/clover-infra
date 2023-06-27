@@ -32,3 +32,6 @@ nr_slack_channel = "#{nr_slack_channel}"
 
 nr_account_id = "#{nr_account_id}"
 nr_api_key    = "#{nr_api_key}"
+
+short_host_name_clover = "#{short_host_name_clover}"
+short_host_name_worker = "#{short_host_name_worker}"
