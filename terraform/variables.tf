@@ -200,3 +200,13 @@ variable "ebs_lun_storage_type" {
   description = "Storage Type.  Options include gp2 and gp3.  Default is gp3"
   default     = "gp3"
 }
+
+# Short Host Name
+variable "short_host_name_worker" {
+  description = "short host name in case instance name fails to set full name"
+  default     = "clover-worker"
+}
+variable "short_host_name_clover" {
+  description = "short host name in case instance name fails to set full name"
+  default     = "clover"
+}

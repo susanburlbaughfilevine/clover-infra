@@ -66,6 +66,40 @@ Configuration InstallOctopus
         Roles = "${server_roles}"
     }
 }
+# Don't use the Default RenameComputer DSC as of 3 Mar 2020 as it limits to 15 char password
+# Default to setting the compiled configuration to current computer name.  Pass a name in to change it.
+Configuration ScriptRenameComputer
+{
+    param
+    (
+        [String]
+        $NewComputerName
+    )
+
+    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName 'ComputerManagementDSC'
+
+    Node localhost
+    {
+        Script RenameComputerScript
+        {
+            SetScript = {
+                Write-Verbose "Setting the name to $using:NewComputerName"
+                Rename-Computer -NewName "$using:NewComputerName" -Force
+            }
+            TestScript = {
+                Write-Verbose "Checking if $using:NewComputerName matches $env:COMPUTERNAME"
+                $using:NewComputerName -match $env:COMPUTERNAME
+            }
+            GetScript = { @{ Result = ($env:COMPUTERNAME) } }
+        }
+
+        PendingReboot AfterRenameComputer {
+            Name = 'AfterRenameComputer'
+            DependsOn = '[Script]RenameComputerScript'
+        }
+    }
+}
 
 # Execute AllInOne Module made up of combined modules from above.
 Configuration AllInOne {
@@ -77,6 +111,10 @@ Configuration AllInOne {
 
     node localhost {
 
+        ScriptRenameComputer myrename
+        {
+            NewComputerName = $newcomputername
+        }
         InstallOctopus mytentacle
         {
             ComputerName = $newcomputername
@@ -94,4 +132,13 @@ $global:DSCMachineStatus = 1
 # Compile and apply the AllinOne configuration
 AllInOne -NewComputerName $instanceName
 Start-DscConfiguration -Path .\AllInOne\ -Verbose -Wait -Force
+
+$hostname = hostname | Out-String
+if ($hostname.Substring($hostname.Length - 1 , 1 ) -eq "-" -or $hostname.Length -eq 17) {
+  Rename-Computer -NewName ${short_host_name}
+  Restart-Computer
+}
+
+
+
 </powershell>

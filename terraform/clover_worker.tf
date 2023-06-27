@@ -55,6 +55,7 @@ resource "aws_instance" "clover_worker" {
     server_roles               = "clover-worker"
     scaleft_config             = file("${path.root}/sftd.yaml")
     newrelic_enabled           = var.newrelic_enabled
+    short_host_name            = var.short_host_name_worker
   })
   monitoring = false
 
