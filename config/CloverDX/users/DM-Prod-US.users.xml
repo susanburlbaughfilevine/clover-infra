@@ -419,6 +419,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>trhodes</cs:username>
+      <cs:firstName>irvine_</cs:firstName>
+      <cs:email>tony@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="false">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>irvine</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>egunderson</cs:username>
       <cs:firstName>irvine_</cs:firstName>
       <cs:email>evan@irvinesoftwaresolutions.com</cs:email>
@@ -501,6 +515,34 @@
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>false</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>ajaramillo</cs:username>
+      <cs:firstName>neostella_</cs:firstName>
+      <cs:email>andres.jaramillo@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="false">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>neostella</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>jperdomo</cs:username>
+      <cs:firstName>neostella_</cs:firstName>
+      <cs:email>juan.perdomo@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="false">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>neostella</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
       <cs:username>aplummer</cs:username>
