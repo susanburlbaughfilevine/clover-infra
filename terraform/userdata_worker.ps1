@@ -101,6 +101,36 @@ Configuration ScriptRenameComputer
     }
 }
 
+Configuration ScriptMountDrive
+{
+  Node localhost
+  {
+    param
+    (
+        [String]
+        $DriveLetter
+    )
+    Script MountDrive
+    {
+      SetScript = {
+          Stop-Service -Name ShellHWDetection
+          Get-Disk | Where PartitionStyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Volume Label" -Confirm:$false
+          Start-Service -Name ShellHWDetection
+      }
+      TestScript = {
+        If(Test-Path "D:\")
+        {
+          return $true
+        }
+        else 
+        {
+          return $false
+        }
+      }
+      GetScript = { @{ Result = Test-Path("D:\") } }
+    }
+  }
+}
 # Execute AllInOne Module made up of combined modules from above.
 Configuration AllInOne {
     param 
@@ -111,6 +141,9 @@ Configuration AllInOne {
 
     node localhost {
 
+        ScriptMountDrive d_drive
+        {
+        }
         ScriptRenameComputer myrename
         {
             NewComputerName = $newcomputername
