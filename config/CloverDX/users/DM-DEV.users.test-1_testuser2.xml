@@ -14,7 +14,6 @@
   <cs:usersList>
     <cs:user disabled="false">
       <cs:username>testuser2</cs:username>
-      <cs:firstName>test-1_</cs:firstName>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>

@@ -14,7 +14,6 @@
   <cs:usersList>
     <cs:user disabled="false">
       <cs:username>testuser</cs:username>
-      <cs:firstName>test-1_</cs:firstName>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
@@ -27,8 +26,6 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>tjudd</cs:username>
-      <cs:firstName>Tom</cs:firstName>
-      <cs:lastName>Judd</cs:lastName>
       <cs:email>tomjudd@filevine.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
@@ -39,8 +36,6 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>mmoore</cs:username>
-      <cs:firstName>Mike</cs:firstName>
-      <cs:lastName>Moore</cs:lastName>
       <cs:email>mikemoore@filevine.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">VSZ1l*H$06!j</cs:password>
