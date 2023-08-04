@@ -498,6 +498,20 @@
       <cs:changePassword>false</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>jnovakowski</cs:username>
+      <cs:firstName>irvine_</cs:firstName>
+      <cs:email>justin@irvinesoftwaresolutions.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>irvine</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>false</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>aplummer</cs:username>
       <!--cs:FirstName>neostella_</cs:FirstName-->
       <cs:email>Alexander.plummer@neostella.com</cs:email>
