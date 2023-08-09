@@ -137,65 +137,35 @@
       <cs:name>Dataloader Partner Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Partners to the dataloader sandbox</cs:description>
       <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
+      <cs:groupPermissions/>
     </cs:userGroup>
     <cs:userGroup>
       <cs:code>partner_docscan</cs:code>
       <cs:name>DocScan Partner Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Partners to the docscan sandbox</cs:description>
       <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
+      <cs:groupPermissions/>
     </cs:userGroup>
         <cs:userGroup>
       <cs:code>lighthouse_docscan</cs:code>
       <cs:name>DocScan Lighthouse Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Lighthouse to the docscan sandbox</cs:description>
       <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
+      <cs:groupPermissions/>
     </cs:userGroup>
     <cs:userGroup>
       <cs:code>partner_s3create</cs:code>
       <cs:name>S3 Create Partner Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Partners to the s3 create sandbox</cs:description>
       <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
+      <cs:groupPermissions/>
     </cs:userGroup>
     <cs:userGroup>
       <cs:code>partner_rdsdrop</cs:code>
       <cs:name>RDS Database Delete Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Partners to the RDS Database Delete sandbox</cs:description>
       <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>sandbox_list</cs:permission>
-        <cs:permission>data_service_list</cs:permission>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
+      <cs:groupPermissions/>
     </cs:userGroup>
   </cs:userGroupsList>
   <cs:sandboxesList/>

@@ -14,18 +14,6 @@
   <cs:usersList/>
   <cs:userGroupsList>
     <cs:userGroup>
-      <cs:code>lighthouse</cs:code>
-      <cs:name>Lighthouse</cs:name>
-      <cs:description>Lighthouse user group</cs:description>
-      <cs:assignedUsers/>
-      <cs:groupPermissions>
-        <cs:permission>data_service_execute</cs:permission>
-        <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
-        <cs:permission>open_server_console</cs:permission>
-      </cs:groupPermissions>
-    </cs:userGroup>
-    <cs:userGroup>
       <cs:code>bespokean</cs:code>
       <cs:name>Bespokean</cs:name>
       <cs:description>Bespokean Partner user group</cs:description>
@@ -33,7 +21,6 @@
       <cs:groupPermissions>
         <cs:permission>data_service_execute</cs:permission>
         <cs:permission>user_edit_me</cs:permission>
-        <cs:permission>secret_managers_unlimited</cs:permission>
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
@@ -118,6 +105,17 @@
       <cs:code>vinetegrate</cs:code>
       <cs:name>Vinetegrate</cs:name>
       <cs:description>Vinetegrate Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>lighthouse</cs:code>
+      <cs:name>Lighthouse</cs:name>
+      <cs:description>Lighthouse user group</cs:description>
       <cs:assignedUsers/>
       <cs:groupPermissions>
         <cs:permission>data_service_execute</cs:permission>
