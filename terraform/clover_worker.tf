@@ -58,6 +58,7 @@ resource "aws_instance" "clover_worker" {
     short_host_name            = var.short_host_name_worker
   })
   monitoring = false
+  user_data_replace_on_change = true
 
   root_block_device {
     volume_size = var.ec2_storage_size

@@ -2,12 +2,8 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-    }
-    ## Remove after PagerDuty resources have been deleted (after this change has been deployed everywhere)
-    pagerduty = {
-      source  = "pagerduty/pagerduty"
-      version = "~>2.2.1"
+      version = ">= 4.9.0, < 5.0.0"
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">= 1.1"
 }

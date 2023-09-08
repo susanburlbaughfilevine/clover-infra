@@ -152,6 +152,7 @@ resource "aws_instance" "clover" {
     newrelic_enabled           = var.newrelic_enabled
     short_host_name            = var.short_host_name_clover
   })
+  user_data_replace_on_change = true
   monitoring = false
 
   root_block_device {
