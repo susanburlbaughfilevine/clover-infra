@@ -734,6 +734,20 @@
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
+    </cs:user> 
+    <cs:user disabled="false">
+      <cs:username>yvela</cs:username>
+      <cs:email>yorlady.vela@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="false">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>neostella</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+        <cs:groupCode>partner_rdsdrop</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <!--NEOSTELLA USER LIST-->
     <!--VINETEGRATE USER LIST-->
