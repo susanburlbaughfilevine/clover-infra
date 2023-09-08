@@ -1,4 +1,5 @@
 local_vars.tfvars
 .terraform/
+.terraform.lock.hcl
 destroy/
 clover-assets/
