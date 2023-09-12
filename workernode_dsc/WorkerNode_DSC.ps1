@@ -583,7 +583,7 @@ Configuration WorkerNode
                 $backupFiles = (Get-ChildItem "$($env:SystemDrive)\Windows\Temp\backup" -Recurse)
                 
                 # If we end up wanting to perform tlog restores as well, add the following string before the pipe below
-                # ,@{"Type"="Log";"Path"=$backupFiles.Where({$_.Name.EndsWith(".trn")})
+                # ,@{"Type"="Log";"Path"=$backupFiles.Where({$_.Name.EndsWith(".trn")})}
                 @{"Type" = "Database"; "Path" = $backupFiles.Where({ $_.Name.EndsWith(".bak") }) } | ForEach-Object {
                     $acl = Get-Acl $_.Path.FullName
                     $perm = "NT Service\MSSQLSERVER", "Write, Read, ReadAndExecute", "Allow"
@@ -641,5 +641,53 @@ Configuration WorkerNode
             }
         }
 
+        ########################
+        # ScrapeSqlLinesWebsite 
+        ########################
+        Script ScrapeSqlLinesWebsite {
+            SetScript  = {
+                $client = New-Object System.Net.WebClient
+
+                $versions = @()
+                $result = Invoke-WebRequest "https://www.sqlines.com/download" -UseBasicParsing
+                $result.Links.Where({ $_.outerHTML.Contains("x64_win.zip") }) | ForEach-Object {
+                    $version = [System.Version](([uri]($_.outerHTML.Split('">') | Select-String -Pattern "(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])").Matches.value).Segments | Select-Object -last 1 | Select-String -Pattern "(\d+).(\d+).(\d+)").Matches.Value
+                    $versions += [pscustomobject]@{"Version" = $version; "Link" = $_.href }
+                }
+
+                $latestVersion = [System.Version]::new()
+
+                for ($i = 0; $i -le $versions.length; $i++) {
+                    if ($versions.Version[$i] -gt $latestVersion) {
+                        $latestVersion = $versions.Version[$i]
+                    }
+                }
+
+                $downloadLink = $versions.Where({ $_.Version -eq $latestVersion }).Link
+                $fileName = $downloadLink.Split("/")[4]
+
+                $client.DownloadFile($downloadLink, "C:\Windows\Temp\$($fileName)")
+
+                Expand-Archive "C:\Windows\Temp\$($fileName)" -DestinationPath "c:\windows\temp" -Verbose -Force
+                Get-ChildItem "c:\windows\temp\$($fileName.Replace(".zip",''))" -Exclude "*msvcr*", "*msvcp*", "*vcruntime*" | Copy-Item -Destination c:\windows\system32 -Verbose
+            }
+
+            TestScript = {
+                $hasBins = $true
+                "sqldata.exe", "sqldataw.exe" | ForEach-Object {
+                    if (-not (Test-Path "C:\Windows\System32\$($_)")) {
+                        $hasBins = $false
+                    }
+                }
+
+                return $hasBins
+            }
+
+            GetScript  = {
+                "c:\windows\system32\sqldata.exe", "c:\windows\system32\sqldataw.exe" | ForEach-Object {
+                    [pscustomobject]@{"Path" = $_; "Exists" = (Test-Path $_) }
+                }
+            }
+        }
     }
 }
