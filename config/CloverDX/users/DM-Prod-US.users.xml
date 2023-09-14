@@ -465,6 +465,62 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
+    <cs:user disabled="false">
+      <cs:username>lransford</cs:username>
+      <!--cs:FirstName>nakoa_</cs:FirstName-->
+      <cs:email>lindsey.ransford@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>nakoa</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+     <cs:user disabled="false">
+      <cs:username>cliston</cs:username>
+      <!--cs:FirstName>nakoa_</cs:FirstName-->
+      <cs:email>lcade.liston@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>nakoa</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+     <cs:user disabled="false">
+      <cs:username>dmunoz</cs:username>
+      <!--cs:FirstName>nakoa_</cs:FirstName-->
+      <cs:email>daniel.munoz@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>nakoa</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
+      <cs:username>dogburn</cs:username>
+      <!--cs:FirstName>nakoa_</cs:FirstName-->
+      <cs:email>denise.ogburn@nakoatechnologies.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>nakoa</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
     <!--NAKOA USER LIST-->
     <!--NEOSTELLA USER LIST-->
     <cs:user disabled="false">
