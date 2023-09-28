@@ -579,6 +579,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>framirez</cs:username>
+      <!--cs:FirstName>neostella_</cs:FirstName-->
+      <cs:email>felipe.ramirez@neostella.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+        <cs:groupCode>neostella</cs:groupCode>
+        <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_docscan</cs:groupCode>
+        <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>jbetancur</cs:username>
       <!--cs:FirstName>neostella_</cs:FirstName-->
       <cs:email>juan.betancur@neostella.com</cs:email>
