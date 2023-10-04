@@ -18,7 +18,7 @@
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>aman@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -75,7 +75,7 @@
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>jason@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -132,7 +132,7 @@
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>tim@bespokean.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -395,7 +395,7 @@
       <!--cs:FirstName>irvine_</cs:FirstName-->
       <cs:email>tony@irvinesoftwaresolutions.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -557,7 +557,7 @@
       <!--cs:FirstName>neostella_</cs:FirstName-->
       <cs:email>andres.jaramillo@neostella.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -669,7 +669,7 @@
       <cs:username>jcuca</cs:username>
       <cs:email>juan.cuca@neostella.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -754,7 +754,7 @@
       <!--cs:FirstName>neostella_</cs:FirstName-->
       <cs:email>juan.perdomo@neostella.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
@@ -853,7 +853,7 @@
       <cs:username>yvela</cs:username>
       <cs:email>yorlady.vela@neostella.com</cs:email>
       <cs:domain>clover</cs:domain>
-      <cs:password plaintext="true">temp</cs:password>
+      <cs:password plainText="true">temp</cs:password>
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
