@@ -955,6 +955,20 @@
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
     <cs:user disabled="false">
+      <cs:username>mhoefferle</cs:username>
+      <cs:firstName>vinetegrate_</cs:firstName>
+      <cs:email>mckalee@vinetegrate.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+    <cs:groupCode>vinetegrate</cs:groupCode>
+    <cs:groupCode>partner_dataloader</cs:groupCode>
+    <cs:groupCode>partner_docscan</cs:groupCode>
+    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
+    <cs:user disabled="false">
       <cs:username>tcopeland</cs:username>
       <!--cs:FirstName>vinetegrate_</cs:FirstName-->
       <cs:email>tom@vinetegrate.com</cs:email>
