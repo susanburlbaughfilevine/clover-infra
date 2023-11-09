@@ -840,7 +840,7 @@
     </cs:user>
     <cs:user disabled="false">
       <cs:username>mhoefferle</cs:username>
-      <cs:firstName>vinetegrate_</cs:firstName>
+      <!-- <cs:firstName>vinetegrate_</cs:firstName> -->
       <cs:email>mckalee@vinetegrate.com</cs:email>
       <cs:domain>clover</cs:domain>
       <cs:password plainText="true">temp</cs:password>
