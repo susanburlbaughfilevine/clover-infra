@@ -13,7 +13,7 @@
         PackageName      = "apache-tomcat-9.0.83-windows-x64.zip"
         FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83-windows-x64.zip"
         Version          = "9.0.83"
-        Checksum         = "183b8ee94e47789f3ba3b1b4bd775ce4d17b7e53b9303ad432a5d9e8d9e5a4e6f18e8979b7ff3ccb6efc9e12d6293936835038646b21b5cc9dfdfb1f12b13dca"
+        Checksum         = "4c8e71761c0c827ebd5a6a59a74ce348aed04f1c8470f68a95b0dae3d68b7e3c4e942667f0f7c33ccbb3636e7df1432ac5d3fd5ae41f96d1908930bd413075dd"
         ChecksumType     = "sha512"
     }
 
@@ -22,8 +22,8 @@
         PackageName      = "bcprov-jdk15on-1.70.jar"
         FileLink         = "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar"
         Version          = "1.70"
-        Checksum         = "4c8e71761c0c827ebd5a6a59a74ce348aed04f1c8470f68a95b0dae3d68b7e3c4e942667f0f7c33ccbb3636e7df1432ac5d3fd5ae41f96d1908930bd413075dd *apache-tomcat-9.0.83-windows-x64.zip"
-        ChecksumType     = "sha512"
+        Checksum         = "4636a0d01f74acaf28082fb62b317f1080118371"
+        ChecksumType     = "sha1"
     }
 
     securecfg = @{
