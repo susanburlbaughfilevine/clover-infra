@@ -200,6 +200,20 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
+    <cs:user disabled="false">
+      <cs:username>vnicolescu</cs:username>
+      <!--cs:FirstName>encoretech_</cs:FirstName-->
+      <cs:email>vnicolescu@encoretech.com</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>encoretech</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
     <!--ENCORETECH USER LIST-->
     <!--FUEL DIGITAL USER LIST-->
     <cs:user disabled="false">
