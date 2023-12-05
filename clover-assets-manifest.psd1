@@ -23,7 +23,7 @@
         FileLink         = "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.70/bcprov-jdk15on-1.70.jar"
         Version          = "1.70"
         Checksum         = "4c8e71761c0c827ebd5a6a59a74ce348aed04f1c8470f68a95b0dae3d68b7e3c4e942667f0f7c33ccbb3636e7df1432ac5d3fd5ae41f96d1908930bd413075dd"
-        ChecksumType     = "sha12"
+        ChecksumType     = "sha512"
     }
 
     securecfg = @{
