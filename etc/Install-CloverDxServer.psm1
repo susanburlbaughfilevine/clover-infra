@@ -59,7 +59,7 @@ function Install-CloverDxServer
     $tomcatDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\tomcat
     $jdkDirectory = New-Item -Type Directory -Path $env:SYSTEMDRIVE\jdk
     $jdkPath = Join-Path -Path $jdkDirectory.FullName -ChildPath ($config["jdk"].PackageName).Replace(".zip","")
-    $tomcatPath = Join-Path -Path $tomcatDirectory.FullName -ChildPath $config["tomcat"].PackageName.Replace(".zip","")
+    $tomcatPath = Join-Path -Path $tomcatDirectory.FullName -ChildPath $config["tomcat"].PackageName.Replace("-windows-x64.zip","")
     Expand-Archive $packageDir\$($config["tomcat"].PackageName) -Destination $tomcatDirectory.FullName
     Expand-Archive $packageDir\$($config["jdk"].PackageName) -Destination $jdkDirectory.FullName
 
