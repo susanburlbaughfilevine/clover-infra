@@ -734,7 +734,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>pcelis</cs:username>
       <!--cs:FirstName>neostella_</cs:FirstName-->
       <cs:email>pablo.celis@neostella.com</cs:email>

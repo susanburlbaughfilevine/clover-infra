@@ -123,6 +123,28 @@
         <cs:permission>open_server_console</cs:permission>
       </cs:groupPermissions>
     </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>kraftkennedy</cs:code>
+      <cs:name>Kraft Kennedy</cs:name>
+      <cs:description>Kraft Kennedy Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>rops</cs:code>
+      <cs:name>Rops</cs:name>
+      <cs:description>Rops Partner user group</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions>
+        <cs:permission>data_service_execute</cs:permission>
+        <cs:permission>user_edit_me</cs:permission>
+        <cs:permission>open_server_console</cs:permission>
+      </cs:groupPermissions>
+    </cs:userGroup>
   </cs:userGroupsList>
   <cs:sandboxesList/>
   <cs:jobConfigsList/>
