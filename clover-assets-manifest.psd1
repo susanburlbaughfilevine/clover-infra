@@ -10,10 +10,10 @@
 
     tomcat = @{
         # PackageName should be the name of the folder inside of the downladed zip
-        PackageName      = "apache-tomcat-9.0.83-windows-x64.zip"
-        FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83-windows-x64.zip"
-        Version          = "9.0.83"
-        Checksum         = "4c8e71761c0c827ebd5a6a59a74ce348aed04f1c8470f68a95b0dae3d68b7e3c4e942667f0f7c33ccbb3636e7df1432ac5d3fd5ae41f96d1908930bd413075dd"
+        PackageName      = "apache-tomcat-9.0.86-windows-x64.zip"
+        FileLink         = "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86-windows-x64.zip"
+        Version          = "9.0.86"
+        Checksum         = "0e9075729ed7642c492d6ef8928b798dc9c4f83b9133e7399e4deda5bb4d900d498000e3d30618c80e9d633ce0752bd1bd9c77114125f1174c05441ceb4214ce"
         ChecksumType     = "sha512"
     }
 
