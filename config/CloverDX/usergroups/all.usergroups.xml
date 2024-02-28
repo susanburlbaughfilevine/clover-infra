@@ -167,6 +167,13 @@
       <cs:assignedUsers/>
       <cs:groupPermissions/>
     </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>partner_coveragetool</cs:code>
+      <cs:name>Coverage Tool Partner Sandbox Group</cs:name>
+      <cs:description>Global User Group to Assign Partners to the Coverage Tool sandbox</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions/>
+    </cs:userGroup>
   </cs:userGroupsList>
   <cs:sandboxesList/>
   <cs:jobConfigsList/>
