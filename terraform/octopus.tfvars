@@ -26,7 +26,7 @@ rds_user_name                 = "#{rds_user_name}"
 rds_user_password             = "#{rds_user_password}"
 filevine_shard_cidr           = "#{filevine_shard_cidr}"
 filevine_common_services_cidr = "#{filevine_common_services_cidr}"
-canada_sg                     = "#{internal_sg_canada}""
+internal_sg_canada            = "#{internal_sg_canada}""
 
 nr_slack_webhook = "#{nr_slack_webhook}"
 nr_slack_channel = "#{nr_slack_channel}"
