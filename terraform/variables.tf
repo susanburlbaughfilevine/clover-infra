@@ -1,7 +1,10 @@
 locals {
-  cs_cidr = split(",", var.filevine_common_services_cidr)
-  cs_cidr1 = concat(local.cs_cidr, formatlist(var.filevine_shard_cidr))
+  cs_cidr     = split(",", var.filevine_common_services_cidr)
+  cs_cidr1    = concat(local.cs_cidr, formatlist(var.filevine_shard_cidr))
   cidr_blocks = concat(local.cs_cidr1, formatlist(data.aws_vpc.clover.cidr_block))
+}
+locals {
+  canada_sg = var.internal_sg_canada == "$null" ? ["nothing"] : [var.internal_sg_canada]
 }
 
 output "filevine_common_services_cidr" {
@@ -15,6 +18,10 @@ output "cs_cidr1" {
 }
 output "cidr_blocks" {
   value = local.cidr_blocks
+}
+variable "internal_sg_canada" {
+  description = "SG needed for dm-canada and cloverdx to migrate to CA shards."
+  type        = string
 }
 
 variable "envName" {

@@ -26,6 +26,17 @@ resource "aws_security_group" "cloverdx" {
     Name       = "${var.envName}-cloverdx"
     managed_by = "Octopus via Terraform"
   }
+  ## Workaround to allow communication between Clover CA and CAB during migrations.
+  dynamic "ingress" {
+    for_each = local.canada_sg != ["nothing"] ? [0] : []
+    content {
+      from_port   = 1433
+      to_port     = 1433
+      protocol    = "tcp"
+      description = "From CA Prod shards subnets"
+      cidr_blocks = ["172.22.0.0/17"]
+    }
+  }
   ingress {
     description     = "HTTP"
     from_port       = 80
