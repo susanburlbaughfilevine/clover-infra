@@ -22,6 +22,8 @@
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -36,6 +38,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -50,6 +54,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -64,6 +70,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
     <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -79,6 +87,8 @@
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -94,6 +104,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -108,6 +120,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -122,6 +136,8 @@
       <cs:userGroups>
 		<cs:groupCode>bespokean</cs:groupCode>
 		<cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		<cs:groupCode>partner_docscan</cs:groupCode>
 		<cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -136,6 +152,8 @@
       <cs:userGroups>
         <cs:groupCode>bespokean</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -150,6 +168,8 @@
       <cs:userGroups>
 		    <cs:groupCode>bespokean</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -166,6 +186,8 @@
       <cs:userGroups>
 		    <cs:groupCode>encoretech</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -181,6 +203,8 @@
       <cs:userGroups>
 		    <cs:groupCode>encoretech</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -195,6 +219,8 @@
       <cs:userGroups>
 		    <cs:groupCode>encoretech</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -211,6 +237,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -225,6 +253,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -239,6 +269,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -253,6 +285,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -268,6 +302,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -283,6 +319,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -297,6 +335,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -312,6 +352,8 @@
       <cs:userGroups>
 		    <cs:groupCode>fueldigital</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -328,6 +370,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -342,6 +386,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -356,6 +402,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -371,6 +419,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -385,6 +435,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -399,6 +451,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -413,6 +467,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -431,6 +487,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -445,6 +503,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -459,6 +519,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -473,6 +535,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -488,6 +552,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -502,6 +568,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -516,6 +584,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -530,6 +600,8 @@
       <cs:userGroups>
 		    <cs:groupCode>nakoa</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -545,6 +617,8 @@
       <cs:userGroups>
         <cs:groupCode>nakoa</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -561,6 +635,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -575,6 +651,8 @@
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -589,6 +667,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -603,6 +683,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -617,6 +699,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -631,6 +715,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -645,6 +731,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -660,6 +748,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -674,6 +764,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -687,6 +779,8 @@
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -701,6 +795,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -715,6 +811,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -729,6 +827,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -744,6 +844,8 @@
       <cs:userGroups>
         <cs:groupCode>irvine</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -758,6 +860,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -772,6 +876,8 @@
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -786,6 +892,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -801,6 +909,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -815,6 +925,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -829,6 +941,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -843,6 +957,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -856,6 +972,8 @@
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -870,6 +988,8 @@
       <cs:userGroups>
         <cs:groupCode>neostella</cs:groupCode>
         <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
         <cs:groupCode>partner_docscan</cs:groupCode>
         <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -885,6 +1005,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -899,6 +1021,8 @@
       <cs:userGroups>
 		    <cs:groupCode>neostella</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -917,6 +1041,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -932,6 +1058,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -947,6 +1075,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -961,6 +1091,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -975,6 +1107,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -990,6 +1124,8 @@
       <cs:userGroups>
     <cs:groupCode>vinetegrate</cs:groupCode>
     <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
     <cs:groupCode>partner_docscan</cs:groupCode>
     <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -1004,6 +1140,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -1018,6 +1156,8 @@
       <cs:userGroups>
 		    <cs:groupCode>vinetegrate</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
       </cs:userGroups>
@@ -1100,6 +1240,8 @@
       <cs:userGroups>
 		    <cs:groupCode>rops</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1114,6 +1256,8 @@
       <cs:userGroups>
 		    <cs:groupCode>rops</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1128,6 +1272,8 @@
       <cs:userGroups>
 		    <cs:groupCode>rops</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1144,6 +1290,8 @@
       <cs:userGroups>
 		    <cs:groupCode>kraftkennedy</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1158,6 +1306,8 @@
       <cs:userGroups>
 		    <cs:groupCode>kraftkennedy</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1172,6 +1322,8 @@
       <cs:userGroups>
 		    <cs:groupCode>kraftkennedy</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
@@ -1186,6 +1338,8 @@
       <cs:userGroups>
 		    <cs:groupCode>kraftkennedy</cs:groupCode>
 		    <cs:groupCode>partner_dataloader</cs:groupCode>
+				<cs:groupCode>partner_exec_history</cs:groupCode>
+				<cs:groupCode>partner_coveragetool</cs:groupCode>
 		    <cs:groupCode>partner_docscan</cs:groupCode>
 		    <cs:groupCode>partner_s3create</cs:groupCode>
         <cs:groupCode>partner_rdsdrop</cs:groupCode>
