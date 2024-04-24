@@ -133,6 +133,20 @@
       </cs:groupPermissions>
     </cs:userGroup>
     <cs:userGroup>
+      <cs:code>partner_exec_history</cs:code>
+      <cs:name>Execution History Partner Sandbox Group</cs:name>
+      <cs:description>Global User Group to Assign Partners to the Execution History Sandbox</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions/>
+    </cs:userGroup>
+    <cs:userGroup>
+      <cs:code>partner_coveragetool</cs:code>
+      <cs:name>Coverage Tool Partner Sandbox Group</cs:name>
+      <cs:description>Global User Group to Assign Partners to the Coverage Tool sandbox</cs:description>
+      <cs:assignedUsers/>
+      <cs:groupPermissions/>
+    </cs:userGroup>
+    <cs:userGroup>
       <cs:code>partner_dataloader</cs:code>
       <cs:name>Dataloader Partner Sandbox Group</cs:name>
       <cs:description>Global User Group to Assign Partners to the dataloader sandbox</cs:description>
