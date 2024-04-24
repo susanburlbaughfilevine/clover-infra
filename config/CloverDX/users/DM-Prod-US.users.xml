@@ -13,7 +13,7 @@
   </cs:exportOptions>
   <cs:usersList>
   <!--BESPOKEAN USER LIST-->
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>achauhan</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>aman@bespokean.com</cs:email>
@@ -28,7 +28,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>amathur</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>anish@bespokean.com</cs:email>
@@ -43,7 +43,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>ccash</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>crystal@bespokean.com</cs:email>
@@ -58,7 +58,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>dmahon</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>darin@bespokean.com</cs:email>
@@ -74,7 +74,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>jdewalt</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>jason@bespokean.com</cs:email>
@@ -90,7 +90,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>kschmeisser</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>katelyn@bespokean.com</cs:email>
@@ -105,7 +105,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>phonegger</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>Paul@bespokean.com</cs:email>
@@ -120,7 +120,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
   </cs:user>
-  <cs:user disabled="false">
+  <cs:user disabled="true">
       <cs:username>psheppard</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>peggy@bespokean.com</cs:email>
@@ -135,7 +135,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>tlightfoot</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>tim@bespokean.com</cs:email>
@@ -150,7 +150,7 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
-    <cs:user disabled="false">
+    <cs:user disabled="true">
       <cs:username>vkamra</cs:username>
       <!--cs:FirstName>bespokean_</cs:FirstName-->
       <cs:email>vikram@bespokean.com</cs:email>
