@@ -1236,6 +1236,21 @@
       </cs:userGroups>
       <cs:changePassword>true</cs:changePassword>
     </cs:user>
+    <cs:user disabled="false">
+      <cs:username>aosorio</cs:username>
+      <cs:email>Andres@rops.io</cs:email>
+      <cs:domain>clover</cs:domain>
+      <cs:password plainText="true">temp</cs:password>
+      <cs:userGroups>
+		    <cs:groupCode>rops</cs:groupCode>
+		    <cs:groupCode>partner_dataloader</cs:groupCode>
+        <cs:groupCode>partner_coveragetool</cs:groupCode>
+		    <cs:groupCode>partner_docscan</cs:groupCode>
+		    <cs:groupCode>partner_s3create</cs:groupCode>
+        <cs:groupCode>partner_rdsdrop</cs:groupCode>
+      </cs:userGroups>
+      <cs:changePassword>true</cs:changePassword>
+    </cs:user>
     <!--ROPS USER LIST-->
     <!--KRAFT KENNEDY USER LIST-->
     <cs:user disabled="false">
